@@ -1,0 +1,387 @@
+﻿
+/*====================================================*/
+/* SEPARACIÓN ENTRE TEXTOS Y FILAS                    */
+/*====================================================*/
+.sep_width {
+    width: 5px;
+}
+
+.sep_width_20 {
+    width: 20px;
+}
+
+/* clase para dar separación entre lineas */
+.row_height_size {
+    height: 15px;
+}
+
+.row_height_size_5 {
+    height: 5px;
+}
+
+/*====================================================*/
+/* IMAGENES                                           */
+/*====================================================*/
+
+.img_size_h {
+    height:150px;
+}
+
+.img_size_h_v2 {
+    height: 80px;
+}
+
+.img_size_w {
+    height: 400px;
+}
+
+.img_normal_size {
+    height: 20px;
+    width:20px;
+}
+
+
+.ImagenManual {
+    background: url(../../Imagenes/manual.png) no-repeat center center;
+    cursor:pointer;
+}
+
+/*====================================================*/
+/* ALINEACIÓN DE TEXTOS
+/*====================================================*/
+
+/*Textos centrados*/
+.center_txt {
+    vertical-align: middle;
+    text-align: center;
+}
+
+/*Textos alineados a la derecha*/
+.right_txt {
+    vertical-align: middle;
+    text-align: right;
+}
+
+/*Textos alineados a la izquierda*/
+
+.left_txt {
+    vertical-align: middle;
+    text-align: left;
+}
+
+/*====================================================*/
+
+/*====================================================*/
+/* TABLAS
+/*====================================================*/
+
+/* Tamaño al 100% */
+.size_100 {
+    width:100%;
+}
+
+.size_95 {
+    width: 95%;
+}
+
+.size_90 {
+    width: 90%;
+}
+
+
+
+/* Color del backgroun de las celdas de una tabla */
+.back_celdas {
+    background-color: #efebdc;
+    height:22px;
+}
+
+
+.back_cel_den_color {
+    background-color: #efebdc;
+    height: 43px;
+    vertical-align:middle;
+    
+    padding:5px;
+}
+
+.back_cel_den_NoColor {
+    height: 43px;
+    vertical-align: middle;
+    padding: 5px;
+}
+
+/*================================================================================================================*/
+/* ESTILO A TEXTOS                                                                                                */
+/*================================================================================================================*/
+
+/* Estilo para resaltar letreros */
+
+.CtrlFrm {
+    font-family: "Calibri", "Candara", "Segoe", "Segoe UI", "Optima", "Arial", "sans-serif";
+    font-size: 11pt !important;
+}
+
+
+.txt_ne_normal {
+
+    font-family: Calibri;
+    font-size: 11pt !important;
+    text-decoration: none;
+}
+
+
+.txt_ne_bold {
+    font-family: Calibri;
+    font-size: 11pt !important;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+
+.txt_az_normal {
+    font-family: Calibri;
+    text-decoration: none;
+    color: #3c5478 !important;
+}
+
+.txt_az_bold {
+    font-family: Calibri;
+    text-decoration: none;
+    font-weight: bold;
+    color: #3c5478 !important;
+    
+}
+
+
+
+
+.txt_dor_normal {
+    font-family: Calibri;
+    text-decoration: none;
+    color: #c2aa33 !important;
+}
+
+.txt_dor_bold {
+    font-family: Calibri;
+    text-decoration: none;
+    font-weight: bold;
+    color: #c2aa33 !important;
+}
+
+
+
+.txt_bla_normal {
+    font-family: Calibri;
+    text-decoration: none;
+    color: #fff !important;
+}
+
+.txt_bla_bold {
+    font-family: Calibri;
+    text-decoration: none;
+    font-weight: bold;
+    color: #fff !important;
+}
+
+
+
+.ControlForm {
+    font-family: Verdana;
+    font-size: 8pt;
+    text-decoration: none;
+    /*text-align: justify;*/
+}
+
+.ControlFormBold {
+    font-family: Verdana;
+    font-size: 8pt;
+    text-decoration: none;
+    font-weight: bold;
+    /*text-align: justify;*/
+}
+
+
+.TextoResaltado {
+    color: darkslategrey;
+    background-color: #D3CFC8;
+    font-weight: bold;
+}
+
+.txtEsp {
+    background-color: #efebdc;
+    border: none;
+}
+
+.LetrerosCafe {
+    color: #8B4513;
+}
+
+
+
+.LetrerosFontStand {
+    color: DarkSlateGray;
+    /*font-weight:bold;*/
+}
+
+.FormatContUPP {
+    font-family: Verdana;
+    font-size: 8pt;
+    text-decoration: none;
+    text-transform: uppercase;
+}
+
+
+.FormTabFiltros {
+    background-color: #FBFAF6;
+    background: #FBFAF6;
+}
+
+
+.CampoOblig {
+    border-width: 1px;
+    border-color: red;
+    border-style: solid;
+}
+
+
+.FormTxtEnCelda {
+    font-family: Verdana;
+    font-size: 8pt;
+    text-decoration: none;
+    font-weight: bold;
+    background-color: #e5e5e4; /*fffbf0; FBFAF6*/
+    text-align: right;
+    border-bottom-color: #DCDCDC;
+    border-bottom-width: medium;
+    border-bottom-style: solid;
+}
+
+/*================================================================================================================*/
+/*================================================================================================================*/
+
+
+.div_redondeado {
+    background-color: #f2f2f2;
+    border-radius:30px;
+}
+
+
+.div_redondeado_gris {
+    background-color: #f2f2f2;
+    border-radius: 10px;
+    vertical-align: middle;
+    padding: 3px;
+}
+
+.div_redondeado_gris_bl {
+    background-color: #50545b;
+    border-radius: 10px;
+    vertical-align: middle;
+    padding: 3px;
+    background-image: url('../Imagenes/Pie.jpg');
+}
+
+.div_redondeado_28 {
+    background-color: #f2f2f2;
+    height: 28px;
+    vertical-align: middle;
+    border-radius: 5px;
+    padding: 3px;
+}
+
+
+
+
+
+
+
+#otInfDen tr td {
+    background-color: #DCDCDC;
+    border: 3px solid white;
+    border-spacing: 0;
+    vertical-align: middle;
+}
+
+.al_img_celda {
+    width: 40px;
+    text-align: center;
+    vertical-align:middle;
+
+}
+
+.txt_alineados_celdas {
+    margin-left:10px; 
+    padding:10px;
+}
+
+.fManualInfografia {
+    cursor:pointer;
+}
+
+
+
+/*================================================================================================================*/
+/* Maquetación Divs                                                                                               */
+/*================================================================================================================*/
+
+.dvcontenedor {
+    
+    
+}
+
+.dvcabecera {
+    
+    height: 20%;
+}
+
+.dvmenu {
+    height: 10%;
+    
+}
+
+.dvCeldaIzquierda {
+    height: 50%;
+    
+    float: left;
+    
+}
+
+.dvCeldaDerecha {
+    height: 50%;
+    
+    float: right;
+    
+}
+
+.dvpie {
+    height: 20%;
+    
+    clear: both;
+}
+
+.dvFilaCompleta {
+    height: 50%;
+    
+    float: right;
+    width: 100%;
+}
+
+
+/*===========================================================================*/
+/* ESTILO PARA MARCAR LAS LINEAS (hr --> Ejemplo en el módulo de Ayuda)      */
+/*===========================================================================*/
+
+.linesHTML {
+    opacity: 0.4;
+    border-top: 3px solid tan;
+    /*color:#c6b88b;*/
+    width: 99%;
+}
+
+.linesHTMLTrans {
+    color: transparent;
+    background-color: transparent;
+    width: 90%;
+}
+

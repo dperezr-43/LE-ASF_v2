@@ -1,0 +1,156 @@
+html, body{
+	font-family: 'Ubuntu', sans-serif;
+	
+	
+}
+a {
+
+    -webkit-transition: all 250ms cubic-bezier(0.230, 1.000, 0.320, 1.000);
+    -moz-transition: all 250ms cubic-bezier(0.230, 1.000, 0.320, 1.000);
+    -ms-transition: all 250ms cubic-bezier(0.230, 1.000, 0.320, 1.000);
+    -o-transition: all 250ms cubic-bezier(0.230, 1.000, 0.320, 1.000);
+    transition: all 250ms cubic-bezier(0.230, 1.000, 0.320, 1.000);
+  	
+    text-decoration: none;
+
+	 
+}
+
+demos{
+	margin-right:20px;
+	
+	
+	}
+
+.list {
+
+      font-family: 'Ubuntu', sans-serif;
+	  -webkit-transform-style: preserve-3d;
+    -moz-transform-style: preserve-3d;
+    -ms-transform-style: preserve-3d;
+    -o-transform-style: preserve-3d;
+    transform-style: preserve-3d;
+    
+    text-transform: uppercase;
+    position: absolute;
+    margin-left: -140px;
+    margin-top: -280px;
+    top: 55%;
+}
+
+.list a {
+    
+    display: block;
+    color: #fff;
+}
+
+.list a:hover {
+    text-indent: 20px;
+	  font-family: 'Ubuntu', sans-serif;
+}
+
+.list dt, .list dd {
+
+    text-indent: 10px;
+    line-height: 55px;
+    background: #E0FBAC;
+    margin: 0;
+    height: 55px;
+    width: 270px;
+    color: #fff;
+	
+}
+
+.list rc {
+   text-indent: 55px;
+   text-transform: capitalize;
+  
+}
+
+
+.list dt {
+  font-family: 'Ubuntu', sans-serif;
+    /* Since we're hiding elements behind here, we need it in 3d */
+    -webkit-transform: translateZ(0.3px);
+    -moz-transform: translateZ(0.3px);
+    -ms-transform: translateZ(0.3px);
+    -o-transform: translateZ(0.3px);
+    transform: translateZ(0.3px);
+
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+    font-size: 15px;
+	
+}
+
+.list dd {
+
+    border-top: 1px dashed rgba(255,255,255,0.3);
+    line-height: 35px;
+    font-size: 11px;
+    height: 35px;
+    margin: 0;
+	
+}
+
+p{
+	font-weight:bold;
+	margin-left:25px;
+	
+}
+
+/* UI */
+ .cacahuate{
+top:485px;
+ }
+
+ .cacahuate1{
+top:410px;
+ }
+ 
+  .cacahuate2{
+top:520px;
+ }
+.toggle {
+
+    box-shadow: 2px 4px 4px rgba(139,136,136,1.00);
+    border-radius: 8px;
+  	font-family: 'Ubuntu', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: -1px;
+    line-height: 50px;
+    margin-left: -100px;
+    margin-top: -20px;
+    background: rgba(0,185,38,1.00);
+    text-align: center;
+    font-size: 12px;
+    position: absolute;
+    height: 50px;
+    bottom: 35.5%;
+    width: 240px;
+    color: #fff;
+    left: 13%;
+	
+	
+}
+
+.toggle:hover {
+    
+    background:rgba(255,69,0,1) ;
+}
+
+
+/* Individual styles */
+
+.maki dt, .maki dd, .maki a { background: rgba(0,32,78,1); } /*FFC219*/
+.maki a:hover { background: rgba(0,185,38,1.00); }
+.maki {
+
+    -webkit-transform: perspective(600px) translateZ(0px) !important;
+    -moz-transform: perspective(600px) translateZ(0px) !important;
+    -ms-transform: perspective(600px) translateZ(0px) !important;
+    -o-transform: perspective(600px) translateZ(0px) !important;
+    transform: perspective(600px) translateZ(0px) !important;
+  	font-family: 'Ubuntu', sans-serif;
+    left: 10%;
+	
+}
