@@ -1,0 +1,143 @@
+#dashboard {
+    bottom: 0;
+    position: absolute;
+   /* overflow: hidden;*/
+	top:500px;
+	margin-left:3%;
+}
+
+#shelf, #left_shelf, #right_shelf {
+    float:left;
+    height: 150px;
+	
+}
+
+#left_shelf, #right_shelf {
+    width: 300px;
+}
+
+#menu_dashboard {
+	display: inline-block;
+	width: auto;
+	margin: 0px;
+	padding: 0px;
+	list-style: none;
+
+}
+
+
+#menu_dashboard r {
+	width: auto;
+	height: auto;
+	display: inline-block;
+	bottom: 0;
+	vertical-align: bottom;
+}
+
+
+#menu_dashboard r.separator {
+	width: 300px;
+	height: 400px;
+}
+
+#menu_dashboard r a {
+	display: block;
+	height: 200px;
+	width: 225px;
+	position: relative;
+	
+    -webkit-transition-property: width, height;
+    -webkit-transition-duration: 0.5s;
+    -o-transition-property: width, height;
+    -o-transition-duration: 0.5s;
+    -moz-transition-property: width, height;
+    -moz-transition-duration: 0.5s;
+}
+
+#menu_dashboard r a:hover {
+	width: 300px;
+	height: 100px;
+}
+
+
+
+#menu_dashboard r a img {
+	width: 100%;
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	border: none;
+}
+
+
+
+
+/********************************************************/
+
+
+#menu_dashboard j {
+	width: auto;
+	height: auto;
+	display: inline-block;
+	bottom: 0;
+	vertical-align: bottom;
+}
+
+
+#menu_dashboard jr.separator {
+	width: 200px;
+	height: 300px;
+}
+
+#menu_dashboard j a {
+	display: block;
+	height: 175px;
+	width: 175px;
+	position: relative;
+	
+    -webkit-transition-property: width, height;
+    -webkit-transition-duration: 0.5s;
+    -o-transition-property: width, height;
+    -o-transition-duration: 0.5s;
+    -moz-transition-property: width, height;
+    -moz-transition-duration: 0.5s;
+}
+
+#menu_dashboard j a:hover {
+	width: 275px;
+	height: 150px;
+}
+
+
+
+#menu_dashboard j a img {
+	width: 80%;
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	border: none;
+}
+
+#dashboard1 {
+    bottom: 0;
+    position: absolute;
+
+	top:950px;
+	margin-left:25%;
+}
+
+
+#dashboard2{
+    bottom: 0;
+    position: absolute;
+
+	top:1500px;
+	margin-left:25%;
+}
+
+#dashboard3{
+    bottom: 0;
+    position: absolute;
+	top:800px;
+	margin-left:25%;
+}

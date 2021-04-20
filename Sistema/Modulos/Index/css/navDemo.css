@@ -1,0 +1,102 @@
+div.demo {
+	margin: 15px 8px; padding: 3px 10px;
+}
+div.demo h2 {
+	margin: 20px 0px 0px; color: rgb(51, 51, 51); font-size: 18px; font-variant: small-caps; font-weight: bold;
+}
+div.demo p {
+	color: rgb(102, 102, 102); font-size: 14px; font-style: italic;
+}
+div.ajaxContent {
+	margin: 0px 6px 0px 20px; border: 1px dotted rgb(153, 153, 153); border-image: none;
+}
+div.ajaxContent h2 {
+	margin: 16px 20px 16px 35px; padding: 0px 0px 6px; font-size: 18px; font-variant: normal; font-weight: bold; border-bottom-color: rgb(51, 51, 51); border-bottom-width: 1px; border-bottom-style: solid;
+}
+div.ajaxContent p {
+	margin: 16px 20px 16px 35px; padding: 16px 20px 16px 35px; width: auto; height: auto; color: rgb(51, 51, 51); line-height: 1.3; font-size: 12px; font-style: normal;
+}
+div.exp {
+	margin: 15px 8px; padding: 3px 10px;
+}
+div.exp h1 {
+	margin: 20px 0px 10px; font-size: 18px; font-weight: bold;
+}
+div.exp h3 {
+	margin: 20px 0px 10px; color: rgb(68, 138, 176); text-transform: uppercase; font-size: 16px; font-weight: bold; text-decoration: none;
+}
+div.exp ul {
+	list-style: square;
+}
+div.exp ul li {
+	margin: 10px 0px; font-size: 14px;
+}
+div.exp ul li a {
+	color: rgb(68, 138, 176);
+}
+div.exp ul li span {
+	margin: 0px 0px 0px 10px; color: rgb(102, 102, 102);
+}
+div.exp p#licence {
+	color: rgb(51, 51, 51); font-size: 13px;
+}
+div.exp p#licence a {
+	color: rgb(68, 138, 176); text-decoration: none;
+}
+p#footer {
+	margin: 15px 0px; padding: 10px 0px 0px; text-align: right; font-size: 12px; border-top-color: rgb(102, 102, 102); border-top-width: 1px; border-top-style: solid;
+}
+p#footer a {
+	color: rgb(68, 138, 176); text-decoration: none;
+}
+p#footer a:hover {
+	text-decoration: underline;
+}
+.navigation01 {
+	margin: 0px 0px 0px 15px; padding: 0px;
+}
+#navDemo01 {
+	margin: 0px auto; padding: 15px; width: 336px; height: 80px;
+}
+#navDemo01 li {
+	margin: 0px; padding: 0px;
+}
+#navDemo01 li.navActive a {
+	background-position: bottom; background-image: url("../img/navActive.png"); background-repeat: no-repeat;
+}
+#navDemo01 li a {
+	background-position: bottom; margin: 32px 0px 0px; padding: 0px 0px 7px; width: 48px; height: 48px; text-decoration: none; float: left; display: block; position: relative; background-image: url("../img/bgMenu1.png"); background-repeat: no-repeat;
+}
+#navDemo01 li a img {
+	margin: 0px; padding: 0px; width: 90%;
+}
+.navigation02 {
+	background-position: 0px bottom; margin: 0px 0px 0px 15px; background-image: url("../img/bgNavDiv.png"); background-repeat: repeat-x;
+}
+#navDemo02 {
+	background-position: 0px bottom; margin: 0px auto; width: 448px; height: 143px; background-image: url("../img/bgMenu.png"); background-repeat: repeat-x;
+}
+#navDemo02 li {
+	margin: 0px; padding: 0px;
+}
+#navDemo02 li.navActive a {
+	background-position: bottom; background-image: url("../img/navActive.png"); background-repeat: no-repeat;
+}
+#navDemo02 li a {
+	padding: 0px 0px 15px; width: 64px; height: 64px; text-decoration: none; margin-top: 64px; float: left; display: block; position: relative;
+}
+#navDemo02 li a img {
+	margin: 0px; padding: 0px; width: 100%;
+}
+div.code {
+	padding: 10px; display: block; background-color: rgb(255, 255, 255);
+}
+div.code span {
+	margin: 2px; display: inline;
+}
+pre.plain-text {
+	display: block;
+}
+#navDemo02 li span.tips {
+	margin: 0px; padding: 5px; left: 70px; top: 10px; color: rgb(68, 138, 176); font-family: Arial, Helvetica, sans-serif; font-weight: bold; text-decoration: none; display: block; position: absolute; opacity: 0; background-color: rgb(240, 240, 240);
+}
