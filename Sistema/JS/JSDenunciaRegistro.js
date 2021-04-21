@@ -103,7 +103,7 @@ $(document).ready(function () {
     });
 
 
-    cargaCP();
+    cargaCP('NG');
 
 }); // Fin ready
 
@@ -146,9 +146,9 @@ var onloadCallback = function () {
 
 
 
-function cargaCP() {
+function cargaCP(_pClaveCatalogo ) {
 
-    _oData = "";
+    _oData = "{_pClaveCatalogo:'" + _pClaveCatalogo + "'}";
 
     try {
 

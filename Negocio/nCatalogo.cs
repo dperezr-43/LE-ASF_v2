@@ -33,11 +33,11 @@ namespace Negocio
 
         public long LlaveCatalogo { get; set; }
         public string Texto { get; set; }
-
+        public string ClaveCatalogo { get; set; }
 
 
         // Procedimientos almacenados 
-               
+
 
         public Procedimientos Procs
         {
@@ -97,8 +97,9 @@ namespace Negocio
             try
             {
 
-                Procs = Procedimientos.sp_TraeCP;
-                _ds = Consulta();
+                Procs = Procedimientos.sp_TraeCatalogo;
+                SClaveCat = ClaveCatalogo;
+                _ds = TraeCatalogo();
 
                 if (Exception == null)
                 {
@@ -133,7 +134,7 @@ namespace Negocio
 
         public enum Procedimientos
         {
-            sp_TraeCP
+            sp_TraeCatalogo
 
         }
 
@@ -159,11 +160,6 @@ namespace Negocio
                 lRowNum = value;
             }
         }
-
-
-
-
-
 
 
         private int lLlave = 0;

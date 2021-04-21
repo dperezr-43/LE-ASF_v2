@@ -102,6 +102,10 @@ namespace General
 
         public bool DsVacio { get { return _DsVacio; } set { _DsVacio = value; } }
 
+
+        public string SClaveCat { get { return _Coord; } set { _Coord = value; } }
+
+
         public DataSet dsDatos
         {
             get { return _ds; }
@@ -211,7 +215,7 @@ namespace General
 
 
 
-        public DataSet Consulta()
+        public DataSet TraeCatalogo()
         {
 
             _ds = null; 
@@ -231,6 +235,10 @@ namespace General
                 {
                     return _ds;
                 }
+
+                _dDataSQL.ClearParameters();
+                _dDataSQL.AddParameter("@clave_tipo_cat", SClaveCat);
+
 
                 _ds = _dDataSQL.Ejecuta(_sStoreProc);
                 Exception = _dDataSQL.Exception;

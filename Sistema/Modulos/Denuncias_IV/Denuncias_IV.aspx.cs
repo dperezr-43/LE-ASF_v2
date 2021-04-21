@@ -24,10 +24,9 @@ namespace Sistema.Modulos.Denuncias_IV
 
 
         [WebMethod]
-        public static object AJAX_cargaCP()
+        public static object AJAX_cargaCP( string _pClaveCatalogo )
         {
-            DataSet _dSet = new DataSet();
-            
+                        
 
             nCatalogo nCat = new nCatalogo();
                         
@@ -35,6 +34,7 @@ namespace Sistema.Modulos.Denuncias_IV
 
             try
             {
+                nCat.ClaveCatalogo = _pClaveCatalogo;
                 nCat.Catalogos();
 
                 if (nCat.Exception != null) {
