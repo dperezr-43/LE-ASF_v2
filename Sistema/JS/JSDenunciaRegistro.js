@@ -165,9 +165,7 @@ function cargaCP() {
 
                let _ddlCP = _Main + 'ddlCP';
                            
-               $(_ddlCP).empty();                          
-
-               $(_ddlCP).append($("<option     />").val("0").text("-- Seleccione --"));
+               $(_ddlCP).empty();                                         
 
                $.each(data.d, function () {
                    $(_ddlCP).append($("<option     />").val(this.Llave).text(this.Texto));

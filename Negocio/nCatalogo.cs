@@ -16,6 +16,7 @@ namespace Negocio
     {
 
         
+
       
 
         public DataSet DSDatos { get; set; }
@@ -28,16 +29,28 @@ namespace Negocio
         private DatosSQL DB;
         private List<DataParamSQL> _lParam;
 
-              
-
-      
+        private Procedimientos _Proc;
 
 
+        public long LlaveCatalogo { get; set; }
+        public string Texto { get; set; }
+
+
+        public Procedimientos Procs
+        {
+            get { return _Proc; }
+            set
+            {
+                _Proc = value;
+                _sStoreProc = _Proc.ToString();
+            }
+        }
 
 
         public nCatalogo() : base(ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString)
         {
             _sSubClase = "nCatalogo";
+
 
             _Exception = null;
             _eCatList = new List<ECatalogo>();
@@ -69,80 +82,27 @@ namespace Negocio
 
 
 
-        // Procedimientos almacenados 
 
-        private Procedimientos _Proc;        
-        public Procedimientos Procs
+        public void Catalogos()
         {
-            get { return _Proc; }
-            set
-            {
-                _Proc = value;
-                _sStoreProc = _Proc.ToString();
-            }
-        }
 
-
-
-
-
-
-
-
-
-        public void TraeCP()
-        {
-            DSDatos = new DataSet();
-
-
-            try {
-
-                
-                Procs = Procedimientos.sp_TraeCP;
-                              
-                DSDatos = Consulta();
-                            
-               
-
-            }
-
-            catch ( Exception err) {
-
-                Exception = err;
-                
-            
-            }
-        }
-
-
-
-
-        // Procedimientos 
-
-        public enum Procedimientos
-        {
-            sp_TraeCP
-
-        }
-
-
-
-        public void Catalogos() {
-
-            _sMensaje = "";            
+            _sMensaje = "";
 
             _eCatList = new List<ECatalogo>();
 
-            try {
+            try
+            {
 
                 Procs = Procedimientos.sp_TraeCP;
                 _ds = Consulta();
 
-                if (Exception == null) {
+                if (Exception == null)
+                {
 
                     if (_ds != null || _ds.Tables.Count > 0 || _ds.Tables[0].Rows.Count > 0)
                     {
-                        foreach (DataRow _dr in _ds.Tables[0].Rows) {
+                        foreach (DataRow _dr in _ds.Tables[0].Rows)
+                        {
 
                             _eCat = new ECatalogo
                             {
@@ -156,9 +116,10 @@ namespace Negocio
 
                 }
             }
-            catch (Exception err) {
+            catch (Exception err)
+            {
                 _Exception = err;
-            
+
             }
 
         } // Catalogos
@@ -166,72 +127,82 @@ namespace Negocio
 
 
 
-
-
-
-
-
-
-        public partial class ECatalogo
+        public enum Procedimientos
         {
+            sp_TraeCP
+
+        }
 
 
-            private long lRowNum = 0;
+    } // Clase principal 
 
-            public long RowNum
+
+    public partial class ECatalogo
+    {
+
+
+        private long lRowNum = 0;
+
+        public long RowNum
+        {
+            get
             {
-                get
-                {
-                    return lRowNum;
-                }
-
-                set
-                {
-                    lRowNum = value;
-                }
+                return lRowNum;
             }
 
-
-
-
-            private int lLlave = 0;
-
-            public int Llave
+            set
             {
-                get
-                {
-                    return lLlave;
-                }
-
-                set
-                {
-                    lLlave = value;
-                }
+                lRowNum = value;
             }
-
-            private string sTexto = "";
-
-            public string Texto
-            {
-                get
-                {
-                    return sTexto;
-                }
-
-                set
-                {
-                    sTexto = value;
-                }
-            }
-
-            
-           
-           
-
-           
         }
 
 
 
+
+        private int lLlave = 0;
+
+        public int Llave
+        {
+            get
+            {
+                return lLlave;
+            }
+
+            set
+            {
+                lLlave = value;
+            }
+        }
+
+        private string sTexto = "";
+
+        public string Texto
+        {
+            get
+            {
+                return sTexto;
+            }
+
+            set
+            {
+                sTexto = value;
+            }
+        }
+
+
+
+
+
+
     }
-}
+
+    // Procedimientos almacenados 
+
+
+    // Procedimientos 
+
+
+
+} // Namespace
+
+
