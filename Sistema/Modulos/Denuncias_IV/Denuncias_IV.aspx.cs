@@ -28,7 +28,7 @@ namespace Sistema.Modulos.Denuncias_IV
         {
                         
 
-            nCatalogo nCat = new nCatalogo();
+           nCatalogo nCat = new nCatalogo();
                         
 
 

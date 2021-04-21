@@ -385,3 +385,11 @@
     width: 90%;
 }
 
+.radio-inline {
+    border: none;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    break-before: always;
+    margin: 0 1.81em 0;
+}

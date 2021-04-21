@@ -12,7 +12,7 @@ $(document).ready(function () {
         try {
 
             fMuestraDocumento('../../Archivos/PDF/Infograma_v1.pdf', 'Infograma', 900, 800);
-            
+
 
         } catch (err) {
 
@@ -26,20 +26,20 @@ $(document).ready(function () {
 
 
     $("input[id*=rblDenunciaAnonima]").change(function () {
-        
+
         try {
 
             let _sNameDiv = '#dvSiAnonima';
 
             ($(this).val() === '1' ? $(_sNameDiv).show() : $(_sNameDiv).hide());
 
-          
+
         }
         catch (err) {
             alert("[rblDenunciaAnonima.change] \n" + err.message);
         }
 
-      
+
     });
 
 
@@ -50,11 +50,11 @@ $(document).ready(function () {
     $('.fToolLFRCArt61').prop('title', 'De acuerdo con la Ley de Fiscalización y Rendición de Cuentas de la Federación (artículo 61), su denuncia debe hacer referencia a alguno de los siguientes supuestos de presuntos daños o perjuicios a la Hacienda Pública Federal o al patrimonio de los entes públicos. Clic en el ícono para ver el tutorial');
 
     setTimeout(function () {
-        $('[data-toggle="tooltip"]').tooltip(); 
+        $('[data-toggle="tooltip"]').tooltip();
     }, 3000);
 
 
-  
+
 
 
     //$("#btnContinuaDenuncia").click() {
@@ -103,7 +103,27 @@ $(document).ready(function () {
     });
 
 
-    cargaCP('NG');
+
+    var _NomControl = _Main + 'ddlCP';
+    var _NContenedeor = '';
+
+    _oAJAX = null;
+    cargaCatalogo('CP', 'ddl', _NomControl, _NContenedeor);
+
+    if (_oAJAX != null) {
+
+        $.when(_oAJAX).done(function (data, textStatus, jqXHR) {
+
+            if (String(data.d).indexOf("Error") == -1) {
+
+                _NomControl = 'NivelGobierno';
+                _NContenedeor = '#NivelGobierno';
+
+                _oAJAX = null;
+                cargaCatalogo('NG', 'rbl', _NomControl, _NContenedeor);
+            }
+        });
+    }     
 
 }); // Fin ready
 
@@ -146,7 +166,7 @@ var onloadCallback = function () {
 
 
 
-function cargaCP(_pClaveCatalogo ) {
+function cargaCatalogo(_pClaveCatalogo, _pTipo, _pNomControl, _pContenedor ) {
 
     _oData = "{_pClaveCatalogo:'" + _pClaveCatalogo + "'}";
 
@@ -166,15 +186,38 @@ function cargaCP(_pClaveCatalogo ) {
 
                 if (String(data.d).indexOf("Error") == -1) {
 
-                    let _ddlCP = _Main + 'ddlCP';
 
-                    $(_ddlCP).empty();
+                    switch (_pTipo) {
 
-                    $.each(data.d, function () {
-                        $(_ddlCP).append($("<option     />").val(this.Llave).text(this.Texto));
-                    });
+                        case 'ddl':
+
+                            $(_pNomControl).empty();
+
+                            $.each(data.d, function () {
+                                $(_pNomControl).append($("<option     />").val(this.Llave).text(this.Texto));
+                            });
+
+                            break;
+
+                        case 'rbl':
 
 
+                            var table = $('<table></table>');
+                            var counter = 0;
+                            $(data.d).each(function () {
+                                table.append($('<tr></tr>').append($('<td></td>').append($('<input">').attr({
+                                    type: 'radio', name: 'rb' + _pNomControl, value: this.Llave, id: 'r' + _pClaveCatalogo + '-' + counter, class: 'css-' + _pClaveCatalogo 
+                                })).append(
+                                    $('<label>').attr({
+                                        for: 'rb' + _pNomControl + counter++
+                                    }).text(this.Texto))));
+                            });
+
+                            $(_pContenedor).append(table);
+
+                            break;
+
+                    }
 
                 }
 

@@ -557,12 +557,12 @@
                                                     
                                                 </td>
                                                 <td style="width: 75%" class="left_txt">
-                                                    <asp:RadioButtonList ID="rblNivelGobierno" runat="server" RepeatDirection="Horizontal" CssClass="txt_az_normal" >
-                                                        <asp:ListItem Text="&nbsp; Federal &nbsp;" Value="1" Selected="True" ></asp:ListItem>
-                                                        <asp:ListItem Text="&nbsp; Estatal &nbsp;" Value="2"></asp:ListItem>
-                                                        <asp:ListItem Text="&nbsp; Municipal &nbsp;" Value="3"></asp:ListItem>
+                                                    <%--<asp:RadioButtonList ID="rblNivelGobierno" runat="server" RepeatDirection="Horizontal" CssClass="txt_az_normal" >                                                        
                                                     </asp:RadioButtonList>
-                                                    &nbsp;
+                                                    &nbsp;--%>
+
+                                                    <div id="NivelGobierno"></div>
+                                                    <br />
                                                 </td>
                                                
                                             </tr>
