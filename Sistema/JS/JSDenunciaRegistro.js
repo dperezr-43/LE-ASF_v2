@@ -1,4 +1,5 @@
 ﻿_oAJAX = null;
+var _Main = '#MainContent_';
 
 $(document).ready(function () {
 
@@ -151,31 +152,43 @@ function cargaCP() {
    _oAJAX = $.ajax({
        type: "POST",
        url: "Denuncias_IV.aspx/AJAX_cargaCP",
+
        data: _oData,
        contentType: "application/json; charset=utf-8",
        dataType: "json"
-            
+           
+   })
+       
+       .done(function (data, textStatus, jqXHR) {
+
+           if (String(data.d).indexOf("Error") == -1) {
+
+               let _ddlCP = _Main + 'ddlCP';
+                           
+               $(_ddlCP).empty();                          
+
+               $(_ddlCP).append($("<option     />").val("0").text("-- Seleccione --"));
+
+               $.each(data.d, function () {
+                   $(_ddlCP).append($("<option     />").val(this.Llave).text(this.Texto));
+               });       
+                            
+
+
+           }
+
+           else {
+
+               MensajeError("Hubo un error al traer los datos.")
+
+                }
        })
-            .done(function (data, textStatus, jqXHR) {
-                if (String(data.d).indexOf("Error") == -1) {
 
-                    let _ddlCP = '#ddlCP';
+       .fail(function (jqXHR, textStatus, errorThrown) {
 
-                    $(_ddlCP).empty();
+           MensajeError("Error al traer los datos [AJAX.cargaCP()]");
+       });
 
-                    $(_ddlCP).append($("<option     />").val("0").text("--> Resultados de la busqueda, seleccione uno: <--"));
-
-                    $.each(data.d, function () {
-                        $(_ddlCP).append($("<option     />").val(this.llave).text(this.texto));
-                    });
-                }
-                else {
-                    MensajeError("Hubo un error al traer los datos.")
-                }
-            })
-            .fail(function (jqXHR, textStatus, errorThrown) {
-                MensajeError("Error al traer los datos [AJAX.cargaCP()]");
-            });
 
     }
     catch (err) {

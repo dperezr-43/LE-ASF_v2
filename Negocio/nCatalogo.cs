@@ -16,13 +16,58 @@ namespace Negocio
     {
 
         
-        public long LlaveCatalogo { get; set; }
-        public string Texto { get; set; }
+      
+
+        public DataSet DSDatos { get; set; }
+
+        private Exception _Exception;
+        private string _sMensaje;
+
+        private List<ECatalogo> _eCatList;
+        private ECatalogo _eCat;
+        private DatosSQL DB;
+        private List<DataParamSQL> _lParam;
+
+              
+
+      
+
+
+
 
         public nCatalogo() : base(ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString)
         {
             _sSubClase = "nCatalogo";
+
+            _Exception = null;
+            _eCatList = new List<ECatalogo>();
+            _eCat = new ECatalogo();
+            DB = null;
+
+
         }
+
+
+
+        public string Mensaje
+        {
+            get
+            {
+                return _sMensaje;
+            }
+        }
+
+
+
+        public List<ECatalogo> CatList
+        {
+            get
+            {
+                return _eCatList;
+            }
+        }
+
+
 
         // Procedimientos almacenados 
 
@@ -45,28 +90,26 @@ namespace Negocio
 
 
 
-        public DataSet TraeCP()
+        public void TraeCP()
         {
-            DataSet _ds = new DataSet();
-            
+            DSDatos = new DataSet();
+
+
             try {
 
-
-                //_ds = BD.Ejecuta("sp_CatalogoCP");
-                Procs = Procedimientos.sp_TraeCP;
-                _ds = Consulta();
-
-
-                return _ds;
-
                 
+                Procs = Procedimientos.sp_TraeCP;
+                              
+                DSDatos = Consulta();
+                            
+               
 
             }
 
             catch ( Exception err) {
 
                 Exception = err;
-                return _ds;
+                
             
             }
         }
@@ -83,6 +126,110 @@ namespace Negocio
         }
 
 
+
+        public void Catalogos() {
+
+            _sMensaje = "";            
+
+            _eCatList = new List<ECatalogo>();
+
+            try {
+
+                Procs = Procedimientos.sp_TraeCP;
+                _ds = Consulta();
+
+                if (Exception == null) {
+
+                    if (_ds != null || _ds.Tables.Count > 0 || _ds.Tables[0].Rows.Count > 0)
+                    {
+                        foreach (DataRow _dr in _ds.Tables[0].Rows) {
+
+                            _eCat = new ECatalogo
+                            {
+                                Llave = (int)_dr["llave"],
+                                Texto = (string)_dr["texto"]
+                            };
+
+                            _eCatList.Add(_eCat);
+                        }
+                    }
+
+                }
+            }
+            catch (Exception err) {
+                _Exception = err;
+            
+            }
+
+        } // Catalogos
+
+
+
+
+
+
+
+
+
+
+        public partial class ECatalogo
+        {
+
+
+            private long lRowNum = 0;
+
+            public long RowNum
+            {
+                get
+                {
+                    return lRowNum;
+                }
+
+                set
+                {
+                    lRowNum = value;
+                }
+            }
+
+
+
+
+            private int lLlave = 0;
+
+            public int Llave
+            {
+                get
+                {
+                    return lLlave;
+                }
+
+                set
+                {
+                    lLlave = value;
+                }
+            }
+
+            private string sTexto = "";
+
+            public string Texto
+            {
+                get
+                {
+                    return sTexto;
+                }
+
+                set
+                {
+                    sTexto = value;
+                }
+            }
+
+            
+           
+           
+
+           
+        }
 
 
 

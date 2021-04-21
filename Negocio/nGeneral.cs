@@ -256,6 +256,17 @@ namespace General
 
 
 
+
+
+
+
+
+
+
+
+
+
+
         #region Metodos Privados
         protected virtual void LLenaParams()
         {
