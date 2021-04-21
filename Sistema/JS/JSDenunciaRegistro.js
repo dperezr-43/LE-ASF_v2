@@ -1,4 +1,5 @@
 ﻿_oAJAX = null;
+
 var _Main = '#MainContent_';
 
 $(document).ready(function () {
@@ -146,50 +147,52 @@ var onloadCallback = function () {
 
 
 function cargaCP() {
+
+    _oData = "";
+
     try {
-        _oData = "";
-
-   _oAJAX = $.ajax({
-       type: "POST",
-       url: "Denuncias_IV.aspx/AJAX_cargaCP",
-
-       data: _oData,
-       contentType: "application/json; charset=utf-8",
-       dataType: "json"
-           
-   })
-       
-       .done(function (data, textStatus, jqXHR) {
-
-           if (String(data.d).indexOf("Error") == -1) {
-
-               let _ddlCP = _Main + 'ddlCP';
-                           
-               $(_ddlCP).empty();                                         
-
-               $.each(data.d, function () {
-                   $(_ddlCP).append($("<option     />").val(this.Llave).text(this.Texto));
-               });       
-                            
 
 
-           }
+        _oAJAX = $.ajax({
+            type: "POST",
+            url: "Denuncias_IV.aspx/AJAX_cargaCP",
+            data: _oData,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json"
 
-           else {
+        })
 
-               MensajeError("Hubo un error al traer los datos.")
+            .done(function (data, textStatus, jqXHR) {
+
+                if (String(data.d).indexOf("Error") == -1) {
+
+                    let _ddlCP = _Main + 'ddlCP';
+
+                    $(_ddlCP).empty();
+
+                    $.each(data.d, function () {
+                        $(_ddlCP).append($("<option     />").val(this.Llave).text(this.Texto));
+                    });
+
+
 
                 }
-       })
 
-       .fail(function (jqXHR, textStatus, errorThrown) {
+                else {
 
-           MensajeError("Error al traer los datos [AJAX.cargaCP()]");
-       });
+                    MensajeError("Hubo un error al traer los datos.")
+                }
+            })
 
+            .fail(function (jqXHR, textStatus, errorThrown) {
+
+                MensajeError("Error al traer los datos [AJAX.cargaCP()]");
+            });
 
     }
     catch (err) {
-        MensajeError("[cargaCP] \n" + err.message);
+        alert("[cargaCP] \n" + err.message);
+
     }
+      
 }

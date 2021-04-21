@@ -16,8 +16,7 @@ namespace Negocio
     {
 
         
-
-      
+    
 
         public DataSet DSDatos { get; set; }
 
@@ -36,6 +35,10 @@ namespace Negocio
         public string Texto { get; set; }
 
 
+
+        // Procedimientos almacenados 
+               
+
         public Procedimientos Procs
         {
             get { return _Proc; }
@@ -45,6 +48,7 @@ namespace Negocio
                 _sStoreProc = _Proc.ToString();
             }
         }
+
 
 
         public nCatalogo() : base(ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString)
@@ -159,6 +163,9 @@ namespace Negocio
 
 
 
+
+
+
         private int lLlave = 0;
 
         public int Llave
@@ -189,8 +196,14 @@ namespace Negocio
             }
         }
 
+        // Procedimientos 
+
+        public enum Procedimientos
+        {
+            sp_TraeCP
 
 
+        }
 
 
 
@@ -204,5 +217,4 @@ namespace Negocio
 
 
 } // Namespace
-
 

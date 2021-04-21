@@ -26,25 +26,26 @@ namespace Sistema.Modulos.Denuncias_IV
         [WebMethod]
         public static object AJAX_cargaCP()
         {
-                       
+            DataSet _dSet = new DataSet();
+            
 
             nCatalogo nCat = new nCatalogo();
-
                         
+
 
             try
             {
                 nCat.Catalogos();
 
                 if (nCat.Exception != null) {
-
+                
                     return nCat.Exception.Message;
                 }
                 else {
                     return nCat.CatList;
-                    
-                }
                 
+                }
+
              
             }
             catch (Exception ex)
