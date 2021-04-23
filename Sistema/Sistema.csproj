@@ -128,8 +128,10 @@
     <Content Include="Content\bootstrap-theme.css.map" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="JS\bootstrap.min.js" />
+    <Content Include="JS\JSSeguimDenuncia.js" />
     <Content Include="Modulos\Denuncias_IV\Denuncias_IV.aspx" />
     <Content Include="Modulos\Denuncias_IV\Internas.aspx" />
+    <Content Include="Modulos\Denuncias_IV\Seguimiento_Denuncia.aspx" />
     <Content Include="Modulos\Index\Index.html" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -206,6 +208,13 @@
     </Compile>
     <Compile Include="Modulos\Denuncias_IV\Internas.aspx.designer.cs">
       <DependentUpon>Internas.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Modulos\Denuncias_IV\Seguimiento_Denuncia.aspx.cs">
+      <DependentUpon>Seguimiento_Denuncia.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Modulos\Denuncias_IV\Seguimiento_Denuncia.aspx.designer.cs">
+      <DependentUpon>Seguimiento_Denuncia.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Site.Master.cs">
