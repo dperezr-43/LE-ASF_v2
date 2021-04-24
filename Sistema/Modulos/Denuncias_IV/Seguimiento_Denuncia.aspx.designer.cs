@@ -24,12 +24,21 @@ namespace Sistema.Modulos.Denuncias_IV
         protected global::System.Web.UI.WebControls.Label lblPrueba2;
 
         /// <summary>
-        /// Control lblDos.
+        /// Control lblDos210.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblDos210;
+
+        /// <summary>
+        /// Control lblCuatro4.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblCuatro4;
     }
 }
