@@ -6,6 +6,6 @@
 
     <script src="../../JS/JSSeguimDenuncia.js"></script>
 
-
+    <asp:Label runat="server" ID="lblDos" Text="Cambio David"></asp:Label>
 
 </asp:Content>
