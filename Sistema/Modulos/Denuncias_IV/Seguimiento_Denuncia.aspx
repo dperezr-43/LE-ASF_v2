@@ -11,5 +11,8 @@
     <asp:Label runat="server" ID="lblDos210" Text="Cambio David"></asp:Label>
 
     <asp:Label runat="server" ID="lblCuatro4" Text="Prueba"></asp:Label>
+    <asp:Label runat="server" ID="lblNueva" Text="Nueva David"></asp:Label>
+    
+
 
 </asp:Content>
