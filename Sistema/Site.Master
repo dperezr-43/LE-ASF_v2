@@ -19,8 +19,8 @@
     <webopt:bundlereference runat="server" path="~/Content/css" />
     <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />    
     <link href="~/Content/Style.css" rel="stylesheet" />
-
-    
+   <%-- <link href="~/CSS/jquery.dataTables.css" rel="stylesheet" />--%>
+    <%--<script src="~/JS/jquery.dataTables.js"></script>--%>
 
 </head>
 <body>
@@ -41,7 +41,9 @@
                 <asp:ScriptReference Name="WebParts.js" Assembly="System.Web" Path="~/Scripts/WebForms/WebParts.js" />
                 <asp:ScriptReference Name="Focus.js" Assembly="System.Web" Path="~/Scripts/WebForms/Focus.js" />
                 <asp:ScriptReference Name="WebFormsBundle" />
-                               
+                
+               
+         
                 
 
                 <%--Site Scripts--%>
