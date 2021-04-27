@@ -46,6 +46,7 @@
     <Compile Include="nEntidad.cs" />
     <Compile Include="nFunciones.cs" />
     <Compile Include="nGeneral.cs" />
+    <Compile Include="nSeguimiento.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
