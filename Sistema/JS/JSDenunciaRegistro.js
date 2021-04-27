@@ -23,25 +23,8 @@ $(document).ready(function () {
     });
 
 
-
-
-    $("input[id*=rblDenunciaAnonima]").change(function () {
-
-        try {
-
-            let _sNameDiv = '#dvSiAnonima';
-
-            ($(this).val() === '1' ? $(_sNameDiv).show() : $(_sNameDiv).hide());
-
-
-        }
-        catch (err) {
-            alert("[rblDenunciaAnonima.change] \n" + err.message);
-        }
-
-
-    });
-
+    
+   
 
 
 
@@ -55,9 +38,24 @@ $(document).ready(function () {
 
 
 
+    $("body").on("click", "input[name*='rblDenunciaAnonima']", function () {
+
+        try {
+
+            let _sNomControl = "#Denuncia_no_anonima";
+
+            $(this).val() == '1' ? $(_sNomControl).addClass("OcultaSeccion") : $(_sNomControl).removeClass("OcultaSeccion");         
+            $('#dvSiAnonima').show();       
+
+        } catch (err) {
+
+            alert("[rblDenunciaAnonima.click] \n" + err.message);
+        }
 
 
-    //$("#btnContinuaDenuncia").click() {
+    });
+
+        
     $("body").on("click", "input[name*='btnContinuaDenuncia']", function () {
 
         try {
@@ -75,8 +73,30 @@ $(document).ready(function () {
     });
 
 
+    $("body").on("click", "input[name*='btnRegresaPresentacion']", function () {
+
+        try {
+
+           
+            $('#otInfo').show();
+            $('#dvDenunciaRegistro, #dvSiAnonima').hide();
+            $('input[id*="rblDenunciaAnonima"]').prop('checked', false);
+
+
+        } catch (err) {
+
+            alert("[btnRegresaPresentacion.click - (Reday)] \n" + err.message);
+        }
+
+
+    });
+
+    
+
 
     $(".set > a").on("click", function () {
+
+      
         if ($(this).hasClass("active")) {
             $(this).removeClass("active");
             $(this)

@@ -12,7 +12,7 @@
     
     
 
-    <div class="contenedor">
+    <div class="contenedor" >
 
 
 
@@ -244,11 +244,11 @@
         </table>
 
         <%-- Captura de la denuncia --%>
-        <div id="dvDenunciaRegistro" style="display:block; width: 95%; margin-top:80px; margin-left: auto; margin-right: auto;"">
+        <div id="dvDenunciaRegistro"  style="display:block; width: 95%; margin-top:80px; margin-left: auto; margin-right: auto;"">
 
             <hr class="linesHTML" />
 
-            <div class="dvcontenedor">
+            <div class="dvcontenedor" >
 
                 <div class="dvFilaCompleta center_txt txt_az_bold" style="font-size:20px;">
                     <asp:Label runat="server" Text="SISTEMA DE DENUNCIAS ELECTRÓNICAS (SIDEEL)"></asp:Label>                    
@@ -260,19 +260,96 @@
 
                 <br />
 
-                <div id="Denuncia_Registro" class="set">
+                <%-- Registro de denuncia no anonima --%>
+
+                <div id="Denuncia_no_anonima" class="set">
 
                     <a href="#" class="txt_az_bold"> DATOS DE CONTACTO
                     <i class="fa fa-plus"></i>
                     </a>
                     
-                    <div class="content">
-                        
-
-                        
+                    <div class="content center_txt">
 
 
+                        <table style="width:60%; margin:0px auto;">
+                            
+                            <tr class="left_txt">
+                                   
+                                <td class="txt_az_normal">                                   
+                                    <br />
+                                    <br />
+                                    <asp:Label runat="server" Text="Nombre o seudónimo "></asp:Label>                                    
+                                </td>
+                            </tr>
+
+                            <tr class="left_txt ">
+                                 <td class="txt_az_normal">
+                                    <asp:TextBox ID="txtNomSeudonimo" runat="server" Width="100%"></asp:TextBox>   
+                                     
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td class="row_height_size"></td>
+                            </tr>
+
+                            <tr class="left_txt">
+                                <td class="txt_az_normal">
+                                    <asp:Label runat="server" Text="Dirección de correo electrónico para recibir la respuesta" Width="40%"></asp:Label>                                    
+                                </td>                              
+                            </tr>
+
+                            <tr class="left_txt">
+                                <td class="txt_az_normal">
+                                    <asp:TextBox ID="TextBox4" runat="server" Width="100%"></asp:TextBox>                                    
+                                    <br />
+                                    <br />
+                                </td>
+                            </tr>
+
+                            <tr class="left_txt">
+                                <td class="txt_az_normal">
+                                    <asp:Label runat="server" Text="Podrá consultar la respuesta mediante el Folio de Registro de la Denuncia, que se proporcionará al final del registro "></asp:Label>                                    
+                                    <br />
+                                    <br />
+                                </td>                              
+                            </tr>
+
+
+                            <tr>
+                                <td class="center_txt txt_az_normal">                                   
+                                    
+                                    <input  type="button" name="btnGuardaDatosContacto" value="Validar Correo"/>
+                                    <br />
+                                    <br />
+                                    
+                                </td>
+                            </tr>
+
+
+                            <tr class="center_txt">
+                                <td class="txt_az_bold">
+                                    <a href="https://www.asf.gob.mx/Section/262_Proteccion_de_Datos" target="_blank">
+                                        <img src="../../Imagenes/candado_2.png" data-toggle="tooltip" title="Proteccion de Datos Personales" class="img_normal_size" />
+                                    </a>
+                                    
+                                    <asp:Label runat="server" Text="La ASF protegerá en todo momento la identidad del denunciante "></asp:Label>                                    
+                                    <br />
+                                    <br />
+                                </td>                              
+                            </tr>
+
+                           
+
+                        </table>
                     </div>
+
+                </div>
+
+
+                <%-- Registro de denuncia anonima --%>
+
+                <div id="Denuncia_anonima" class="set">                                       
 
 
                     <a href="#" class="txt_az_bold"> REGISTRO DE DENUNCIA
@@ -743,30 +820,122 @@
 
 
 
+                   
+                </div>
+               
 
+                <div id="Denuncia_seguimiento" class="set">
 
-
-                    <a href="#" class="txt_az_bold"> SEGUIMIENTO DE LA DENUNCIA
+                    <a href="#" class="txt_az_bold"> SEGUIMIENTO DE LA DENUNCIA REGISTRADA
                     <i class="fa fa-plus"></i>
                     </a>
                     
-                    <div class="content">
-                        
+                    <div class="content center_txt">
 
-                        
 
+
+
+
+                        <table style=" width:60%; margin:0px auto;" >
+
+                            <tr>
+                                <td colspan="3">
+                                    <img src="../../Imagenes/Consulta2.jpg" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="center_txt" colspan="3">
+                                    <br />                                    
+                                    <br />
+                                    <asp:Label CssClass="txt_az_bold" runat="server" Text="Para entrar a ver el seguimiento o concluir su denuncia es necesario capturar el Folio y la contraseña de la misma."></asp:Label>
+                                    <br />
+                                    <br />
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td class="center_txt">
+                                    <asp:Label CssClass="txt_az_bold" runat="server" Text="Folio"></asp:Label>
+                                    <br />                                    
+                                </td>
+
+                                <td style="width:10px;" ></td>
+                                
+                                <td class="center_txt">
+                                    <asp:Label CssClass="txt_az_bold" runat="server" Text="Contraseña"></asp:Label>
+                                    <br />                                     
+                                </td>
+
+                            </tr>
+
+
+                            <tr class="center_txt">
+                                   
+                                <td class="txt_az_normal">                                                                                                           
+                                    <asp:TextBox ID="txtSegFolio" runat="server" MaxLength="60" CssClass="center_txt" Width="100%"></asp:TextBox>
+                                </td>
+
+                                <td></td>
+
+                                <td class="txt_az_normal">                                                                                                           
+                                    <asp:TextBox ID="txtSegPsw" runat="server" MaxLength="20" CssClass="center_txt" Width="100%"></asp:TextBox>                                    
+                                </td>
+
+                            </tr>    
+                            
+                            <tr>
+                                <td class="center_txt txt_az_normal" colspan="3">                                   
+                                    <br />                                    
+                                    <br />
+                                    <input  type="button" name="btnSegconsulta" value="Consultar"/>
+                                    <br />                                    
+                                    <br />
+                                    
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td class="center_txt txt_az_normal" colspan="3">                                   
+                                    
+                                    <input  type="button" name="btnSegRecuperaPsw" value="Olvide mi contraseña"/>
+                                    <br />
+                                    <br />
+                                    
+                                </td>
+                            </tr>
+
+                           
+                  
+
+                        </table>
 
                     </div>
 
                 </div>
-               
-              
-            </div>
+
+
+                <div class="size_100">
+                    <table style="margin:0px auto; width:60%;">
+                        <tr>
+                            <td class="size_100 center_txt">
+                                <br />
+                                <br />
+                                <input type="button" name="btnRegresaPresentacion" value="Regresar" />
+                                <br />
+                                <br />
+                                
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+
 
             </div>
 
+        </div>  <%-- Captura de la denuncia  --%>
 
-        
+
+
 
     </div>
    

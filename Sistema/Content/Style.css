@@ -393,3 +393,8 @@
     break-before: always;
     margin: 0 1.81em 0;
 }
+
+
+.OcultaSeccion {
+    visibility: hidden;
+}
