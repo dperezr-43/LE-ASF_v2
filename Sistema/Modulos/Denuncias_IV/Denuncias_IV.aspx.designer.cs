@@ -24,6 +24,24 @@ namespace Sistema.Modulos.Denuncias_IV
         protected global::System.Web.UI.WebControls.RadioButtonList rblDenunciaAnonima;
 
         /// <summary>
+        /// Control txtNomSeudonimo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtNomSeudonimo;
+
+        /// <summary>
+        /// Control TextBox4.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox TextBox4;
+
+        /// <summary>
         /// Control chbHechos.
         /// </summary>
         /// <remarks>
@@ -112,6 +130,24 @@ namespace Sistema.Modulos.Denuncias_IV
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtPSW;
+
+        /// <summary>
+        /// Control txtSegFolio.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtSegFolio;
+
+        /// <summary>
+        /// Control txtSegPsw.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtSegPsw;
 
         /// <summary>
         /// Control hdnCvePublicaReCaptcha.
