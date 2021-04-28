@@ -141,15 +141,6 @@ namespace Sistema.Modulos.Denuncias_IV
         protected global::System.Web.UI.WebControls.Label lblSubEstado;
 
         /// <summary>
-        /// Control ddlEstado.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlEstado;
-
-        /// <summary>
         /// Control ddlSubEstado.
         /// </summary>
         /// <remarks>
@@ -222,15 +213,6 @@ namespace Sistema.Modulos.Denuncias_IV
         protected global::System.Web.UI.WebControls.Label lblDivEstado;
 
         /// <summary>
-        /// Control ddlDvEstado.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlDvEstado;
-
-        /// <summary>
         /// Control Label1.
         /// </summary>
         /// <remarks>
@@ -247,5 +229,23 @@ namespace Sistema.Modulos.Denuncias_IV
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlDvSubEstado;
+
+        /// <summary>
+        /// Control dvEnvioCorreo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl dvEnvioCorreo;
+
+        /// <summary>
+        /// Control dvCuerpo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl dvCuerpo;
     }
 }

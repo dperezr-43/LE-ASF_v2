@@ -145,7 +145,7 @@ namespace Negocio
                 _sCons._sTipoDenuncia = "PruebaTipoDenuncia";
                 _sCons._sFechaDenuncia = "00/00/0000";
                 _sCons._sFechaEnvio = "00/00/0000";
-                _sCons._sEstatus = "<table><tr><td class=\"tablas_internas\"><img src=\"../../Imagenes/aprobar-green3.png\"></td><td class=\"tablas_internas\">En Revisión</td></table>";
+                _sCons._sEstatus = "<table align=\"center\"><tr><td class=\"tablas_internas\"><img src=\"../../Imagenes/aprobar-green3.png\"></td><td class=\"tablas_internas\">En Revisión</td></table>";
                 _sCons._sFechaEstatus = "00/00/0000";
                 _sCons._sProcedencia = "Si";
                 _sCons._sOficioProc = "<img src=\"../../Imagenes/PDF-rojo.png\">";

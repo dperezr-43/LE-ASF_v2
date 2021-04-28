@@ -122,6 +122,12 @@
     font-size: 11pt !important;
 }
 
+.CtrlFrmBold {
+    font-family: "Calibri", "Candara", "Segoe", "Segoe UI", "Optima", "Arial", "sans-serif";
+    font-size: 11pt !important;
+    font-weight:bold;
+}
+
 
 .txt_ne_normal {
 
@@ -452,6 +458,26 @@ table.dataTable tbody td.tablas_internas {
     border-image: none;
 }
 
+.letraLabel {
+    font-size: 10pt;
+}
+
+.longLabel1 {
+    width: 80px;
+}
+
+.longLabel2 {
+    width: 90px;
+}
+
+.longLabel3 {
+    width: 107px;
+}
+
+.longLabel4 {
+    width: 100px;
+}
+
 /*===========================================================================*/
 /* ESTILO PARA LAS CAJAS DE TEXTO     */
 /*===========================================================================*/
@@ -462,8 +488,34 @@ table.dataTable tbody td.tablas_internas {
     border-radius: 10px 10px;
 }
 
-
+.CtrlCalendarImg {
+    background-image: url('../Imagenes/calendario.png');
+    background-position: left;
+    padding-left: 30px;
+    background-size: 19px;
+    background-repeat: no-repeat;
+    border-radius: 8px;
+    width: 125px;
+}
 
 .OcultaSeccion {
     visibility: hidden;
+}
+
+/*===========================================================================*/
+/* ESTILO PARA DIALOG     */
+/*===========================================================================*/
+
+.ui-dialog-buttonpane ui-widget-content ui-helper-clearfix
+{
+    height:50px;
+}
+
+.modal_dialog_icons {
+    /*background-image: url(../../Imagenes/Iconos/cancelar.png) !important; */
+    background-repeat: no-repeat;
+    background-size: cover;
+    border: none;
+    height: 33px;
+    width: 33px;
 }

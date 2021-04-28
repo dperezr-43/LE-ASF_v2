@@ -58,7 +58,7 @@ namespace Sistema.Modulos.Denuncias_IV
 
 
         [WebMethod]
-        public static object AJAX_traeEstados()
+        public static object AJAX_traeEstados(string _pClaveCatalogo)
         {
 
 
@@ -98,6 +98,135 @@ namespace Sistema.Modulos.Denuncias_IV
             }
         }
 
-        
+        [WebMethod]
+        public static object AJAX_traeTipoDenuncias(string _pClaveCatalogo)
+        {
+
+
+            nCatalogo nCat = new nCatalogo();
+
+
+
+            try
+            {
+                //nCat.ClaveCatalogo = _pClaveCatalogo;
+
+                //nCat.TraeCatalogo();
+
+                //if (nCat.Exception != null)
+                //{
+
+                //    return nCat.Exception.Message;
+                //}
+                //else
+                //{
+                //    return nCat.CatList;
+
+                //}
+
+                //return  nCat.CatList;
+
+                return "Datos";
+
+            }
+            catch (Exception ex)
+            {
+                return ex.Message;
+            }
+            finally
+            {
+                nCat = null;
+            }
+        }
+
+        [WebMethod]
+        public static object AJAX_traeSubEstados(string _pClaveCatalogo)
+        {
+
+
+            nCatalogo nCat = new nCatalogo();
+
+
+
+            try
+            {
+                //nCat.ClaveCatalogo = _pClaveCatalogo;
+
+                //nCat.TraeCatalogo();
+
+                //if (nCat.Exception != null)
+                //{
+
+                //    return nCat.Exception.Message;
+                //}
+                //else
+                //{
+                //    return nCat.CatList;
+
+                //}
+
+                //return  nCat.CatList;
+
+                return "Datos";
+
+            }
+            catch (Exception ex)
+            {
+                return ex.Message;
+            }
+            finally
+            {
+                nCat = null;
+            }
+        }
+
+
+        [WebMethod]
+        public static object AJAX_cambioEstado(string _psFolio, 
+                                               Int32 _plEstado, 
+                                               Int32 _plSubEstado)
+        {
+
+
+            nCatalogo nCat = new nCatalogo();
+
+
+
+            try
+            {
+                //nCat.ClaveCatalogo = _pClaveCatalogo;
+
+                //nCat.TraeCatalogo();
+
+                //if (nCat.Exception != null)
+                //{
+
+                //    return nCat.Exception.Message;
+                //}
+                //else
+                //{
+                //    return nCat.CatList;
+
+                //}
+
+                //return  nCat.CatList;
+
+                return "Datos";
+
+            }
+            catch (Exception ex)
+            {
+                return ex.Message;
+            }
+            finally
+            {
+                nCat = null;
+            }
+        }
+
+
+
+
+
     }
 }
