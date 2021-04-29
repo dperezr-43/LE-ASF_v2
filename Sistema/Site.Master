@@ -120,6 +120,21 @@
             </footer>
         </div>
 
+        <div id="diag-error" title="Error" style="display: none;">
+            <p>
+                <span class="ui-icon ui-icon-closethick" style="float: left; margin: 0 7px 20px 0;"></span><b>
+                    <label id="lblMsjeError"></label>
+                </b>
+            </p>
+        </div>
+        <div id="diag-ok" title="Datos Almacenados Correctamente" style="display: none;">
+            <p>
+                <span class="ui-icon ui-icon-info" style="float: left; margin: 0 7px 20px 0;"></span><b>
+                    <label id="lblMsjOk"></label>
+                </b>
+            </p>
+        </div>
+
     </form>
 </body>
 </html>

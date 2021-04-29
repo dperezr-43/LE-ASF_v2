@@ -1,4 +1,4 @@
-﻿using Negocio;
+﻿
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.Services;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using Negocio;
 
 namespace Sistema.Modulos.Denuncias_IV
 {
@@ -58,34 +59,28 @@ namespace Sistema.Modulos.Denuncias_IV
 
 
         [WebMethod]
-        public static object AJAX_traeEstados(string _pClaveCatalogo)
+        public static object AJAX_traeCatalogo(string _psClaveCatalogo, long _plLlaveTipoCat)
         {
-
 
             nCatalogo nCat = new nCatalogo();
 
-
-
             try
             {
-                //nCat.ClaveCatalogo = _pClaveCatalogo;
+                nCat.ClaveCatalogo = _psClaveCatalogo;
+                nCat.LlaveTipoCat = _plLlaveTipoCat;
+                nCat.Catalogos();
 
-                //nCat.TraeCatalogo();
+                if (nCat.Exception != null)
+                {
 
-                //if (nCat.Exception != null)
-                //{
+                    return nCat.Exception.Message;
+                }
+                else
+                {
+                    return nCat.CatList;
 
-                //    return nCat.Exception.Message;
-                //}
-                //else
-                //{
-                //    return nCat.CatList;
+                }
 
-                //}
-
-                //return  nCat.CatList;
-
-                return "Datos";
 
             }
             catch (Exception ex)
@@ -96,37 +91,32 @@ namespace Sistema.Modulos.Denuncias_IV
             {
                 nCat = null;
             }
+
         }
 
         [WebMethod]
-        public static object AJAX_traeTipoDenuncias(string _pClaveCatalogo)
+        public static object AJAX_traeTipoDenuncias(string _psClaveCatalogo, long _plLlaveTipoCat)
         {
-
 
             nCatalogo nCat = new nCatalogo();
 
-
-
             try
             {
-                //nCat.ClaveCatalogo = _pClaveCatalogo;
+                nCat.ClaveCatalogo = _psClaveCatalogo;
+                nCat.LlaveTipoCat = _plLlaveTipoCat;
+                nCat.Catalogos();
 
-                //nCat.TraeCatalogo();
+                if (nCat.Exception != null)
+                {
 
-                //if (nCat.Exception != null)
-                //{
+                    return nCat.Exception.Message;
+                }
+                else
+                {
+                    return nCat.CatList;
 
-                //    return nCat.Exception.Message;
-                //}
-                //else
-                //{
-                //    return nCat.CatList;
+                }
 
-                //}
-
-                //return  nCat.CatList;
-
-                return "Datos";
 
             }
             catch (Exception ex)
@@ -224,7 +214,52 @@ namespace Sistema.Modulos.Denuncias_IV
             }
         }
 
+        [WebMethod]
+        public static object AJAX_enviarCorreo(string _psFolio,
+                                               string _psPara,
+                                               string _psCCO,
+                                               string _psMensaje)
+        {
 
+
+            nSeguimiento nSeg = new nSeguimiento();
+
+
+
+            try
+            {
+                //nCat.ClaveCatalogo = _pClaveCatalogo;
+
+
+
+                nSeg.EnvioCorreo(_psFolio, _psPara, _psCCO, _psMensaje);
+
+                //if (nCat.Exception != null)
+                //{
+
+                //    return nCat.Exception.Message;
+                //}
+                //else
+                //{
+                //    return nCat.CatList;
+
+                //}
+
+                return nSeg.ListCons;
+
+            }
+            catch (Exception ex)
+            {
+                return ex.Message;
+            }
+            finally
+            {
+                nSeg = null;
+            }
+        }
+
+
+        
 
 
 

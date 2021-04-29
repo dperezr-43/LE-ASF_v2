@@ -141,7 +141,7 @@ namespace Negocio
                 cConsulta _sCons = new cConsulta();
 
                 _sCons._sCalEstatus = "<img src=\"../../Imagenes/editar.png\" onclick=\"javascript:CambiarEstado('Folio1234'); return false;\">";
-                _sCons._sNoFolio = "PruebaNoFolio";
+                _sCons._sNoFolio = "PruebaNoFolio" + i;
                 _sCons._sTipoDenuncia = "PruebaTipoDenuncia";
                 _sCons._sFechaDenuncia = "00/00/0000";
                 _sCons._sFechaEnvio = "00/00/0000";
@@ -149,9 +149,13 @@ namespace Negocio
                 _sCons._sFechaEstatus = "00/00/0000";
                 _sCons._sProcedencia = "Si";
                 _sCons._sOficioProc = "<img src=\"../../Imagenes/PDF-rojo.png\">";
-                _sCons._sCorreo = "xxxxxx@xxxx.xx";
+                _sCons._sCorreo = "<img src=\"../../Imagenes/correo.png\" onclick=\"javascript:EnvioCorreo('Folio1234'); return false;\">";
                 _sCons._sImpDenuncia = "<img src=\"../../Imagenes/imprimir.png\">";
                 _sCons._sDocsDenuncia = "<img src=\"../../Imagenes/libros.png\">";
+                _sCons._lLlaveDenuncia = 0;
+                _sCons._lLlaveEstado = 0;
+                _sCons._lLlaveSubEstado = 0;
+
 
                 _eListCons.Add(_sCons);
 
@@ -159,6 +163,24 @@ namespace Negocio
 
 
         }
+
+        public void EnvioCorreo(string _psFolio,
+                                string _psPara,
+                                string _psCCO,
+                                string _psMensaje)
+        {
+
+            nMail _nMail = new nMail();
+            _nMail.eMail.Email = _psPara;
+            _nMail.eMail.Folio = _psFolio;
+            _nMail.eMail.CCO = _psCCO;
+            _nMail.eMail.Mensaje = _psMensaje;
+
+            _nMail.EnviaCorreosEdoDen();
+
+
+        }
+
 
         public string MensajeError
         {
@@ -298,6 +320,13 @@ namespace Negocio
         public string _sCorreo { get; set; } = "";
         public string _sImpDenuncia { get; set; } = "";
         public string _sDocsDenuncia { get; set; } = "";
+        public long _lLlaveDenuncia { get; set; } = 0;
+        public long _lLlaveEstado { get; set; } = 0;
+        public long _lLlaveSubEstado { get; set; } = 0;
+
+        
+            
+            
 
 
     }

@@ -14,16 +14,32 @@
     <link href="../../Content/ImageSelect.css" rel="stylesheet" />
     <link href="../../CSS/jquery.dataTables.css" rel="stylesheet" />
   <%--  <link href="../../CSS/richtext.css" rel="stylesheet" />--%>
-    <link href="../../CSS/richtext.min.css" rel="stylesheet" />
+   <%-- <link href="../../CSS/richtext.min.css" rel="stylesheet" />--%>
+
+    <%--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">--%>
+<%--  <link href="../../CSS/font-awesome.min.css" rel="stylesheet" />--%>
+<%--    <link href="../../CSS/fontawesome-free-5.14.0/css/fontawesome.css" rel="stylesheet" />
+    <link href="../../CSS/fontawesome-free-5.14.0/css/fontawesome.min.css" rel="stylesheet" />--%>
     <script src="../../JS/jquery-1.11.2.min.js"></script>
     <script src="../../JS/jquery-ui-1.10.3.custom.js"></script>
     <script src="../../JS/jquery.dataTables.js"></script>
     <script src="../../JS/chosen.jquery.js"></script>
     <script src="../../JS/ImageSelect.jquery.js"></script>
-    <script src="../../JS/jquery.richtext.js"></script>
+   <%-- <script src="../../JS/jquery.richtext.js"></script>--%>
 <%--    <script src="../../JS/jquery.richtext.min.js"></script>--%>
+    <%--<script src="../../JS/tinymce.min_2.js"></script>--%>
+    <script type="text/javascript" src="https://cdn.tiny.cloud/1/v1a5rwaqu78gb45pxzvvs0u7mt0cbx5jpgi3u6ua6v8xm5x4/tinymce/5/tinymce.min.js"></script>
+    <script src="../../JS/JSUtils.js"></script>
     <script src="../../JS/JSSeguimDenuncia.js"></script>
-    
+   <%-- 
+    <style>
+
+         .pull-right {float:none !important}
+         .navbar-nav {margin:0 !important}
+
+    </style>--%>
+
+
     <br />
     <br />
     <br />
@@ -31,14 +47,12 @@
 
     <div runat="server" id="dvImagen" align="center">
 
-        <asp:Image runat="server" ID="imgPrincipal" ImageUrl="~/Imagenes/fiscalización.png" />
+        <asp:Image runat="server" ID="imgPrincipal" ImageUrl="~/Imagenes/seguimiento.jpg" />
 
     </div>
 
-    <br />
+    
 
-    <br />
-    <input type="text" id="RichText" />
     <br />
 
     <div align="center" runat="server" title="Búsqueda de Denuncias" id="dvFiltroBusqueda" class="div_redondeado">
@@ -127,7 +141,7 @@
                             </td>
                 
                             <td align="right">
-                                <asp:ImageButton runat="server" ID="imgBtnBuscar" ImageUrl="~/Imagenes/buscar.png" />
+                              <%--  <asp:ImageButton runat="server" ID="imgBtnBuscar" ImageUrl="~/Imagenes/buscar.png" />--%>
                             </td>
                         </tr>
                     </table>
@@ -208,9 +222,40 @@
 
     <div runat="server" id="dvEnvioCorreo" title="Mensaje para el denunciante">
 
-        <div runat="server" id="dvCuerpo">
-            
-        </div>
+        <table>
+            <tr>
+                <td>
+                    <asp:Label ID="Label4" runat="server" CssClass="CtrlFrmBold" Text="Para:"></asp:Label>&nbsp;&nbsp;&nbsp;
+                </td>
+                <td>
+                    <asp:TextBox ID="txtPara" CssClass="CtrlFrmTXT" runat="server" Width="300px"></asp:TextBox>
+                </td>
+            </tr>
+            <tr>
+                <td style="width:5px;">
+                    &nbsp;
+                </td>
+            </tr>
+            <tr>
+                <td>
+                     <asp:Label ID="Label5" runat="server" CssClass="CtrlFrmBold" Text="CCO:"></asp:Label>&nbsp;&nbsp;&nbsp;
+                </td>
+                <td>
+                    <asp:TextBox ID="txtCCO" CssClass="CtrlFrmTXT" runat="server" Width="300px"></asp:TextBox>
+                </td>
+            </tr>
+            <tr>
+                <td style="width:10px;">
+                    &nbsp;
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <textarea id="txtEmail"></textarea>
+                </td>
+            </tr>
+        </table>
+
 
     </div>
 
