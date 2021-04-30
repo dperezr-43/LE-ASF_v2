@@ -76,6 +76,7 @@ namespace General
         private bool _DsVacio = false;
         private string _Pagina = null;
         private string _Evento = null;
+        private int _Coord2 = 0;
         private string _Coord = null;
         private string _Pais = null;
         private string _Estado = null;
@@ -92,6 +93,8 @@ namespace General
         public string Pagina { get { return _Pagina; } set { _Pagina = value; } }
         public string Evento { get { return _Evento; } set { _Evento = value; } }
         public string Coord { get { return _Coord; } set { _Coord = value; } }
+
+        public int Coord2 { get { return _Coord2; } set { _Coord2 = value; } }
         public string Pais { get { return _Pais; } set { _Pais = value; } }
         public string Estado { get { return _Estado; } set { _Estado = value; } }
         public string Ciudad { get { return _Ciudad; } set { _Ciudad = value; } }
@@ -104,6 +107,8 @@ namespace General
 
 
         public string SClaveCat { get { return _Coord; } set { _Coord = value; } }
+
+        public int ILlaveCat { get { return _Coord2; } set { _Coord2 = value; } }
 
 
         public DataSet dsDatos
@@ -238,6 +243,7 @@ namespace General
 
                 _dDataSQL.ClearParameters();
                 _dDataSQL.AddParameter("@clave_tipo_cat", SClaveCat);
+                _dDataSQL.AddParameter("@llave_tipo_cat", ILlaveCat);
 
 
                 _ds = _dDataSQL.Ejecuta(_sStoreProc);

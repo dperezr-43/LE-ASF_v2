@@ -99,6 +99,7 @@ namespace Negocio
 
                 Procs = Procedimientos.sp_TraeCatalogo;
                 SClaveCat = ClaveCatalogo;
+                ILlaveCat = ILlaveCat;
                 _ds = TraeCatalogo();
 
                 if (Exception == null)

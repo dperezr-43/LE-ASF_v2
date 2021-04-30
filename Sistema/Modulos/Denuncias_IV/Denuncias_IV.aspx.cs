@@ -24,7 +24,7 @@ namespace Sistema.Modulos.Denuncias_IV
 
 
         [WebMethod]
-        public static object AJAX_cargaCP( string _pClaveCatalogo )
+        public static object AJAX_cargaCatalogo( string _pClaveCatalogo, int _pTipoCatalogo)
         {
                         
 
@@ -35,6 +35,22 @@ namespace Sistema.Modulos.Denuncias_IV
             try
             {
                 nCat.ClaveCatalogo = _pClaveCatalogo;
+                nCat.ILlaveCat = _pTipoCatalogo; // Pp--*
+                nCat.Catalogos();
+
+                if (nCat.Exception != null)
+                {
+
+                    return nCat.Exception.Message;
+                }
+                else
+                {
+                    return nCat.CatList;
+                }
+
+
+                nCat.ClaveCatalogo = _pClaveCatalogo;
+                nCat.ILlaveCat = _pTipoCatalogo; // Pp--*
                 nCat.Catalogos();
 
                 if (nCat.Exception != null) {

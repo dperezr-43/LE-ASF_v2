@@ -384,7 +384,17 @@
                                                 <br />
                                             </td>
                                         </tr>
+                                        <!-- JLRT--: se enlazan de manera dinamica mediante ajax la lista de hechos desde tabla catalogos, se eliminan los textos en codigo duro -->
                                         <tr>
+                                            <td class="txt_az_normal left_txt" style="font-size:10pt;">
+                                               <asp:CheckBoxList ID="chbHechosD" runat="server" CssClass="txt_az_normal ">
+                                                    <asp:ListItem Text="" Value=""></asp:ListItem>        
+                                                </asp:CheckBoxList>
+                                            </td>
+                                        </tr>
+                                        
+
+                                       <!-- <tr>
                                             <td class="txt_az_normal left_txt" style="font-size:10pt;">
                                                 <asp:CheckBoxList ID="chbHechos" runat="server" CssClass="txt_az_normal ">
                                                     <asp:ListItem Text="&nbsp; Desvío de recursos hacia fines distintos a los autorizados." Value="1"></asp:ListItem>
@@ -395,7 +405,7 @@
                                                     <asp:ListItem Text="&nbsp; Desconozco cómo clasificarlo en alguno de los supuestos anteriores." Value="5"></asp:ListItem>
                                                 </asp:CheckBoxList>
                                             </td>
-                                        </tr>
+                                        </tr> -->
                                     </table>
 
                                 </td>
@@ -450,7 +460,7 @@
                                     
                                     <div class="txt_az_normal back_cel_den_NoColor">
                                         <asp:Label runat="server" Text="&nbsp;&nbsp; Selección múltiple &nbsp;"></asp:Label>
-                                        <asp:DropDownList ID="ddlCP" runat="server"></asp:DropDownList>
+                                        <asp:DropDownList ID="ddlCP" runat="server" multiple ="multiple"></asp:DropDownList>
                                     </div>                                                                  
                                     
                                 </td>

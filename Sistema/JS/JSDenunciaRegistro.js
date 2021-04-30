@@ -122,13 +122,12 @@ $(document).ready(function () {
         }
     });
 
-
-
-    var _NomControl = _Main + 'ddlCP';
-    var _NContenedeor = '';
+    // para llenar lista de checks con HECHOS DE LA DENUNCIA
+    var _NomControlCHB = _Main + 'chbHechosD';
+    var _NContenedeorCHB = '';
 
     _oAJAX = null;
-    cargaCatalogo('CP', 'ddl', _NomControl, _NContenedeor);
+    cargaCatalogo('STD1', 'chb', _NomControlCHB, _NContenedeorCHB, 16);
 
     if (_oAJAX != null) {
 
@@ -136,14 +135,54 @@ $(document).ready(function () {
 
             if (String(data.d).indexOf("Error") == -1) {
 
-                _NomControl = 'NivelGobierno';
-                _NContenedeor = '#NivelGobierno';
-
-                _oAJAX = null;
-                cargaCatalogo('NG', 'rbl', _NomControl, _NContenedeor);
+                let _NomControl = _Main + 'chbHechosD';
+                _NContenedeor = '';
             }
         });
     }     
+
+    // para llenar combo de EJERCICIOS FICALES
+    var _NomControl = _Main + 'ddlCP';
+    var _NContenedeor = '';
+
+    _oAJAX = null;
+    cargaCatalogo('CP', 'ddl', _NomControl, _NContenedeor, 0);
+
+    if (_oAJAX != null) {
+
+        $.when(_oAJAX).done(function (data, textStatus, jqXHR) {
+
+            if (String(data.d).indexOf("Error") == -1) {
+
+                let _NomControl = _Main + 'ddlOrigenRecursos';                
+                _NContenedeor = '';
+
+                _oAJAX = null;
+                cargaCatalogo('STD', 'ddl', _NomControl, _NContenedeor, 9); // para llenar combo de ENTIDADES
+            }
+        });
+    } 
+
+    //var _NomControl = _Main + 'ddlCP';
+    //var _NContenedeor = '';
+
+    //_oAJAX = null;
+    //cargaCatalogo('CP', 'ddl', _NomControl, _NContenedeor);
+
+    //if (_oAJAX != null) {
+
+    //    $.when(_oAJAX).done(function (data, textStatus, jqXHR) {
+
+    //        if (String(data.d).indexOf("Error") == -1) {
+
+    //            _NomControl = 'NivelGobierno';
+    //            _NContenedeor = '#NivelGobierno';
+
+    //            _oAJAX = null;
+    //            cargaCatalogo('NG', 'rbl', _NomControl, _NContenedeor);
+    //        }
+    //    });
+    //}     
 
 }); // Fin ready
 
@@ -186,16 +225,16 @@ var onloadCallback = function () {
 
 
 
-function cargaCatalogo(_pClaveCatalogo, _pTipo, _pNomControl, _pContenedor ) {
+function cargaCatalogo(_pClaveCatalogo, _pTipo, _pNomControl, _pContenedor, _pLlaveCatalogo ) {
 
-    _oData = "{_pClaveCatalogo:'" + _pClaveCatalogo + "'}";
+    _oData = "{_pClaveCatalogo:'" + _pClaveCatalogo + "', _pTipoCatalogo:" + _pLlaveCatalogo + " }";
 
     try {
 
 
         _oAJAX = $.ajax({
             type: "POST",
-            url: "Denuncias_IV.aspx/AJAX_cargaCP",
+            url: "Denuncias_IV.aspx/AJAX_cargaCatalogo",
             data: _oData,
             contentType: "application/json; charset=utf-8",
             dataType: "json"
@@ -220,8 +259,6 @@ function cargaCatalogo(_pClaveCatalogo, _pTipo, _pNomControl, _pContenedor ) {
                             break;
 
                         case 'rbl':
-
-
                             var table = $('<table></table>');
                             var counter = 0;
                             $(data.d).each(function () {
@@ -237,6 +274,32 @@ function cargaCatalogo(_pClaveCatalogo, _pTipo, _pNomControl, _pContenedor ) {
 
                             break;
 
+                        case 'chb':
+                            $(_pNomControl).empty();
+                            var items = '';
+                            var table = "<table>"; // $('<table></table>');
+                            var counter = 0;
+
+                            $.each(data.d, function () {
+                                items += "<tr><td><input name = ListHechos[] type = checkbox value = '" + this.Llave + "' ><b> " + this.Texto + "</b></input></td></tr>"
+                            });
+                            table = table + items + "</table>"
+                            $(_pNomControl).html(table);
+
+                            /* // RETAZO DE CODIGO QUE FUNCIONA 
+                            $(_pNomControl).empty();
+                            var items = '';
+                            var table = $('<table></table>');
+                            var counter = 0;
+
+                            $.each(data.d, function () {
+                                items += "<input name = ListHechos[] type = checkbox value = '" + this.Llave + "' ><b> " + this.Texto + "</b></input>"
+                                //$(_pNomControl).append($("<option     />").val(this.Llave).text(this.Texto));
+                            });
+                            $(_pNomControl).html(items);
+                             */
+
+                            break;
                     }
 
                 }
