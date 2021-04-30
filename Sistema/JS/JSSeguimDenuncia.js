@@ -1,7 +1,14 @@
 ﻿var _oAJAX = null;
 var _oData = null;
 
+var _oAJAXCatEst = null;
+var _oDataCatEst = null;
+
 var _lTipoFiltro = 0;
+
+var _oArchBytesOfiProc = null;
+
+var _bLimpiaDatos = false;
 
 $(document).ready(function () {
 
@@ -15,88 +22,45 @@ $(document).ready(function () {
             maxDate: "+0D",
             changeYear: true,
             changeMonth: true,
-            onSelect: function (dateText, inst) {
+            //onSelect: function (dateText, inst) {
 
-                var _bInicio = false;
-                var _bFinal = false;
-                var valor = "";
-
-               
-
-                if ($("#MainContent_txtFechaInicio").length > 0) {
-
-                    _bInicio = true;
-
-                }
-
-                if ($("#MainContent_txtFechaFinal").length > 0) {
-
-                    _bFinal = true;
-
-                }
-
-                if (!_bInicio && !_bFinal) {
-                    _lTipoFiltro = 2;
-                    BuscaEnTabla('tab_gvConsDenuncias', valor, 2);
-                }
-                else if (_bInicio && !_bFinal) {
-                    _lTipoFiltro = 2;
-                    valor = $("#MainContent_txtFechaInicio").val();
-                    BuscaEnTabla('tab_gvConsDenuncias', valor, 2);
-                }
-                else if (!_bInicio && _bFinal) {
-                    _lTipoFiltro = 2;
-                    valor = $("#MainContent_txtFechaFinal").val();
-                    BuscaEnTabla('tab_gvConsDenuncias', valor, 2);
-                }
-
-                else if (_bInicio && _bFinal) {
-                    _lTipoFiltro = 3;
-                    var table = $("#tab_gvConsDenuncias").DataTable();
-
-                    table.draw();
-
-                }
-
-                _lTipoFiltro = 0;
-            }
+                
+            //}
 
 
         })
     });
 
-    //$.fn.dataTable.ext.search.push(
-    //    function (settings, data, dataIndex) {
+    $.fn.dataTable.ext.search.push(
+        function (settings, data, dataIndex) {
 
-    //        if (_lTipoFiltro == 3) {
+            if (_lTipoFiltro == 3) {
 
-    //            var dateDe = $.datepicker.parseDate("dd/mm/yy", $("#MainContent_txtFechaInicio").val());
-    //            var dateA = $.datepicker.parseDate("dd/mm/yy", $("#MainContent_txtFechaFinal").val());
-    //            var dateColum = $.datepicker.parseDate("dd/mm/yy", data[3]);
+                var dateDe = $.datepicker.parseDate("dd/mm/yy", $("#MainContent_txtFechaInicio").val());
+                var dateA = $.datepicker.parseDate("dd/mm/yy", $("#MainContent_txtFechaFinal").val());
+                var dateColum = $.datepicker.parseDate("dd/mm/yy", data[3]);
 
 
-    //            if (dateColum >= dateDe && dateColum <= dateA) 
-    //            {
-    //                return true;
-    //            }
-    //            return false;
+                if (dateColum >= dateDe && dateColum <= dateA) 
+                {
+                    return true;
+                }
+                return false;
 
-    //        }
-    //        else {
-    //            return true;
-    //        }
+            }
+            else {
+                return true;
+            }
 
             
-    //    }
-    //);
+        }
+    );
 
-    _oAJAX = null;
+    _oAJAXCatEst = null;
 
-    
+    cargaCatalogoEstadoFiltro();
 
-        cargaCatalogoEstadoFilt();
-
-        $.when(_oAJAX).done(function () {
+    $.when(_oAJAXCatEst).done(function () {
 
             _oAJAX = null;
 
@@ -120,7 +84,7 @@ $(document).ready(function () {
 
 
                         $("#MainContent_dvCambioEstado").hide();
-                        $("#MainContent_dvCambioEstado, #MainContent_dvEnvioCorreo").hide();
+                        $("#MainContent_dvCambioEstado, #MainContent_dvEnvioCorreo, #MainContent_FileUploadOficioProc, #MainContent_dvOficioProcedencia").hide();
 
                         $("#MainContent_ddlDvSubEstado").empty();
                         $("#MainContent_ddlDvSubEstado").append($("<option     />").val(1000).text("-- Seleccione --"));
@@ -136,19 +100,69 @@ $(document).ready(function () {
 
                             _lTipoFiltro = 1;
 
-                            var valor = this.value;
+                            var valor = $("#MainContent_txtNoFolio").val();
                             if (valor == 0) { valor = ""; }
                             BuscaEnTabla('tab_gvConsDenuncias', valor, 1);
 
                             _lTipoFiltro = 0;
                         });
 
+                        $("#MainContent_txtFechaInicio,#MainContent_txtFechaFinal").change(function () {
+
+                            var _bInicio = false;
+                            var _bFinal = false;
+                            var valor = "";
+
+
+
+                            if ($("#MainContent_txtFechaInicio").val().length > 0) {
+
+                                _bInicio = true;
+
+                            }
+
+                            if ($("#MainContent_txtFechaFinal").val().length > 0) {
+
+                                _bFinal = true;
+
+                            }
+
+                            if (!_bInicio && !_bFinal) {
+                                _lTipoFiltro = 2;
+                                BuscaEnTabla('tab_gvConsDenuncias', valor, 3);
+                            }
+                            else if (_bInicio && !_bFinal) {
+                                _lTipoFiltro = 2;
+                                valor = $("#MainContent_txtFechaInicio").val();
+                                BuscaEnTabla('tab_gvConsDenuncias', valor, 3);
+                            }
+                            else if (!_bInicio && _bFinal) {
+                                _lTipoFiltro = 2;
+                                valor = $("#MainContent_txtFechaFinal").val();
+                                BuscaEnTabla('tab_gvConsDenuncias', valor, 3);
+                            }
+
+                            else if (_bInicio && _bFinal) {
+
+                                BuscaEnTabla('tab_gvConsDenuncias', "", 3);
+
+                                _lTipoFiltro = 3;
+                                var table = $("#tab_gvConsDenuncias").DataTable();
+
+                                table.draw();
+
+                            }
+
+                            _lTipoFiltro = 0;
+
+                        });
+
                         $("#MainContent_ddlTipoDenuncia").change(function () {
 
                             _lTipoFiltro = 4;
 
-                            var valor = this.options.value
-                            if (valor == 0) { valor = ""; }
+                            var valor = $("#MainContent_ddlTipoDenuncia").val();
+                            if (valor == 1000) { valor = "";  }
                             BuscaEnTabla('tab_gvConsDenuncias', valor, 12);
 
                             _lTipoFiltro = 0;
@@ -161,14 +175,6 @@ $(document).ready(function () {
                                 _oAJAX = null;
                                 cargaCatalogoSubestadoFilt();
 
-                                _lTipoFiltro = 5;
-
-                                var valor = this.options.value;
-                                if (valor == 0) { valor = ""; }
-                                BuscaEnTabla('tab_gvConsDenuncias', valor, 13);
-
-                                _lTipoFiltro = 0;
-
                             }
                             else {
                                 $("#MainContent_ddlSubEstado").empty();
@@ -177,6 +183,13 @@ $(document).ready(function () {
                                 $("#MainContent_ddlSubEstado").prop('disabled', true);
 
                             }
+                            _lTipoFiltro = 5;
+
+                            var valor = $("#ddlEstado").val();
+                            if (valor == 1000) { valor = ""; BuscaEnTabla('tab_gvConsDenuncias', "", 14); }
+                            BuscaEnTabla('tab_gvConsDenuncias', valor, 13);
+
+                            _lTipoFiltro = 0;
 
                         });
 
@@ -201,12 +214,42 @@ $(document).ready(function () {
 
                             _lTipoFiltro = 6;
 
-                            var valor = this.options.value;
-                            if (valor == 0) { valor = ""; }
+                            var valor = $("#MainContent_ddlSubEstado").val();
+                            if (valor == 1000) { valor = ""; }
                             BuscaEnTabla('tab_gvConsDenuncias', valor, 14);
 
                             _lTipoFiltro = 0;
                         });
+
+                        $("#MainContent_FileUploadOficioProc").on("change", function () {
+
+                            if (!_bLimpiaDatos) {
+
+                                var _oArchivo = $(this).prop('files')[0];
+
+                                //$("#lblCER").text($("#fileUploadCER")[0].value);
+                                $("#MainContent_lblOficioProc").text(_oArchivo.name);
+
+                                var reader = new FileReader();
+                                reader.onload = function () {
+
+                                    var arrayBuffer = this.result;
+                                    _oArchBytesOfiProc = new Uint8Array(arrayBuffer);
+
+                                }
+                                reader.readAsArrayBuffer(_oArchivo);
+
+                            }
+
+                        });
+
+                        $("#btnOficio").on("click", function () {
+
+                            $("#MainContent_FileUploadOficioProc").click();
+
+                        });
+
+                        reseteoFiltros();
 
                     });
 
@@ -295,7 +338,7 @@ function consultaRegDenuncias() {
                             { title: "<label class=\"letraLabel longLabel3\">Imprimir Denuncia</label>", data: "_sImpDenuncia" }, //10
                             { title: "<label class=\"letraLabel longLabel3\">Documentos Denuncia</label>", data: "_sDocsDenuncia" }, //11
 
-                            { title: "", data: "_lLlaveDenuncia" }, //12
+                            { title: "", data: "_lLlaveTipoDenuncia" }, //12
                             { title: "", data: "_lLlaveEstado" }, //13
                             { title: "", data: "_lLlaveSubEstado" }, //14
 
@@ -326,9 +369,18 @@ function consultaRegDenuncias() {
                         "bInfo": true,
                         "bAutoWidth": false,
                         "bStateSave": true,
-                        "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "Sin paginado"]]
+                        "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "Sin paginado"]],
 
-                        //"destroy": _bDestroy,
+                        "destroy": _bDestroy,
+                        "columnDefs":
+                        [
+                            {
+
+                                "targets": [12,13,14],
+                                "visible": false,
+                                "searchable": true
+                            },
+                        ]
 
                         //"bLengthChange": true, // Paginado mediante el combo que indica cuantos registros se desean ver ***
 
@@ -376,17 +428,17 @@ function consultaRegDenuncias() {
 
 }
 
-function cargaCatalogoEstadoFilt()
+function cargaCatalogoEstadoFiltro()
 {
-    _oData = "{ _psClaveCatalogo:'STD', _plLlaveTipoCat: 26}";
+    _oDataCatEst = "{ _psClaveCatalogo:'STD', _plLlaveTipoCat: 26}";
 
     try {
 
 
-        _oAJAX = $.ajax({
+        _oAJAXCatEst = $.ajax({
             type: "POST",
             url: "Seguimiento_Denuncia.aspx/AJAX_traeCatalogo",
-            data: _oData,
+            data: _oDataCatEst,
             contentType: "application/json; charset=utf-8",
             dataType: "json"
 
@@ -399,6 +451,10 @@ function cargaCatalogoEstadoFilt()
                     $("#ddlEstado").empty();
 
                     var _iPos = 0;
+
+                    //Para que vuelva a colocar los íconos en el DDL
+                    var _sOuterHTML = $("#ddlEstado")[0].outerHTML;
+                    $("#ddlEstado")[0].outerHTML = _sOuterHTML.replace("display: inline-block;", "");
 
                     $.each(data.d, function () {
                         $("#ddlEstado").append($("<option     />").val(this.Llave).text(this.Texto).attr('data-img-src', (_iPos == 0 ? "" : (_iPos == 1 ? "../../Imagenes/aprobar.png" : "../../Imagenes/aprobar-green3.png"))));
@@ -426,7 +482,7 @@ function cargaCatalogoEstadoFilt()
 
     }
     catch (err) {
-        alert("[cargaCatalogoEstadoFilt] \n" + err.message);
+        alert("[cargaCatalogoEstadoFiltro] \n" + err.message);
 
     }
 }
@@ -478,7 +534,7 @@ function cargaCatalogoEstadoDialog() {
 
     }
     catch (err) {
-        alert("[cargaCatalogoEstadoFilt] \n" + err.message);
+        alert("[cargaCatalogoEstadoDialog] \n" + err.message);
 
     }
 }
@@ -646,7 +702,7 @@ function cargaCatalogoSubestadoDialog() {
 
 }
 
-function CambiarEstado(_sFolio) {
+function CambiarEstado(_sFolio, _lLlaveDenuncia) {
 
 
     
@@ -660,7 +716,7 @@ function CambiarEstado(_sFolio) {
             effect: 'fade',
             duration: 700
         },
-        width: 450,
+        width: 500,
         height: 400,
         //modal: true,
         //dialogClass: "no-close",
@@ -675,12 +731,14 @@ function CambiarEstado(_sFolio) {
             "1": {
                 id: 'jq_btn_adjuntar_nvo',
                 click: function () {
-                    OpCambiarEstatus(_sFolio);
+                    ValidarCamposCambioEstado(_lLlaveDenuncia);
+                    $(this).dialog("close");
+                    
                 },
 
                 class: "modal_dialog_icons",
                 style: "background-image: url('../../Imagenes/guardar.png')",
-                title: "Firmar"
+                title: "Actualizar"
             },
 
             "2": {
@@ -707,12 +765,13 @@ function CambiarEstado(_sFolio) {
 
 
 
-function OpCambiarEstatus(_sFolio) {
+function OpCambiarEstatus(_lLlaveDenuncia) {
 
-    _oData = "{ _psFolio:'" + _sFolio + "'" +
+    _oData = "{ _plLlaveDenuncia:" + _lLlaveDenuncia +
              ", _plEstado: " + $("#ddlDvEstado").val() +
              ", _plSubEstado: " + $("#MainContent_ddlDvSubEstado").val() +
-             "'}";
+             ", _psLlaveUsuario: '" + $("#MainContent_HDllaveUsr").val() + "'" +
+             "}";
     
     
     try {
@@ -731,7 +790,10 @@ function OpCambiarEstatus(_sFolio) {
 
                 if (String(data.d).indexOf("Error") == -1) {
 
-                  
+                    MensajeOk("Estatus actualizado correctamente");
+                    limpiarfiltros();
+                    reseteoFiltros();
+                    consultaRegDenuncias();
 
                 }
 
@@ -754,9 +816,9 @@ function OpCambiarEstatus(_sFolio) {
 
 }
 
-function EnvioCorreo(_sFolio) {
+function EnvioCorreo(_sFolio,  _lLlaveDenuncia) {
 
-    
+    var lol = 0;
 
     $("#MainContent_dvEnvioCorreo").dialog({
         open: function () { $(".ui-dialog-titlebar-close").hide(); },
@@ -767,9 +829,7 @@ function EnvioCorreo(_sFolio) {
         },
         width: 850,
         height: 600,
-        //modal: true,
-        //dialogClass: "no-close",
-        //autoOpen:false,
+
 
         //close: function () {
 
@@ -880,5 +940,195 @@ function EnviarCorreoDen(_sFolio) {
 
     }
 
+
+}
+
+function limpiarfiltros() {
+    
+    $("#MainContent_txtNoFolio").val("");
+    $("#MainContent_txtFechaInicio").val("");
+    $("#MainContent_txtFechaFinal").val("");
+    $("#MainContent_ddlTipoDenuncia").val(1000);
+
+    $("#ddlEstado").chosen("destroy");
+    cargaCatalogoEstadoFiltro();
+    //$("#ddlEstado").val(1000);
+    //$("#ddlEstado").chosen();
+    
+    $("#MainContent_ddlSubEstado").val(1000);
+
+}
+
+function reseteoFiltros() {
+
+    BuscaEnTabla('tab_gvConsDenuncias', "", 1);
+    BuscaEnTabla('tab_gvConsDenuncias', "", 2);
+    BuscaEnTabla('tab_gvConsDenuncias', "", 3);
+    BuscaEnTabla('tab_gvConsDenuncias', "", 12);
+    BuscaEnTabla('tab_gvConsDenuncias', "", 13);
+    BuscaEnTabla('tab_gvConsDenuncias', "", 14);
+
+}
+
+function ValidarCamposCambioEstado(_lLlaveDenuncia)
+{
+
+    if ($("#ddlDvEstado").val() == 1000) {
+
+        var _Style = $("#ddlDvEstado_chosen").attr("style");
+        _Style += "border: 2px solid red;";
+        $("#ddlDvEstado_chosen").attr("style", _Style);
+
+        MensajeError("Debe elegir el estado.");
+        return;
+
+    }
+
+    var _Style = $("#ddlDvEstado_chosen").attr("style");
+    _Style = _Style.replace("border: 2px solid red;", "");
+    $("#ddlDvEstado_chosen").attr("style", _Style);
+
+    if ($("#ddlDvEstado").val() == 28 && ($("#MainContent_ddlDvSubEstado").val() == undefined || $("#MainContent_ddlDvSubEstado").val() == 1000)) {
+
+        $("#MainContent_ddlDvSubEstado").css("border-color", "red");
+        MensajeError("Debe elegir el subestado.");
+        return;
+
+    }
+
+    $("#MainContent_ddlDvSubEstado").css("border-color", "");
+
+
+    OpCambiarEstatus(_lLlaveDenuncia);
+
+}
+
+function CargarOficioProc(_lLlaveDenuncia) {
+
+    $("#MainContent_dvOficioProcedencia").dialog({
+        open: function () { $(".ui-dialog-titlebar-close").hide(); },
+        modal: true,
+        show: {
+            effect: 'fade',
+            duration: 700
+        },
+        width: 400,
+        height: 250,
+        //modal: true,
+        //dialogClass: "no-close",
+        //autoOpen:false,
+
+        close: function () {
+
+            limpiaFileUploadOfic();
+        },
+
+        buttons: {
+            "1": {
+                id: 'jq_btn_adjuntar_nvo',
+                click: function () {
+                    ValidarCamposRegOficioProc(_lLlaveDenuncia);
+                    
+
+                },
+
+                class: "modal_dialog_icons",
+                style: "background-image: url('../../Imagenes/guardar.png')",
+                title: "Actualizar"
+            },
+
+            "2": {
+                id: 'jq_btn_cancela',
+                click: function () {
+                    $(this).dialog("close");
+                },
+
+                class: "modal_dialog_icons",
+                style: "background-image: url('../../Imagenes/cancelar.png')",
+                title: "Cerrar"
+            },
+
+        }
+
+
+    });
+
+}
+
+function ValidarCamposRegOficioProc(_lLlaveDenuncia) {
+    
+    if ($("#MainContent_FileUploadOficioProc")[0].value == "") {
+        $("#btnOficio").css("border-color", "red");
+        MensajeError("Debe seleccionar el oficio de procedencia.");
+        return;
+    }
+    $("#btnOficio").css("border-color", "");
+
+    RegOficioProc(_lLlaveDenuncia);
+
+}
+
+function RegOficioProc(_lLlaveDenuncia) {
+
+    _oData = "{ _plLlaveDenuncia:" + _lLlaveDenuncia +
+        ", _psNombreArchivo: '" + $("#MainContent_lblOficioProc").text() + "'" +
+        ", _pByteOfic: " + JSON.stringify(_oArchBytesOfiProc) +
+        ", _psLlaveUsuario: '" + $("#MainContent_HDllaveUsr").val() + "'" +
+        "}";
+
+
+    try {
+
+
+        _oAJAX = $.ajax({
+            type: "POST",
+            url: "Seguimiento_Denuncia.aspx/AJAX_regOficioProcedencia",
+            data: _oData,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json"
+
+        }).done(function (data, textStatus, jqXHR) {
+
+                if (String(data.d).indexOf("Error") == -1) {
+
+                    MensajeOk("Oficio registrado correctamente");
+                    $("#MainContent_dvOficioProcedencia").dialog("close");
+                    limpiarfiltros();
+                    reseteoFiltros();
+                    consultaRegDenuncias();
+                    
+                }
+
+                else {
+
+                    MensajeError("Hubo un error al traer los datos.");
+                }
+            })
+
+            .fail(function (jqXHR, textStatus, errorThrown) {
+
+                MensajeError("Error al traer los datos [AJAX_enviarCorreo]");
+            });
+
+    }
+    catch (err) {
+        alert("[EnviarCorreoDen] \n" + err.message);
+
+    }
+
+}
+
+function limpiaFileUploadOfic() {
+
+    _oArchBytesOfiProc = null;
+
+    _bLimpiaDatos = true;
+
+    $("#FirmaElectronica_FileUploadOficioProc").empty();
+    $("#FirmaElectronica_FileUploadOficioProc")[0].value = "";
+    $("#MainContent_lblOficioProc").text("");
+    
+
+    _bLimpiaDatos = false;
 
 }

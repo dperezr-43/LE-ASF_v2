@@ -34,6 +34,8 @@ namespace Negocio
 
         protected DataSet _ds = null;
 
+        protected bool _bReps = false;
+
         private cConsulta _eConsulta;
 
         public List<cConsulta> ListCons
@@ -57,6 +59,7 @@ namespace Negocio
             _dDataSQL = null;
             _Exception = null;
             _ds = null;
+            _bReps = false;
         }
 
         public Exception Exception
@@ -100,66 +103,71 @@ namespace Negocio
             _eListCons = new List<cConsulta>();
 
 
-            //_ds = TraeConsultaGeneral();
+            _ds = TraeConsultaGeneral();
 
-            //if (Exception == null)
-            //{
-
-            //    if (_ds != null || _ds.Tables.Count > 0 || _ds.Tables[0].Rows.Count > 0)
-            //    {
-            //        foreach (DataRow _dr in _ds.Tables[0].Rows)
-            //        {
-
-            //            _eConsulta = new cConsulta
-            //            {
-            //                _sCalEstatus = (string)_dr["cal_status"],
-            //                _sNoFolio = (string)_dr["no_folio"],
-            //                _sTipoDenuncia = (string)_dr["tipo_denuncia"],
-            //                _sFechaDenuncia = (string)_dr["fecha_denuncia"],
-            //                _sFechaEnvio = (string)_dr["fecha_envio"],
-            //                _sEstatus = (string)_dr["estatus"],
-            //                _sFechaEstatus = (string)_dr["fecha_estatus"],
-            //                _sProcedencia = (string)_dr["procedencia"],
-            //                _sOficioProc = (string)_dr["oficio_procedencia"],
-            //                _sCorreo = (string)_dr["correo"],
-            //                _sImpDenuncia = (string)_dr["imp_denuncia"],
-            //                _sDocsDenuncia = (string)_dr["docs_denuncia"]
-            //            };
-
-            //            _eListCons.Add(_eConsulta);
-            //        }
-
-
-
-            //    }
-
-            //}
-
-            for (Int32 i = 1; i <= 4; i++)
+            if (Exception == null)
             {
 
-                cConsulta _sCons = new cConsulta();
+                if (_ds != null || _ds.Tables.Count > 0 || _ds.Tables[0].Rows.Count > 0)
+                {
+                    foreach (DataRow _dr in _ds.Tables[0].Rows)
+                    {
 
-                _sCons._sCalEstatus = "<img src=\"../../Imagenes/editar.png\" onclick=\"javascript:CambiarEstado('Folio1234'); return false;\">";
-                _sCons._sNoFolio = "PruebaNoFolio" + i;
-                _sCons._sTipoDenuncia = "PruebaTipoDenuncia";
-                _sCons._sFechaDenuncia = "00/00/0000";
-                _sCons._sFechaEnvio = "00/00/0000";
-                _sCons._sEstatus = "<table align=\"center\"><tr><td class=\"tablas_internas\"><img src=\"../../Imagenes/aprobar-green3.png\"></td><td class=\"tablas_internas\">En Revisión</td></table>";
-                _sCons._sFechaEstatus = "00/00/0000";
-                _sCons._sProcedencia = "Si";
-                _sCons._sOficioProc = "<img src=\"../../Imagenes/PDF-rojo.png\">";
-                _sCons._sCorreo = "<img src=\"../../Imagenes/correo.png\" onclick=\"javascript:EnvioCorreo('Folio1234'); return false;\">";
-                _sCons._sImpDenuncia = "<img src=\"../../Imagenes/imprimir.png\">";
-                _sCons._sDocsDenuncia = "<img src=\"../../Imagenes/libros.png\">";
-                _sCons._lLlaveDenuncia = 0;
-                _sCons._lLlaveEstado = 0;
-                _sCons._lLlaveSubEstado = 0;
+                        _eConsulta = new cConsulta
+                        {
+                            _sCalEstatus = (_dr["cal_status"] == DBNull.Value ? "" : (string)_dr["cal_status"]),
+                            _sNoFolio = (_dr["folio"] == DBNull.Value ? "" : (string)_dr["folio"]),
+                            _sTipoDenuncia = (_dr["tipo_denuncia"] == DBNull.Value ? "" : (string)_dr["tipo_denuncia"]),
+                            _sFechaDenuncia = (_dr["fecha_denuncia"] == DBNull.Value ? "" : (string)_dr["fecha_denuncia"]),
+                            _sFechaEnvio = (_dr["fecha_envio_denuncia"] == DBNull.Value ? "" : (string)_dr["fecha_envio_denuncia"]),
+                            _sEstatus = (_dr["faprobar"] == DBNull.Value ? "" : (string)_dr["faprobar"]),
+                            _sFechaEstatus = (_dr["FECHA_ESTATUS"] == DBNull.Value ? "" : (string)_dr["FECHA_ESTATUS"]),
+                            _sProcedencia = (_dr["subestado"] == DBNull.Value ? "" : (string)_dr["subestado"]),
+                            _sOficioProc = (_dr["of_procedencia"] == DBNull.Value ? "" : (string)_dr["of_procedencia"]),
+                            _sCorreo = (_dr["correo"] == DBNull.Value ? "" : (string)_dr["correo"]),
+                            _sImpDenuncia = "<img src=\"../../Imagenes/imprimir.png\">", //(string)_dr["imp_denuncia"],
+                            _sDocsDenuncia = "<img src=\"../../Imagenes/libros.png\">",//(string)_dr["docs_denuncia"],
+                            _lLlaveTipoDenuncia = (_dr["llave_cat_tipo_denuncia"] == DBNull.Value ? 0 : Convert.ToInt64(_dr["llave_cat_tipo_denuncia"])),
+                            _lLlaveDenuncia = (_dr["llave_denuncia"] == DBNull.Value ? 0 : Convert.ToInt64(_dr["llave_denuncia"])),
+                            _lLlaveEstado = (_dr["LLAVE_CAT_ESTADO"] == DBNull.Value ? 0 : Convert.ToInt64(_dr["LLAVE_CAT_ESTADO"])),
+                            _lLlaveSubEstado = (_dr["LLAVE_CAT_SUBESTADO"] == DBNull.Value ? 0 : Convert.ToInt64(_dr["LLAVE_CAT_SUBESTADO"]))
+                        };
+
+                        _eListCons.Add(_eConsulta);
+                    }
 
 
-                _eListCons.Add(_sCons);
+
+                }
 
             }
+
+            //for (Int32 i = 1; i <= 4; i++)
+            //{
+
+            //    cConsulta _sCons = new cConsulta();
+
+            //    _sCons._sCalEstatus = "<img src=\"../../Imagenes/editar.png\" onclick=\"javascript:CambiarEstado('Folio1234'); return false;\">";
+            //    _sCons._sNoFolio = "PruebaNoFolio" + i;
+            //    _sCons._sTipoDenuncia = "PruebaTipoDenuncia";
+            //    _sCons._sFechaDenuncia = "0" + i + "/04/2021";
+            //    _sCons._sFechaEnvio = "00/00/0000";
+            //    _sCons._sEstatus = "<table align=\"center\"><tr><td class=\"tablas_internas\"><img src=\"../../Imagenes/aprobar-green3.png\"></td><td class=\"tablas_internas\">En Revisión</td></table>";
+            //    _sCons._sFechaEstatus = "00/00/0000";
+            //    _sCons._sProcedencia = "Si";
+            //    _sCons._sOficioProc = "<img src=\"../../Imagenes/PDF-rojo.png\">";
+            //    _sCons._sCorreo = "<img src=\"../../Imagenes/correo.png\" onclick=\"javascript:EnvioCorreo('Folio1234'); return false;\">";
+            //    _sCons._sImpDenuncia = "<img src=\"../../Imagenes/imprimir.png\">";
+            //    _sCons._sDocsDenuncia = "<img src=\"../../Imagenes/libros.png\">";
+            //    _sCons._lLlaveTipoDenuncia = (i <3? 14:15);
+            //    _sCons._lLlaveDenuncia = 0;
+            //    _sCons._lLlaveEstado = (i < 3 ? 27 : 28);
+            //    _sCons._lLlaveSubEstado = (i == 3 || i == 1 ? 29 : 30);
+
+
+            //    _eListCons.Add(_sCons);
+
+            //}
 
 
         }
@@ -181,6 +189,97 @@ namespace Negocio
 
         }
 
+        public void CambioEstado(long _plLlaveDenuncia,
+                                 long _plEstado,
+                                 long _plSubEstado,
+                                 string _psLlaveUsuario)
+        {
+
+            _bReps = false;
+
+            try
+            {
+                //ValidaParams();
+                //if (_Exception != null && _sMensajeError != string.Empty)
+                //{
+                //    Exception = _Exception;
+                //    return _ds;
+                //}
+
+                ////ClearParameters();
+                //LLenaParams();
+                //if (!_bEjecuta)
+                //{
+                //    return _ds;
+                //}
+
+                _dDataSQL.ClearParameters();
+                _dDataSQL.AddParameter("@llave_denuncia", _plLlaveDenuncia);
+                _dDataSQL.AddParameter("@llave_estado", _plEstado);
+                _dDataSQL.AddParameter("@llave_subestado", _plSubEstado);
+                _dDataSQL.AddParameter("@llave_usr", _psLlaveUsuario);
+
+
+                _bReps = _dDataSQL.EjecutaDML("sp_seg_CambioEstadoDenuncia");
+                Exception = _dDataSQL.Exception;  
+    
+            }
+            catch (Exception ex)
+            {
+                Exception = ex;
+            }
+
+
+        }
+
+        public void RegistroOficioProc(long _plLlaveDenuncia,
+                                               string _psNombreArchivo,
+                                               byte[] _pByteOfic,
+                                               string _psLlaveUsuario)
+        {
+
+            _bReps = false;
+
+            try
+            {
+                //ValidaParams();
+                //if (_Exception != null && _sMensajeError != string.Empty)
+                //{
+                //    Exception = _Exception;
+                //    return _ds;
+                //}
+
+                ////ClearParameters();
+                //LLenaParams();
+                //if (!_bEjecuta)
+                //{
+                //    return _ds;
+                //}
+
+                _dDataSQL.ClearParameters();
+                _dDataSQL.AddParameter("@llave_tipo_doc", 37);
+                _dDataSQL.AddParameter("@version", '1');
+                _dDataSQL.AddParameter("@nombre_documento", _psNombreArchivo);
+                _dDataSQL.AddParameter("@desc_documento", "");
+                _dDataSQL.AddParameter("@hipervinculo", "");
+                _dDataSQL.AddParameter("@usuario", _psLlaveUsuario);
+                _dDataSQL.AddParameter("@documento", _pByteOfic);
+                _dDataSQL.AddParameter("@llave_obj", 2);
+                _dDataSQL.AddParameter("@llave_obj_vinc", _plLlaveDenuncia);
+
+
+
+                _bReps = _dDataSQL.EjecutaDML("sp_GuardaDocumento");
+                Exception = _dDataSQL.Exception;
+
+            }
+            catch (Exception ex)
+            {
+                Exception = ex;
+            }
+
+
+        }
 
         public string MensajeError
         {
@@ -285,7 +384,7 @@ namespace Negocio
                 //_dDataSQL.AddParameter("@clave_tipo_cat", SClaveCat);
 
 
-                _ds = _dDataSQL.Ejecuta("sp_ConsultaDenuncias");
+                _ds = _dDataSQL.Ejecuta("sp_seg_TraeDenunciaIV");
                 Exception = _dDataSQL.Exception;
 
                 if (_ds == null || _ds.Tables.Count == 0 || _ds.Tables[0].Rows.Count == 0)
@@ -308,6 +407,7 @@ namespace Negocio
     public partial class cConsulta
     {
 
+        public long _lLlaveDenuncia { get; set; } = 0;
         public string _sCalEstatus { get; set; } = "";
         public string _sNoFolio { get; set; } = "";
         public string _sTipoDenuncia { get; set; } = "";
@@ -320,7 +420,7 @@ namespace Negocio
         public string _sCorreo { get; set; } = "";
         public string _sImpDenuncia { get; set; } = "";
         public string _sDocsDenuncia { get; set; } = "";
-        public long _lLlaveDenuncia { get; set; } = 0;
+        public long _lLlaveTipoDenuncia { get; set; } = 0;
         public long _lLlaveEstado { get; set; } = 0;
         public long _lLlaveSubEstado { get; set; } = 0;
 

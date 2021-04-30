@@ -14,7 +14,8 @@ namespace Sistema.Modulos.Denuncias_IV
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            //Quitar código después
+            HDllaveUsr.Value = "JITREJO250191";
         }
         [WebMethod]
         public static object AJAX_traeConsultas()
@@ -95,29 +96,30 @@ namespace Sistema.Modulos.Denuncias_IV
         }
 
         [WebMethod]
-        public static object AJAX_traeTipoDenuncias(string _psClaveCatalogo, long _plLlaveTipoCat)
+        public static object AJAX_cambioEstado(long _plLlaveDenuncia,
+                                               long _plEstado,
+                                               long _plSubEstado,
+                                               string _psLlaveUsuario)
         {
 
-            nCatalogo nCat = new nCatalogo();
+            nSeguimiento nSeg = new nSeguimiento();
 
             try
             {
-                nCat.ClaveCatalogo = _psClaveCatalogo;
-                nCat.LlaveTipoCat = _plLlaveTipoCat;
-                nCat.Catalogos();
 
-                if (nCat.Exception != null)
+                nSeg.CambioEstado(_plLlaveDenuncia, _plEstado, _plSubEstado, _psLlaveUsuario);
+
+                if (nSeg.Exception != null)
                 {
 
-                    return nCat.Exception.Message;
+                    return nSeg.Exception.Message;
                 }
                 else
                 {
-                    return nCat.CatList;
+                    return "Datos modificados correctamente";
 
                 }
 
-
             }
             catch (Exception ex)
             {
@@ -125,96 +127,13 @@ namespace Sistema.Modulos.Denuncias_IV
             }
             finally
             {
-                nCat = null;
+                nSeg = null;
             }
         }
-
-        [WebMethod]
-        public static object AJAX_traeSubEstados(string _pClaveCatalogo)
-        {
+        
 
 
-            nCatalogo nCat = new nCatalogo();
-
-
-
-            try
-            {
-                //nCat.ClaveCatalogo = _pClaveCatalogo;
-
-                //nCat.TraeCatalogo();
-
-                //if (nCat.Exception != null)
-                //{
-
-                //    return nCat.Exception.Message;
-                //}
-                //else
-                //{
-                //    return nCat.CatList;
-
-                //}
-
-                //return  nCat.CatList;
-
-                return "Datos";
-
-            }
-            catch (Exception ex)
-            {
-                return ex.Message;
-            }
-            finally
-            {
-                nCat = null;
-            }
-        }
-
-
-        [WebMethod]
-        public static object AJAX_cambioEstado(string _psFolio, 
-                                               Int32 _plEstado, 
-                                               Int32 _plSubEstado)
-        {
-
-
-            nCatalogo nCat = new nCatalogo();
-
-
-
-            try
-            {
-                //nCat.ClaveCatalogo = _pClaveCatalogo;
-
-                //nCat.TraeCatalogo();
-
-                //if (nCat.Exception != null)
-                //{
-
-                //    return nCat.Exception.Message;
-                //}
-                //else
-                //{
-                //    return nCat.CatList;
-
-                //}
-
-                //return  nCat.CatList;
-
-                return "Datos";
-
-            }
-            catch (Exception ex)
-            {
-                return ex.Message;
-            }
-            finally
-            {
-                nCat = null;
-            }
-        }
-
-        [WebMethod]
+         [WebMethod]
         public static object AJAX_enviarCorreo(string _psFolio,
                                                string _psPara,
                                                string _psCCO,
@@ -258,6 +177,55 @@ namespace Sistema.Modulos.Denuncias_IV
             }
         }
 
+        [WebMethod]
+        public static object AJAX_regOficioProcedencia(long _plLlaveDenuncia,
+                                               string _psNombreArchivo,
+                                               object _pByteOfic,
+                                               string _psLlaveUsuario)
+        {
+
+            nSeguimiento nSeg = new nSeguimiento();
+
+            System.Collections.Generic.Dictionary<string, object> _lObj = (System.Collections.Generic.Dictionary<string, object>)_pByteOfic;
+
+            //Int32 _long = _pByteOfic.
+
+            byte[] _bByte = new byte[_lObj.Count];
+            Int32 _lPos = 0;
+
+            foreach(KeyValuePair<string,object> kvp in _lObj)
+            {
+
+                _bByte[_lPos] = Byte.Parse(kvp.Value.ToString());
+                _lPos+= 1;
+            }
+
+            try
+            {
+
+                nSeg.RegistroOficioProc(_plLlaveDenuncia, _psNombreArchivo, _bByte, _psLlaveUsuario);
+
+                if (nSeg.Exception != null)
+                {
+
+                    return nSeg.Exception.Message;
+                }
+                else
+                {
+                    return "Datos modificados correctamente";
+
+                }
+                return "Datos modificados correctamente";
+            }
+            catch (Exception ex)
+            {
+                return ex.Message;
+            }
+            finally
+            {
+                nSeg = null;
+            }
+        }
 
         
 

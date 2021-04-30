@@ -23,6 +23,7 @@
     <script src="../../JS/jquery-1.11.2.min.js"></script>
     <script src="../../JS/jquery-ui-1.10.3.custom.js"></script>
     <script src="../../JS/jquery.dataTables.js"></script>
+    <script src="../../JS/JSSeguimDenuncia.js"></script>
     <script src="../../JS/chosen.jquery.js"></script>
     <script src="../../JS/ImageSelect.jquery.js"></script>
    <%-- <script src="../../JS/jquery.richtext.js"></script>--%>
@@ -30,7 +31,7 @@
     <%--<script src="../../JS/tinymce.min_2.js"></script>--%>
     <script type="text/javascript" src="https://cdn.tiny.cloud/1/v1a5rwaqu78gb45pxzvvs0u7mt0cbx5jpgi3u6ua6v8xm5x4/tinymce/5/tinymce.min.js"></script>
     <script src="../../JS/JSUtils.js"></script>
-    <script src="../../JS/JSSeguimDenuncia.js"></script>
+    
    <%-- 
     <style>
 
@@ -47,11 +48,11 @@
 
     <div runat="server" id="dvImagen" align="center">
 
-        <asp:Image runat="server" ID="imgPrincipal" ImageUrl="~/Imagenes/seguimiento.jpg" />
+        <asp:Image runat="server" ID="imgPrincipal" ImageUrl="~/Imagenes/seguimiento2.png" />
 
     </div>
 
-    
+    <asp:HiddenField runat="server" ID="HDllaveUsr" Value="0" />
 
     <br />
 
@@ -141,7 +142,8 @@
                             </td>
                 
                             <td align="right">
-                              <%--  <asp:ImageButton runat="server" ID="imgBtnBuscar" ImageUrl="~/Imagenes/buscar.png" />--%>
+                               <%-- <asp:ImageButton runat="server" ID="imgBtnBuscar" ImageUrl="~/Imagenes/buscar.png" />--%>
+                               
                             </td>
                         </tr>
                     </table>
@@ -257,6 +259,25 @@
         </table>
 
 
+    </div>
+
+    <div runat="server" id="dvOficioProcedencia" title="Oficio de procedencia">
+        <br />
+        <asp:Label ID="Label2" runat="server" CssClass="CtrlFrmBold" Text="Selecione un documento PDF"></asp:Label>
+        <br />
+        <br />
+        <table>
+            <tr>
+                <td>
+                    <label class="ctrFileUpload" id="btnOficio">Seleccionar</label>
+                </td>
+                <td style="width:10px">&nbsp;</td>
+                <td>
+                    <asp:Label CssClass="CtrlFrm" ID="lblOficioProc" runat="server" Text=""></asp:Label>
+                </td>
+            </tr>
+        </table>
+         <asp:FileUpload ID="FileUploadOficioProc" runat="server" accept=".pdf" Width="200px" />
     </div>
 
 </asp:Content>

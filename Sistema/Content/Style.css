@@ -488,16 +488,6 @@ table.dataTable tbody td.tablas_internas {
     border-radius: 10px 10px;
 }
 
-.CtrlCalendarImg {
-    background-image: url('../Imagenes/calendario.png');
-    background-position: left;
-    padding-left: 30px;
-    background-size: 19px;
-    background-repeat: no-repeat;
-    border-radius: 8px;
-    width: 125px;
-}
-
 .OcultaSeccion {
     visibility: hidden;
 }
@@ -520,3 +510,34 @@ table.dataTable tbody td.tablas_internas {
     width: 33px;
 }
 
+/*===========================================================================*/
+/* ESTILO PARA FECHAS (DATEPICKER)    */
+/*===========================================================================*/
+
+.CtrlCalendarImg {
+    background-image: url('../Imagenes/calendario.png');
+    background-position: left;
+    padding-left: 30px;
+    background-size: 19px;
+    background-repeat: no-repeat;
+    border-radius: 8px;
+    width: 125px;
+}
+
+.ui-datepicker select.ui-datepicker-month, .ui-datepicker select.ui-datepicker-year {
+    color: #8e772d;
+}
+
+/*===========================================================================*/
+/* ESTILO PARA CONTROLES TIPO FILEUPLOAD     */
+/*===========================================================================*/
+
+.ctrFileUpload {
+    /*border-radius: 25px;*/
+    border-radius: 10px 10px 10px 10px;
+    background-color: #ffeeab;
+    color: black;
+    padding: 0.4rem;
+    cursor: pointer;
+    font-size: 11px;
+}
