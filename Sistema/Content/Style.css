@@ -541,3 +541,35 @@ table.dataTable tbody td.tablas_internas {
     cursor: pointer;
     font-size: 11px;
 }
+
+
+/*===========================================================================*/
+/* ESTILO PARA TABLAS (GENÉRICO)    */
+/*===========================================================================*/
+
+table {
+    border-collapse: collapse;
+    border-width: 0;
+    border-color: #999999;
+    font-weight: normal;
+    font-family: Verdana;
+    font-size: 10pt;
+    text-decoration: none;
+    padding: 0;
+    margin-right: 0px;
+    /*   border: 1px solid dimgray;*/
+}
+
+
+.thHead {
+    color: DarkSlateGray;
+    background-color: #D3CFC1;
+    border: solid 1px dimgray;
+    font-family: "Calibri", "Arial";
+    font-size: 10pt !important;
+}
+
+
+.thHead th {
+    padding: 5px 5px 5px 5px;
+}

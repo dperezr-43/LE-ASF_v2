@@ -8,6 +8,7 @@ using System.Text.RegularExpressions;
 using System.IO;
 using Datos;
 using System.Data;
+using System.Runtime.Serialization.Formatters.Binary;
 
 namespace Negocio
 {
@@ -15,6 +16,7 @@ namespace Negocio
     {
 
         private List<cConsulta> _eListCons;
+        private List<cDocumento> _eListDoc;
         private Exception _Exception = null;
         protected string _sMensajeError = "";
         private Boolean _ConError = false;
@@ -29,7 +31,7 @@ namespace Negocio
         public int TipoBuzon { get; set; } = 0;
         public long LlaveUsuario { get { return _LlaveUsuario; } set { _LlaveUsuario = value; } }
         public long LlaveSesion { get; set; }
-        
+
         public string Pagina { get { return _Pagina; } set { _Pagina = value; } }
 
         protected DataSet _ds = null;
@@ -37,6 +39,7 @@ namespace Negocio
         protected bool _bReps = false;
 
         private cConsulta _eConsulta;
+        private cDocumento _eDocumento;
 
         public List<cConsulta> ListCons
         {
@@ -46,7 +49,15 @@ namespace Negocio
             }
         }
 
-        public nSeguimiento() 
+        public List<cDocumento> ListDoc
+        {
+            get
+            {
+                return _eListDoc;
+            }
+        }
+
+        public nSeguimiento()
         {
             _Exception = null;
             _eListCons = new List<cConsulta>();
@@ -125,8 +136,8 @@ namespace Negocio
                             _sProcedencia = (_dr["subestado"] == DBNull.Value ? "" : (string)_dr["subestado"]),
                             _sOficioProc = (_dr["of_procedencia"] == DBNull.Value ? "" : (string)_dr["of_procedencia"]),
                             _sCorreo = (_dr["correo"] == DBNull.Value ? "" : (string)_dr["correo"]),
-                            _sImpDenuncia = "<img src=\"../../Imagenes/imprimir.png\">", //(string)_dr["imp_denuncia"],
-                            _sDocsDenuncia = "<img src=\"../../Imagenes/libros.png\">",//(string)_dr["docs_denuncia"],
+                            _sImpDenuncia = (_dr["imprRep"] == DBNull.Value ? "" : (string)_dr["imprRep"]),
+                            _sDocsDenuncia = (_dr["verDocsDenuncia"] == DBNull.Value ? "" : (string)_dr["verDocsDenuncia"]),
                             _lLlaveTipoDenuncia = (_dr["llave_cat_tipo_denuncia"] == DBNull.Value ? 0 : Convert.ToInt64(_dr["llave_cat_tipo_denuncia"])),
                             _lLlaveDenuncia = (_dr["llave_denuncia"] == DBNull.Value ? 0 : Convert.ToInt64(_dr["llave_denuncia"])),
                             _lLlaveEstado = (_dr["LLAVE_CAT_ESTADO"] == DBNull.Value ? 0 : Convert.ToInt64(_dr["LLAVE_CAT_ESTADO"])),
@@ -221,8 +232,8 @@ namespace Negocio
 
 
                 _bReps = _dDataSQL.EjecutaDML("sp_seg_CambioEstadoDenuncia");
-                Exception = _dDataSQL.Exception;  
-    
+                Exception = _dDataSQL.Exception;
+
             }
             catch (Exception ex)
             {
@@ -232,10 +243,15 @@ namespace Negocio
 
         }
 
-        public void RegistroOficioProc(long _plLlaveDenuncia,
-                                               string _psNombreArchivo,
-                                               byte[] _pByteOfic,
-                                               string _psLlaveUsuario)
+        public void RegistroOficioProc(long _plLlaveObjVinc,
+                                       long _plLlaveObj,
+                                       string _psNombreArchivo,
+                                       byte[] _pByteOfic,
+                                       string _psLlaveUsuario,
+                                       long _plLlaveTipoDoc,
+                                       string _psDescripcion,
+                                       string _psHipervinculo,
+                                       string _psVersion)
         {
 
             _bReps = false;
@@ -257,15 +273,15 @@ namespace Negocio
                 //}
 
                 _dDataSQL.ClearParameters();
-                _dDataSQL.AddParameter("@llave_tipo_doc", 37);
-                _dDataSQL.AddParameter("@version", '1');
+                _dDataSQL.AddParameter("@llave_tipo_doc", _plLlaveTipoDoc);
+                _dDataSQL.AddParameter("@version", _psVersion);
                 _dDataSQL.AddParameter("@nombre_documento", _psNombreArchivo);
-                _dDataSQL.AddParameter("@desc_documento", "");
-                _dDataSQL.AddParameter("@hipervinculo", "");
+                _dDataSQL.AddParameter("@desc_documento", _psDescripcion);
+                _dDataSQL.AddParameter("@hipervinculo", _psHipervinculo);
                 _dDataSQL.AddParameter("@usuario", _psLlaveUsuario);
                 _dDataSQL.AddParameter("@documento", _pByteOfic);
-                _dDataSQL.AddParameter("@llave_obj", 2);
-                _dDataSQL.AddParameter("@llave_obj_vinc", _plLlaveDenuncia);
+                _dDataSQL.AddParameter("@llave_obj", _plLlaveObj);
+                _dDataSQL.AddParameter("@llave_obj_vinc", _plLlaveObjVinc);
 
 
 
@@ -402,35 +418,118 @@ namespace Negocio
             }
         }
 
+        public void TraeDocumento(long _plLlaveDocumento, long _plLlaveTipoDoc)
+        {
+            _eListDoc = new List<cDocumento>();
+
+            _ds = null;
+
+            _dDataSQL.ClearParameters();
+            _dDataSQL.AddParameter("@llave_documento", _plLlaveDocumento);
+            _dDataSQL.AddParameter("@llave_tipo_doc", _plLlaveTipoDoc);
+
+            _ds = _dDataSQL.Ejecuta("sp_TraeDocDenuncia");
+            Exception = _dDataSQL.Exception;
+
+            if (Exception == null)
+            {
+                if (!(_ds == null || _ds.Tables.Count == 0 || _ds.Tables[0].Rows.Count == 0))
+                {
+
+                    foreach (DataRow _dr in _ds.Tables[0].Rows)
+                    {
+
+                        _eDocumento = new cDocumento
+                        {
+                            _sNombreDocumento = (_dr["nombre_documento"] == DBNull.Value ? "" : (string)_dr["nombre_documento"]),
+                            _bDocumento= (_dr["documento"] == DBNull.Value ? null : (byte[])_dr["documento"])
+                            
+                        };
+
+                        _eListDoc.Add(_eDocumento);
+                    }
+
+                }
+            }
+
+        }
+
+        public void TraeDocumentosDenuncia(long _plLlaveObj, long _plLlaveObjVinc)
+        {
+            _eListDoc = new List<cDocumento>();
+
+            _ds = null;
+
+            _dDataSQL.ClearParameters();
+            _dDataSQL.AddParameter("@llave_obj", _plLlaveObj);
+            _dDataSQL.AddParameter("@llave_obj_vinc", _plLlaveObjVinc);
+
+            _ds = _dDataSQL.Ejecuta("sp_TraeDocumentosDenuncia");
+            Exception = _dDataSQL.Exception;
+
+            if (Exception == null)
+            {
+                if (!(_ds == null || _ds.Tables.Count == 0 || _ds.Tables[0].Rows.Count == 0))
+                {
+
+                    foreach (DataRow _dr in _ds.Tables[0].Rows)
+                    {
+
+                        _eDocumento = new cDocumento
+                        {
+                            _lRowNum = (_dr["rnom"] == DBNull.Value ? 0 : Convert.ToInt64(_dr["rnom"])),
+                            _lLlaveDocumento = (_dr["llave_documento"] == DBNull.Value ? 0 : Convert.ToInt64(_dr["llave_documento"])),
+                            _sNombreDocumento = (_dr["nombre_documento"] == DBNull.Value ? "" : (string)_dr["nombre_documento"]),
+                            _lLlaveCatTipoDoc = (_dr["llave_cat_tipo_doc"] == DBNull.Value ? 0 : Convert.ToInt64(_dr["llave_cat_tipo_doc"])),
+                            _sNombreTipoDoc = (_dr["nombre_instancia"] == DBNull.Value ? "" : (string)_dr["nombre_instancia"]),
+                            _sFechaUltAc= (_dr["fecha_ult_act"] == DBNull.Value ? "" : (string)_dr["fecha_ult_act"]),
+                            _sVerDocumento = (_dr["VerDoc"] == DBNull.Value ? "" : (string)_dr["VerDoc"])
+
+                        };
+
+                        _eListDoc.Add(_eDocumento);
+                    }
+
+                }
+            }
+
+        }
+
+
+        public partial class cConsulta
+        {
+
+            public long _lLlaveDenuncia { get; set; } = 0;
+            public string _sCalEstatus { get; set; } = "";
+            public string _sNoFolio { get; set; } = "";
+            public string _sTipoDenuncia { get; set; } = "";
+            public string _sFechaDenuncia { get; set; } = "";
+            public string _sFechaEnvio { get; set; } = "";
+            public string _sEstatus { get; set; } = "";
+            public string _sFechaEstatus { get; set; } = "";
+            public string _sProcedencia { get; set; } = "";
+            public string _sOficioProc { get; set; } = "";
+            public string _sCorreo { get; set; } = "";
+            public string _sImpDenuncia { get; set; } = "";
+            public string _sDocsDenuncia { get; set; } = "";
+            public long _lLlaveTipoDenuncia { get; set; } = 0;
+            public long _lLlaveEstado { get; set; } = 0;
+            public long _lLlaveSubEstado { get; set; } = 0;
+
+        }
+
+        public partial class cDocumento
+        {
+            public long _lRowNum { get; set; } = 0;
+            public long _lLlaveDocumento { get; set; } = 0;
+            public string _sNombreDocumento { get; set; } = "";
+            public byte[] _bDocumento { get; set; } = null;
+            public long _lLlaveCatTipoDoc { get; set; } = 0;
+            public string _sNombreTipoDoc { get; set; } = "";
+            public string _sFechaUltAc { get; set; } = "";
+            public string _sVerDocumento { get; set; } = "";
+        }
+
+
     }
-
-    public partial class cConsulta
-    {
-
-        public long _lLlaveDenuncia { get; set; } = 0;
-        public string _sCalEstatus { get; set; } = "";
-        public string _sNoFolio { get; set; } = "";
-        public string _sTipoDenuncia { get; set; } = "";
-        public string _sFechaDenuncia { get; set; } = "";
-        public string _sFechaEnvio { get; set; } = "";
-        public string _sEstatus { get; set; } = "";
-        public string _sFechaEstatus { get; set; } = "";
-        public string _sProcedencia { get; set; } = "";
-        public string _sOficioProc { get; set; } = "";
-        public string _sCorreo { get; set; } = "";
-        public string _sImpDenuncia { get; set; } = "";
-        public string _sDocsDenuncia { get; set; } = "";
-        public long _lLlaveTipoDenuncia { get; set; } = 0;
-        public long _lLlaveEstado { get; set; } = 0;
-        public long _lLlaveSubEstado { get; set; } = 0;
-
-        
-            
-            
-
-
-    }
-
-    
-
 }

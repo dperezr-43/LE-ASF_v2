@@ -1,6 +1,7 @@
 ﻿
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Services;
@@ -16,6 +17,14 @@ namespace Sistema.Modulos.Denuncias_IV
         {
             //Quitar código después
             HDllaveUsr.Value = "JITREJO250191";
+
+            if(HDLlaveDocumento.Value != "0")
+            {
+
+                VerOficioProc();
+
+            }
+
         }
         [WebMethod]
         public static object AJAX_traeConsultas()
@@ -143,7 +152,7 @@ namespace Sistema.Modulos.Denuncias_IV
 
             nSeguimiento nSeg = new nSeguimiento();
 
-
+            string _sMensaje = _psMensaje.Replace("#", "'");
 
             try
             {
@@ -151,7 +160,7 @@ namespace Sistema.Modulos.Denuncias_IV
 
 
 
-                nSeg.EnvioCorreo(_psFolio, _psPara, _psCCO, _psMensaje);
+                nSeg.EnvioCorreo(_psFolio, _psPara, _psCCO, _sMensaje);
 
                 //if (nCat.Exception != null)
                 //{
@@ -164,7 +173,9 @@ namespace Sistema.Modulos.Denuncias_IV
 
                 //}
 
-                return nSeg.ListCons;
+                //return nSeg.ListCons;
+
+                return "Correo enviado correctamente";
 
             }
             catch (Exception ex)
@@ -203,7 +214,7 @@ namespace Sistema.Modulos.Denuncias_IV
             try
             {
 
-                nSeg.RegistroOficioProc(_plLlaveDenuncia, _psNombreArchivo, _bByte, _psLlaveUsuario);
+                nSeg.RegistroOficioProc(_plLlaveDenuncia, 2,_psNombreArchivo, _bByte, _psLlaveUsuario,37,"","","1");
 
                 if (nSeg.Exception != null)
                 {
@@ -227,9 +238,73 @@ namespace Sistema.Modulos.Denuncias_IV
             }
         }
 
+        [WebMethod]
+        public static object AJAX_traeDocumentosDenuncia(long _plLlaveDenuncia)
+        {
+
+            nSeguimiento nSeg = new nSeguimiento();
+
+            
+            try
+            {
+
+                nSeg.TraeDocumentosDenuncia(_plLlaveDenuncia, 2);
+
+                if (nSeg.Exception != null)
+                {
+
+                    return nSeg.Exception.Message;
+                }
+                else
+                {
+                    return nSeg.ListDoc;
+
+                }
+                
+            }
+            catch (Exception ex)
+            {
+                return ex.Message;
+            }
+            finally
+            {
+                nSeg = null;
+            }
+        }
+
         
 
+        public void VerOficioProc()
+        {
+            nSeguimiento nSeg = new nSeguimiento();
 
+            nSeg.TraeDocumento(Convert.ToInt32(HDLlaveDocumento.Value), Convert.ToInt32(HDLlaveTipoDocumento.Value));
 
+            if (nSeg.Exception == null)
+            {
+
+                Response.Clear();
+                Response.ClearContent();
+                Response.Buffer = true;
+
+                Response.AddHeader("content-disposition", "attachment; filename=" + Path.GetFileName(nSeg.ListDoc[0]._sNombreDocumento));
+
+                Response.ContentType = " application/pdf";
+
+                Response.BinaryWrite(nSeg.ListDoc[0]._bDocumento);
+
+                Response.Flush();
+
+                Response.End();
+
+                //nSeg.Exception.Message;
+            }
+            else
+            {
+                //return "Datos modificados correctamente";
+
+            }
+
+        }
     }
 }

@@ -84,7 +84,7 @@ $(document).ready(function () {
 
 
                         $("#MainContent_dvCambioEstado").hide();
-                        $("#MainContent_dvCambioEstado, #MainContent_dvEnvioCorreo, #MainContent_FileUploadOficioProc, #MainContent_dvOficioProcedencia").hide();
+                        $("#MainContent_dvCambioEstado, #MainContent_dvEnvioCorreo, #MainContent_FileUploadOficioProc, #MainContent_dvOficioProcedencia, #MainContent_dvSeccListaDocDenuncias").hide();
 
                         $("#MainContent_ddlDvSubEstado").empty();
                         $("#MainContent_ddlDvSubEstado").append($("<option     />").val(1000).text("-- Seleccione --"));
@@ -169,29 +169,29 @@ $(document).ready(function () {
                         });
 
 
-                        $("#ddlEstado").change(function () {
-                            if ($("#ddlEstado").val() == 28) {
+                        //$("#ddlEstado").change(function () {
+                        //    if ($("#ddlEstado").val() == 28) {
 
-                                _oAJAX = null;
-                                cargaCatalogoSubestadoFilt();
+                        //        _oAJAX = null;
+                        //        cargaCatalogoSubestadoFilt();
 
-                            }
-                            else {
-                                $("#MainContent_ddlSubEstado").empty();
-                                $("#MainContent_ddlSubEstado").append($("<option     />").val(1000).text("-- Seleccione --"));
-                                $("#MainContent_ddlSubEstado").prop('selectedIndex', 0);
-                                $("#MainContent_ddlSubEstado").prop('disabled', true);
+                        //    }
+                        //    else {
+                        //        $("#MainContent_ddlSubEstado").empty();
+                        //        $("#MainContent_ddlSubEstado").append($("<option     />").val(1000).text("-- Seleccione --"));
+                        //        $("#MainContent_ddlSubEstado").prop('selectedIndex', 0);
+                        //        $("#MainContent_ddlSubEstado").prop('disabled', true);
 
-                            }
-                            _lTipoFiltro = 5;
+                        //    }
+                        //    _lTipoFiltro = 5;
 
-                            var valor = $("#ddlEstado").val();
-                            if (valor == 1000) { valor = ""; BuscaEnTabla('tab_gvConsDenuncias', "", 14); }
-                            BuscaEnTabla('tab_gvConsDenuncias', valor, 13);
+                        //    var valor = $("#ddlEstado").val();
+                        //    if (valor == 1000) { valor = ""; BuscaEnTabla('tab_gvConsDenuncias', "", 14); }
+                        //    BuscaEnTabla('tab_gvConsDenuncias', valor, 13);
 
-                            _lTipoFiltro = 0;
+                        //    _lTipoFiltro = 0;
 
-                        });
+                        //});
 
                         $("#ddlDvEstado").change(function () {
                             if ($("#ddlDvEstado").val() == 28) {
@@ -465,6 +465,30 @@ function cargaCatalogoEstadoFiltro()
 
                     //$(".my-select").chosen();
                     $("#ddlEstado").chosen();
+
+                    $("#ddlEstado").change(function () {
+                        if ($("#ddlEstado").val() == 28) {
+
+                            _oAJAX = null;
+                            cargaCatalogoSubestadoFilt();
+
+                        }
+                        else {
+                            $("#MainContent_ddlSubEstado").empty();
+                            $("#MainContent_ddlSubEstado").append($("<option     />").val(1000).text("-- Seleccione --"));
+                            $("#MainContent_ddlSubEstado").prop('selectedIndex', 0);
+                            $("#MainContent_ddlSubEstado").prop('disabled', true);
+
+                        }
+                        _lTipoFiltro = 5;
+
+                        var valor = $("#ddlEstado").val();
+                        if (valor == 1000) { valor = ""; BuscaEnTabla('tab_gvConsDenuncias', "", 14); }
+                        BuscaEnTabla('tab_gvConsDenuncias', valor, 13);
+
+                        _lTipoFiltro = 0;
+
+                    });
                     
 
                 }
@@ -732,7 +756,7 @@ function CambiarEstado(_sFolio, _lLlaveDenuncia) {
                 id: 'jq_btn_adjuntar_nvo',
                 click: function () {
                     ValidarCamposCambioEstado(_lLlaveDenuncia);
-                    $(this).dialog("close");
+                    
                     
                 },
 
@@ -790,6 +814,7 @@ function OpCambiarEstatus(_lLlaveDenuncia) {
 
                 if (String(data.d).indexOf("Error") == -1) {
 
+                    $("#MainContent_dvCambioEstado").dialog("close");
                     MensajeOk("Estatus actualizado correctamente");
                     limpiarfiltros();
                     reseteoFiltros();
@@ -897,10 +922,17 @@ function EnvioCorreo(_sFolio,  _lLlaveDenuncia) {
 
 function EnviarCorreoDen(_sFolio) {
 
+
+    var _sContent = tinymce.activeEditor.getContent();
+
+    _sContent = _sContent.replace(/'/g,"#");
+
+        
+
     _oData = "{ _psFolio:'" + _sFolio + "'" +
              ", _psPara: '" + $("#MainContent_txtPara").val() + "'" +
              ", _psCCO: '" + $("#MainContent_txtCCO").val() + "'" +
-             ", _psMensaje: '" + tinymce.activeEditor.getContent() + "'" +
+              ", _psMensaje: '" + _sContent + "'" +
              "}";
 
 
@@ -921,6 +953,8 @@ function EnviarCorreoDen(_sFolio) {
                 if (String(data.d).indexOf("Error") == -1) {
 
                     MensajeOk("Correo enviado correctamente");
+                    $("#MainContent_dvEnvioCorreo").dialog("close");
+                    limpiarfiltrosCorreo();
                 }
 
                 else {
@@ -967,6 +1001,14 @@ function reseteoFiltros() {
     BuscaEnTabla('tab_gvConsDenuncias', "", 12);
     BuscaEnTabla('tab_gvConsDenuncias', "", 13);
     BuscaEnTabla('tab_gvConsDenuncias', "", 14);
+
+}
+
+function limpiarfiltrosCorreo() {
+
+    $("#MainContent_txtPara").val("");
+    $("#MainContent_txtCCO").val("");
+    tinymce.activeEditor.setContent('');
 
 }
 
@@ -1107,12 +1149,12 @@ function RegOficioProc(_lLlaveDenuncia) {
 
             .fail(function (jqXHR, textStatus, errorThrown) {
 
-                MensajeError("Error al traer los datos [AJAX_enviarCorreo]");
+                MensajeError("Error al traer los datos [AJAX_regOficioProcedencia]");
             });
 
     }
     catch (err) {
-        alert("[EnviarCorreoDen] \n" + err.message);
+        alert("[RegOficioProc] \n" + err.message);
 
     }
 
@@ -1130,5 +1172,145 @@ function limpiaFileUploadOfic() {
     
 
     _bLimpiaDatos = false;
+
+}
+
+function VerDocumento(_lLlaveDocumento, _lLlaveTipoDoc) {
+
+    $("#MainContent_HDLlaveDocumento").val(_lLlaveDocumento);
+    $("#MainContent_HDLlaveTipoDocumento").val(_lLlaveTipoDoc);
+    
+
+    __doPostBack('btnVerDocumento', 'CLICK');
+}
+
+function VerDocsDenuncia(_lLlaveDenuncia) {
+
+    _oData = "{ _plLlaveDenuncia:" + _lLlaveDenuncia +"}";
+
+
+    try {
+
+
+        _oAJAX = $.ajax({
+            type: "POST",
+            url: "Seguimiento_Denuncia.aspx/AJAX_traeDocumentosDenuncia",
+            data: _oData,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json"
+
+        }).done(function (data, textStatus, jqXHR) {
+
+            if (String(data.d).indexOf("Error") == -1) {
+
+                $("#MainContent_dvListaDocDenuncias").empty();
+
+                var _bFilaAlterna = true;
+                var _sHTML = "";
+
+                var _sStyloHead = 'style=\"font-size:11px; vertical-align: middle; text-align:center;"';
+                var _sStyloBody = 'style=\"vertical-align: middle;text-align:';
+
+                _sHTML = "<table  class=\"display\" cellspacing=\"0\" rules=\"cols\" border=\"1\" id=\"t_tabDocumentosDenuncia\" style=\"border-width: 1px; border-style: solid; border-collapse: collapse;\">";
+                _sHTML += "<thead>";
+                _sHTML += "<tr  class= \"thHead\" >" +
+
+
+                    "<th scope=\"col\"" + _sStyloHead + ">Num. Reg</th>" +
+                    "<th scope=\"col\"" + _sStyloHead + ">Documento</th>" +
+                    "<th scope=\"col\"" + _sStyloHead + ">Fecha Actualización</th>" +
+                    "<th scope=\"col\"" + _sStyloHead + ">Consultar</th>";
+
+
+
+                _sHTML += " </tr>";
+                _sHTML += " </thead>";
+                _sHTML += " <tbody>";
+
+                for (_iCont = 0; _iCont <= data.d.length - 1; _iCont++)
+                {
+
+                    if (_bFilaAlterna) {
+
+                        _sHTML += "<tr class=\"ItemStyleClass\">";
+                        _bFilaAlterna = false;
+                    }
+                    else {
+                         _sHTML += "<tr class=\"AlternatingItemStyleClass\" >";
+                        _bFilaAlterna = true;
+                    }
+
+                    _sHTML += "<td " + _sStyloBody + "center\" ><label style=\"width:40px; height:20px;\">" + data.d[_iCont]._lRowNum + "</label></td>";
+                    _sHTML += "<td " + _sStyloBody + "center\" ><label style=\"width:110px; height:20px;\">" + data.d[_iCont]._sNombreDocumento + "</label></td>";
+                    _sHTML += "<td " + _sStyloBody + "center\"><label style=\"width:80px; height:20px\">" + data.d[_iCont]._sFechaUltAc + "</label></td>";
+                    _sHTML += "<td " + _sStyloBody + "center\"><label style=\"width:80px; height:20px\">" + data.d[_iCont]._sVerDocumento + "</label></td>";
+
+                }
+
+                _sHTML += "</tbody>";
+                _sHTML += "</table>";
+
+                $("#MainContent_dvListaDocDenuncias").append(_sHTML);
+
+                visualizarDocsDenuncia();
+
+            }
+
+            else {
+
+                MensajeError("Hubo un error al traer los datos.");
+            }
+        })
+
+            .fail(function (jqXHR, textStatus, errorThrown) {
+
+                MensajeError("Error al traer los datos [AJAX_traeDocumentosDenuncia]");
+            });
+
+    }
+    catch (err) {
+        alert("[VerDocsDenuncia] \n" + err.message);
+
+    }
+
+}
+
+
+function visualizarDocsDenuncia() {
+
+    $("#MainContent_dvSeccListaDocDenuncias").dialog({
+        open: function () { $(".ui-dialog-titlebar-close").hide(); },
+        modal: true,
+        show: {
+            effect: 'fade',
+            duration: 700
+        },
+        width: 400,
+        height: 250,
+        //modal: true,
+        //dialogClass: "no-close",
+        //autoOpen:false,
+
+        close: function () {
+
+        },
+
+        buttons: {
+
+            "1": {
+                id: 'jq_btn_cancela',
+                click: function () {
+                    $(this).dialog("close");
+                },
+
+                class: "modal_dialog_icons",
+                style: "background-image: url('../../Imagenes/cancelar.png')",
+                title: "Cerrar"
+            },
+
+        }
+
+
+    });
 
 }

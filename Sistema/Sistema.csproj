@@ -127,6 +127,17 @@
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
+    <Content Include="DS_Reportes\dsRepSeguimDen.xsc">
+      <DependentUpon>dsRepSeguimDen.xsd</DependentUpon>
+    </Content>
+    <None Include="DS_Reportes\dsRepSeguimDen.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>dsRepSeguimDen.Designer.cs</LastGenOutput>
+    </None>
+    <Content Include="DS_Reportes\dsRepSeguimDen.xss">
+      <DependentUpon>dsRepSeguimDen.xsd</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="JS\bootstrap.min.js" />
     <Content Include="JS\JSSeguimDenuncia.js" />
@@ -192,6 +203,11 @@
     </Compile>
     <Compile Include="Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="DS_Reportes\dsRepSeguimDen.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dsRepSeguimDen.xsd</DependentUpon>
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -264,6 +280,9 @@
       <Project>{f33c3984-adc6-4dd8-9682-eda730e61a63}</Project>
       <Name>Negocio</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Reportes\rSeguimientoDen.rdlc" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
