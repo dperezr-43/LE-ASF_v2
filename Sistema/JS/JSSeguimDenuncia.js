@@ -1314,3 +1314,9 @@ function visualizarDocsDenuncia() {
     });
 
 }
+
+function ImprimirRepDenuncia( _lLlaveDenuncia) {
+
+    window.open('ReporteSeguimDenuncia.aspx?Llave_Denuncia=' + _lLlaveDenuncia, 'Reporte', 'height=600,width=800,resizable=1,scrollbars=1');
+
+}

@@ -26,7 +26,7 @@ namespace Sistema.DS_Reportes {
         
         private dtInfoDenunciaDataTable tabledtInfoDenuncia;
         
-        private sp_TraeInfoDenunciaDataTable tablesp_TraeInfoDenuncia;
+        private sp_TraeInfoDenunciaTabDataTable tablesp_TraeInfoDenunciaTab;
         
         private global::System.Data.SchemaSerializationMode _schemaSerializationMode = global::System.Data.SchemaSerializationMode.IncludeSchema;
         
@@ -59,8 +59,8 @@ namespace Sistema.DS_Reportes {
                 if ((ds.Tables["dtInfoDenuncia"] != null)) {
                     base.Tables.Add(new dtInfoDenunciaDataTable(ds.Tables["dtInfoDenuncia"]));
                 }
-                if ((ds.Tables["sp_TraeInfoDenuncia"] != null)) {
-                    base.Tables.Add(new sp_TraeInfoDenunciaDataTable(ds.Tables["sp_TraeInfoDenuncia"]));
+                if ((ds.Tables["sp_TraeInfoDenunciaTab"] != null)) {
+                    base.Tables.Add(new sp_TraeInfoDenunciaTabDataTable(ds.Tables["sp_TraeInfoDenunciaTab"]));
                 }
                 this.DataSetName = ds.DataSetName;
                 this.Prefix = ds.Prefix;
@@ -94,9 +94,9 @@ namespace Sistema.DS_Reportes {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
         [global::System.ComponentModel.Browsable(false)]
         [global::System.ComponentModel.DesignerSerializationVisibility(global::System.ComponentModel.DesignerSerializationVisibility.Content)]
-        public sp_TraeInfoDenunciaDataTable sp_TraeInfoDenuncia {
+        public sp_TraeInfoDenunciaTabDataTable sp_TraeInfoDenunciaTab {
             get {
-                return this.tablesp_TraeInfoDenuncia;
+                return this.tablesp_TraeInfoDenunciaTab;
             }
         }
         
@@ -170,8 +170,8 @@ namespace Sistema.DS_Reportes {
                 if ((ds.Tables["dtInfoDenuncia"] != null)) {
                     base.Tables.Add(new dtInfoDenunciaDataTable(ds.Tables["dtInfoDenuncia"]));
                 }
-                if ((ds.Tables["sp_TraeInfoDenuncia"] != null)) {
-                    base.Tables.Add(new sp_TraeInfoDenunciaDataTable(ds.Tables["sp_TraeInfoDenuncia"]));
+                if ((ds.Tables["sp_TraeInfoDenunciaTab"] != null)) {
+                    base.Tables.Add(new sp_TraeInfoDenunciaTabDataTable(ds.Tables["sp_TraeInfoDenunciaTab"]));
                 }
                 this.DataSetName = ds.DataSetName;
                 this.Prefix = ds.Prefix;
@@ -212,10 +212,10 @@ namespace Sistema.DS_Reportes {
                     this.tabledtInfoDenuncia.InitVars();
                 }
             }
-            this.tablesp_TraeInfoDenuncia = ((sp_TraeInfoDenunciaDataTable)(base.Tables["sp_TraeInfoDenuncia"]));
+            this.tablesp_TraeInfoDenunciaTab = ((sp_TraeInfoDenunciaTabDataTable)(base.Tables["sp_TraeInfoDenunciaTab"]));
             if ((initTable == true)) {
-                if ((this.tablesp_TraeInfoDenuncia != null)) {
-                    this.tablesp_TraeInfoDenuncia.InitVars();
+                if ((this.tablesp_TraeInfoDenunciaTab != null)) {
+                    this.tablesp_TraeInfoDenunciaTab.InitVars();
                 }
             }
         }
@@ -230,8 +230,8 @@ namespace Sistema.DS_Reportes {
             this.SchemaSerializationMode = global::System.Data.SchemaSerializationMode.IncludeSchema;
             this.tabledtInfoDenuncia = new dtInfoDenunciaDataTable();
             base.Tables.Add(this.tabledtInfoDenuncia);
-            this.tablesp_TraeInfoDenuncia = new sp_TraeInfoDenunciaDataTable();
-            base.Tables.Add(this.tablesp_TraeInfoDenuncia);
+            this.tablesp_TraeInfoDenunciaTab = new sp_TraeInfoDenunciaTabDataTable();
+            base.Tables.Add(this.tablesp_TraeInfoDenunciaTab);
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -242,7 +242,7 @@ namespace Sistema.DS_Reportes {
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-        private bool ShouldSerializesp_TraeInfoDenuncia() {
+        private bool ShouldSerializesp_TraeInfoDenunciaTab() {
             return false;
         }
         
@@ -305,7 +305,7 @@ namespace Sistema.DS_Reportes {
         public delegate void dtInfoDenunciaRowChangeEventHandler(object sender, dtInfoDenunciaRowChangeEvent e);
         
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-        public delegate void sp_TraeInfoDenunciaRowChangeEventHandler(object sender, sp_TraeInfoDenunciaRowChangeEvent e);
+        public delegate void sp_TraeInfoDenunciaTabRowChangeEventHandler(object sender, sp_TraeInfoDenunciaTabRowChangeEvent e);
         
         /// <summary>
         ///Represents the strongly named DataTable class.
@@ -318,8 +318,6 @@ namespace Sistema.DS_Reportes {
             
             private global::System.Data.DataColumn columnfolio;
             
-            private global::System.Data.DataColumn columnfecha_envio_denuncia;
-            
             private global::System.Data.DataColumn columntipo_denuncia;
             
             private global::System.Data.DataColumn columnfecha_denuncia;
@@ -327,6 +325,8 @@ namespace Sistema.DS_Reportes {
             private global::System.Data.DataColumn columnusr_act_estado;
             
             private global::System.Data.DataColumn columnEMAIL_DENUNCIANTE;
+            
+            private global::System.Data.DataColumn columnfecha_envio_denuncia;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
@@ -379,14 +379,6 @@ namespace Sistema.DS_Reportes {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public global::System.Data.DataColumn fecha_envio_denunciaColumn {
-                get {
-                    return this.columnfecha_envio_denuncia;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public global::System.Data.DataColumn tipo_denunciaColumn {
                 get {
                     return this.columntipo_denuncia;
@@ -414,6 +406,14 @@ namespace Sistema.DS_Reportes {
             public global::System.Data.DataColumn EMAIL_DENUNCIANTEColumn {
                 get {
                     return this.columnEMAIL_DENUNCIANTE;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn fecha_envio_denunciaColumn {
+                get {
+                    return this.columnfecha_envio_denuncia;
                 }
             }
             
@@ -454,16 +454,16 @@ namespace Sistema.DS_Reportes {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public dtInfoDenunciaRow AdddtInfoDenunciaRow(string folio, System.DateTime fecha_envio_denuncia, string tipo_denuncia, System.DateTime fecha_denuncia, string usr_act_estado, string EMAIL_DENUNCIANTE) {
+            public dtInfoDenunciaRow AdddtInfoDenunciaRow(string folio, string tipo_denuncia, System.DateTime fecha_denuncia, string usr_act_estado, string EMAIL_DENUNCIANTE, string fecha_envio_denuncia) {
                 dtInfoDenunciaRow rowdtInfoDenunciaRow = ((dtInfoDenunciaRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         null,
                         folio,
-                        fecha_envio_denuncia,
                         tipo_denuncia,
                         fecha_denuncia,
                         usr_act_estado,
-                        EMAIL_DENUNCIANTE};
+                        EMAIL_DENUNCIANTE,
+                        fecha_envio_denuncia};
                 rowdtInfoDenunciaRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowdtInfoDenunciaRow);
                 return rowdtInfoDenunciaRow;
@@ -488,11 +488,11 @@ namespace Sistema.DS_Reportes {
             internal void InitVars() {
                 this.columnllave_denuncia = base.Columns["llave_denuncia"];
                 this.columnfolio = base.Columns["folio"];
-                this.columnfecha_envio_denuncia = base.Columns["fecha_envio_denuncia"];
                 this.columntipo_denuncia = base.Columns["tipo_denuncia"];
                 this.columnfecha_denuncia = base.Columns["fecha_denuncia"];
                 this.columnusr_act_estado = base.Columns["usr_act_estado"];
                 this.columnEMAIL_DENUNCIANTE = base.Columns["EMAIL_DENUNCIANTE"];
+                this.columnfecha_envio_denuncia = base.Columns["fecha_envio_denuncia"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -502,8 +502,6 @@ namespace Sistema.DS_Reportes {
                 base.Columns.Add(this.columnllave_denuncia);
                 this.columnfolio = new global::System.Data.DataColumn("folio", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnfolio);
-                this.columnfecha_envio_denuncia = new global::System.Data.DataColumn("fecha_envio_denuncia", typeof(global::System.DateTime), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnfecha_envio_denuncia);
                 this.columntipo_denuncia = new global::System.Data.DataColumn("tipo_denuncia", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columntipo_denuncia);
                 this.columnfecha_denuncia = new global::System.Data.DataColumn("fecha_denuncia", typeof(global::System.DateTime), null, global::System.Data.MappingType.Element);
@@ -512,6 +510,8 @@ namespace Sistema.DS_Reportes {
                 base.Columns.Add(this.columnusr_act_estado);
                 this.columnEMAIL_DENUNCIANTE = new global::System.Data.DataColumn("EMAIL_DENUNCIANTE", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnEMAIL_DENUNCIANTE);
+                this.columnfecha_envio_denuncia = new global::System.Data.DataColumn("fecha_envio_denuncia", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnfecha_envio_denuncia);
                 this.columnllave_denuncia.AutoIncrement = true;
                 this.columnllave_denuncia.AutoIncrementSeed = -1;
                 this.columnllave_denuncia.AutoIncrementStep = -1;
@@ -522,6 +522,8 @@ namespace Sistema.DS_Reportes {
                 this.columntipo_denuncia.MaxLength = 4000;
                 this.columnusr_act_estado.MaxLength = 70;
                 this.columnEMAIL_DENUNCIANTE.MaxLength = 2147483647;
+                this.columnfecha_envio_denuncia.ReadOnly = true;
+                this.columnfecha_envio_denuncia.MaxLength = 15;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -653,7 +655,7 @@ namespace Sistema.DS_Reportes {
         ///</summary>
         [global::System.Serializable()]
         [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
-        public partial class sp_TraeInfoDenunciaDataTable : global::System.Data.TypedTableBase<sp_TraeInfoDenunciaRow> {
+        public partial class sp_TraeInfoDenunciaTabDataTable : global::System.Data.TypedTableBase<sp_TraeInfoDenunciaTabRow> {
             
             private global::System.Data.DataColumn columnorden;
             
@@ -667,8 +669,8 @@ namespace Sistema.DS_Reportes {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public sp_TraeInfoDenunciaDataTable() {
-                this.TableName = "sp_TraeInfoDenuncia";
+            public sp_TraeInfoDenunciaTabDataTable() {
+                this.TableName = "sp_TraeInfoDenunciaTab";
                 this.BeginInit();
                 this.InitClass();
                 this.EndInit();
@@ -676,7 +678,7 @@ namespace Sistema.DS_Reportes {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            internal sp_TraeInfoDenunciaDataTable(global::System.Data.DataTable table) {
+            internal sp_TraeInfoDenunciaTabDataTable(global::System.Data.DataTable table) {
                 this.TableName = table.TableName;
                 if ((table.CaseSensitive != table.DataSet.CaseSensitive)) {
                     this.CaseSensitive = table.CaseSensitive;
@@ -693,7 +695,7 @@ namespace Sistema.DS_Reportes {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            protected sp_TraeInfoDenunciaDataTable(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
+            protected sp_TraeInfoDenunciaTabDataTable(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
                     base(info, context) {
                 this.InitVars();
             }
@@ -749,49 +751,49 @@ namespace Sistema.DS_Reportes {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public sp_TraeInfoDenunciaRow this[int index] {
+            public sp_TraeInfoDenunciaTabRow this[int index] {
                 get {
-                    return ((sp_TraeInfoDenunciaRow)(this.Rows[index]));
+                    return ((sp_TraeInfoDenunciaTabRow)(this.Rows[index]));
                 }
             }
             
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public event sp_TraeInfoDenunciaRowChangeEventHandler sp_TraeInfoDenunciaRowChanging;
+            public event sp_TraeInfoDenunciaTabRowChangeEventHandler sp_TraeInfoDenunciaTabRowChanging;
             
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public event sp_TraeInfoDenunciaRowChangeEventHandler sp_TraeInfoDenunciaRowChanged;
+            public event sp_TraeInfoDenunciaTabRowChangeEventHandler sp_TraeInfoDenunciaTabRowChanged;
             
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public event sp_TraeInfoDenunciaRowChangeEventHandler sp_TraeInfoDenunciaRowDeleting;
+            public event sp_TraeInfoDenunciaTabRowChangeEventHandler sp_TraeInfoDenunciaTabRowDeleting;
             
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public event sp_TraeInfoDenunciaRowChangeEventHandler sp_TraeInfoDenunciaRowDeleted;
+            public event sp_TraeInfoDenunciaTabRowChangeEventHandler sp_TraeInfoDenunciaTabRowDeleted;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public void Addsp_TraeInfoDenunciaRow(sp_TraeInfoDenunciaRow row) {
+            public void Addsp_TraeInfoDenunciaTabRow(sp_TraeInfoDenunciaTabRow row) {
                 this.Rows.Add(row);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public sp_TraeInfoDenunciaRow Addsp_TraeInfoDenunciaRow(int orden, string seccion, long llave_denuncia, long llave, string texto) {
-                sp_TraeInfoDenunciaRow rowsp_TraeInfoDenunciaRow = ((sp_TraeInfoDenunciaRow)(this.NewRow()));
+            public sp_TraeInfoDenunciaTabRow Addsp_TraeInfoDenunciaTabRow(int orden, string seccion, long llave_denuncia, long llave, string texto) {
+                sp_TraeInfoDenunciaTabRow rowsp_TraeInfoDenunciaTabRow = ((sp_TraeInfoDenunciaTabRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         orden,
                         seccion,
                         llave_denuncia,
                         llave,
                         texto};
-                rowsp_TraeInfoDenunciaRow.ItemArray = columnValuesArray;
-                this.Rows.Add(rowsp_TraeInfoDenunciaRow);
-                return rowsp_TraeInfoDenunciaRow;
+                rowsp_TraeInfoDenunciaTabRow.ItemArray = columnValuesArray;
+                this.Rows.Add(rowsp_TraeInfoDenunciaTabRow);
+                return rowsp_TraeInfoDenunciaTabRow;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public override global::System.Data.DataTable Clone() {
-                sp_TraeInfoDenunciaDataTable cln = ((sp_TraeInfoDenunciaDataTable)(base.Clone()));
+                sp_TraeInfoDenunciaTabDataTable cln = ((sp_TraeInfoDenunciaTabDataTable)(base.Clone()));
                 cln.InitVars();
                 return cln;
             }
@@ -799,7 +801,7 @@ namespace Sistema.DS_Reportes {
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             protected override global::System.Data.DataTable CreateInstance() {
-                return new sp_TraeInfoDenunciaDataTable();
+                return new sp_TraeInfoDenunciaTabDataTable();
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -836,28 +838,28 @@ namespace Sistema.DS_Reportes {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public sp_TraeInfoDenunciaRow Newsp_TraeInfoDenunciaRow() {
-                return ((sp_TraeInfoDenunciaRow)(this.NewRow()));
+            public sp_TraeInfoDenunciaTabRow Newsp_TraeInfoDenunciaTabRow() {
+                return ((sp_TraeInfoDenunciaTabRow)(this.NewRow()));
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             protected override global::System.Data.DataRow NewRowFromBuilder(global::System.Data.DataRowBuilder builder) {
-                return new sp_TraeInfoDenunciaRow(builder);
+                return new sp_TraeInfoDenunciaTabRow(builder);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             protected override global::System.Type GetRowType() {
-                return typeof(sp_TraeInfoDenunciaRow);
+                return typeof(sp_TraeInfoDenunciaTabRow);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             protected override void OnRowChanged(global::System.Data.DataRowChangeEventArgs e) {
                 base.OnRowChanged(e);
-                if ((this.sp_TraeInfoDenunciaRowChanged != null)) {
-                    this.sp_TraeInfoDenunciaRowChanged(this, new sp_TraeInfoDenunciaRowChangeEvent(((sp_TraeInfoDenunciaRow)(e.Row)), e.Action));
+                if ((this.sp_TraeInfoDenunciaTabRowChanged != null)) {
+                    this.sp_TraeInfoDenunciaTabRowChanged(this, new sp_TraeInfoDenunciaTabRowChangeEvent(((sp_TraeInfoDenunciaTabRow)(e.Row)), e.Action));
                 }
             }
             
@@ -865,8 +867,8 @@ namespace Sistema.DS_Reportes {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             protected override void OnRowChanging(global::System.Data.DataRowChangeEventArgs e) {
                 base.OnRowChanging(e);
-                if ((this.sp_TraeInfoDenunciaRowChanging != null)) {
-                    this.sp_TraeInfoDenunciaRowChanging(this, new sp_TraeInfoDenunciaRowChangeEvent(((sp_TraeInfoDenunciaRow)(e.Row)), e.Action));
+                if ((this.sp_TraeInfoDenunciaTabRowChanging != null)) {
+                    this.sp_TraeInfoDenunciaTabRowChanging(this, new sp_TraeInfoDenunciaTabRowChangeEvent(((sp_TraeInfoDenunciaTabRow)(e.Row)), e.Action));
                 }
             }
             
@@ -874,8 +876,8 @@ namespace Sistema.DS_Reportes {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             protected override void OnRowDeleted(global::System.Data.DataRowChangeEventArgs e) {
                 base.OnRowDeleted(e);
-                if ((this.sp_TraeInfoDenunciaRowDeleted != null)) {
-                    this.sp_TraeInfoDenunciaRowDeleted(this, new sp_TraeInfoDenunciaRowChangeEvent(((sp_TraeInfoDenunciaRow)(e.Row)), e.Action));
+                if ((this.sp_TraeInfoDenunciaTabRowDeleted != null)) {
+                    this.sp_TraeInfoDenunciaTabRowDeleted(this, new sp_TraeInfoDenunciaTabRowChangeEvent(((sp_TraeInfoDenunciaTabRow)(e.Row)), e.Action));
                 }
             }
             
@@ -883,14 +885,14 @@ namespace Sistema.DS_Reportes {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             protected override void OnRowDeleting(global::System.Data.DataRowChangeEventArgs e) {
                 base.OnRowDeleting(e);
-                if ((this.sp_TraeInfoDenunciaRowDeleting != null)) {
-                    this.sp_TraeInfoDenunciaRowDeleting(this, new sp_TraeInfoDenunciaRowChangeEvent(((sp_TraeInfoDenunciaRow)(e.Row)), e.Action));
+                if ((this.sp_TraeInfoDenunciaTabRowDeleting != null)) {
+                    this.sp_TraeInfoDenunciaTabRowDeleting(this, new sp_TraeInfoDenunciaTabRowChangeEvent(((sp_TraeInfoDenunciaTabRow)(e.Row)), e.Action));
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public void Removesp_TraeInfoDenunciaRow(sp_TraeInfoDenunciaRow row) {
+            public void Removesp_TraeInfoDenunciaTabRow(sp_TraeInfoDenunciaTabRow row) {
                 this.Rows.Remove(row);
             }
             
@@ -917,7 +919,7 @@ namespace Sistema.DS_Reportes {
                 type.Attributes.Add(attribute1);
                 global::System.Xml.Schema.XmlSchemaAttribute attribute2 = new global::System.Xml.Schema.XmlSchemaAttribute();
                 attribute2.Name = "tableTypeName";
-                attribute2.FixedValue = "sp_TraeInfoDenunciaDataTable";
+                attribute2.FixedValue = "sp_TraeInfoDenunciaTabDataTable";
                 type.Attributes.Add(attribute2);
                 type.Particle = sequence;
                 global::System.Xml.Schema.XmlSchema dsSchema = ds.GetSchemaSerializable();
@@ -996,23 +998,6 @@ namespace Sistema.DS_Reportes {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public System.DateTime fecha_envio_denuncia {
-                get {
-                    try {
-                        return ((global::System.DateTime)(this[this.tabledtInfoDenuncia.fecha_envio_denunciaColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("El valor de la columna \'fecha_envio_denuncia\' de la tabla \'dtInfoDenuncia\' es DBN" +
-                                "ull.", e);
-                    }
-                }
-                set {
-                    this[this.tabledtInfoDenuncia.fecha_envio_denunciaColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public string tipo_denuncia {
                 get {
                     try {
@@ -1078,14 +1063,19 @@ namespace Sistema.DS_Reportes {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public bool Isfecha_envio_denunciaNull() {
-                return this.IsNull(this.tabledtInfoDenuncia.fecha_envio_denunciaColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public void Setfecha_envio_denunciaNull() {
-                this[this.tabledtInfoDenuncia.fecha_envio_denunciaColumn] = global::System.Convert.DBNull;
+            public string fecha_envio_denuncia {
+                get {
+                    try {
+                        return ((string)(this[this.tabledtInfoDenuncia.fecha_envio_denunciaColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("El valor de la columna \'fecha_envio_denuncia\' de la tabla \'dtInfoDenuncia\' es DBN" +
+                                "ull.", e);
+                    }
+                }
+                set {
+                    this[this.tabledtInfoDenuncia.fecha_envio_denunciaColumn] = value;
+                }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1135,20 +1125,32 @@ namespace Sistema.DS_Reportes {
             public void SetEMAIL_DENUNCIANTENull() {
                 this[this.tabledtInfoDenuncia.EMAIL_DENUNCIANTEColumn] = global::System.Convert.DBNull;
             }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public bool Isfecha_envio_denunciaNull() {
+                return this.IsNull(this.tabledtInfoDenuncia.fecha_envio_denunciaColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public void Setfecha_envio_denunciaNull() {
+                this[this.tabledtInfoDenuncia.fecha_envio_denunciaColumn] = global::System.Convert.DBNull;
+            }
         }
         
         /// <summary>
         ///Represents strongly named DataRow class.
         ///</summary>
-        public partial class sp_TraeInfoDenunciaRow : global::System.Data.DataRow {
+        public partial class sp_TraeInfoDenunciaTabRow : global::System.Data.DataRow {
             
-            private sp_TraeInfoDenunciaDataTable tablesp_TraeInfoDenuncia;
+            private sp_TraeInfoDenunciaTabDataTable tablesp_TraeInfoDenunciaTab;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            internal sp_TraeInfoDenunciaRow(global::System.Data.DataRowBuilder rb) : 
+            internal sp_TraeInfoDenunciaTabRow(global::System.Data.DataRowBuilder rb) : 
                     base(rb) {
-                this.tablesp_TraeInfoDenuncia = ((sp_TraeInfoDenunciaDataTable)(this.Table));
+                this.tablesp_TraeInfoDenunciaTab = ((sp_TraeInfoDenunciaTabDataTable)(this.Table));
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1156,14 +1158,14 @@ namespace Sistema.DS_Reportes {
             public int orden {
                 get {
                     try {
-                        return ((int)(this[this.tablesp_TraeInfoDenuncia.ordenColumn]));
+                        return ((int)(this[this.tablesp_TraeInfoDenunciaTab.ordenColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("El valor de la columna \'orden\' de la tabla \'sp_TraeInfoDenuncia\' es DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("El valor de la columna \'orden\' de la tabla \'sp_TraeInfoDenunciaTab\' es DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tablesp_TraeInfoDenuncia.ordenColumn] = value;
+                    this[this.tablesp_TraeInfoDenunciaTab.ordenColumn] = value;
                 }
             }
             
@@ -1172,14 +1174,14 @@ namespace Sistema.DS_Reportes {
             public string seccion {
                 get {
                     try {
-                        return ((string)(this[this.tablesp_TraeInfoDenuncia.seccionColumn]));
+                        return ((string)(this[this.tablesp_TraeInfoDenunciaTab.seccionColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("El valor de la columna \'seccion\' de la tabla \'sp_TraeInfoDenuncia\' es DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("El valor de la columna \'seccion\' de la tabla \'sp_TraeInfoDenunciaTab\' es DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tablesp_TraeInfoDenuncia.seccionColumn] = value;
+                    this[this.tablesp_TraeInfoDenunciaTab.seccionColumn] = value;
                 }
             }
             
@@ -1188,15 +1190,15 @@ namespace Sistema.DS_Reportes {
             public long llave_denuncia {
                 get {
                     try {
-                        return ((long)(this[this.tablesp_TraeInfoDenuncia.llave_denunciaColumn]));
+                        return ((long)(this[this.tablesp_TraeInfoDenunciaTab.llave_denunciaColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("El valor de la columna \'llave_denuncia\' de la tabla \'sp_TraeInfoDenuncia\' es DBNu" +
-                                "ll.", e);
+                        throw new global::System.Data.StrongTypingException("El valor de la columna \'llave_denuncia\' de la tabla \'sp_TraeInfoDenunciaTab\' es D" +
+                                "BNull.", e);
                     }
                 }
                 set {
-                    this[this.tablesp_TraeInfoDenuncia.llave_denunciaColumn] = value;
+                    this[this.tablesp_TraeInfoDenunciaTab.llave_denunciaColumn] = value;
                 }
             }
             
@@ -1205,14 +1207,14 @@ namespace Sistema.DS_Reportes {
             public long llave {
                 get {
                     try {
-                        return ((long)(this[this.tablesp_TraeInfoDenuncia.llaveColumn]));
+                        return ((long)(this[this.tablesp_TraeInfoDenunciaTab.llaveColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("El valor de la columna \'llave\' de la tabla \'sp_TraeInfoDenuncia\' es DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("El valor de la columna \'llave\' de la tabla \'sp_TraeInfoDenunciaTab\' es DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tablesp_TraeInfoDenuncia.llaveColumn] = value;
+                    this[this.tablesp_TraeInfoDenunciaTab.llaveColumn] = value;
                 }
             }
             
@@ -1221,75 +1223,75 @@ namespace Sistema.DS_Reportes {
             public string texto {
                 get {
                     try {
-                        return ((string)(this[this.tablesp_TraeInfoDenuncia.textoColumn]));
+                        return ((string)(this[this.tablesp_TraeInfoDenunciaTab.textoColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("El valor de la columna \'texto\' de la tabla \'sp_TraeInfoDenuncia\' es DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("El valor de la columna \'texto\' de la tabla \'sp_TraeInfoDenunciaTab\' es DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tablesp_TraeInfoDenuncia.textoColumn] = value;
+                    this[this.tablesp_TraeInfoDenunciaTab.textoColumn] = value;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public bool IsordenNull() {
-                return this.IsNull(this.tablesp_TraeInfoDenuncia.ordenColumn);
+                return this.IsNull(this.tablesp_TraeInfoDenunciaTab.ordenColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public void SetordenNull() {
-                this[this.tablesp_TraeInfoDenuncia.ordenColumn] = global::System.Convert.DBNull;
+                this[this.tablesp_TraeInfoDenunciaTab.ordenColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public bool IsseccionNull() {
-                return this.IsNull(this.tablesp_TraeInfoDenuncia.seccionColumn);
+                return this.IsNull(this.tablesp_TraeInfoDenunciaTab.seccionColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public void SetseccionNull() {
-                this[this.tablesp_TraeInfoDenuncia.seccionColumn] = global::System.Convert.DBNull;
+                this[this.tablesp_TraeInfoDenunciaTab.seccionColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public bool Isllave_denunciaNull() {
-                return this.IsNull(this.tablesp_TraeInfoDenuncia.llave_denunciaColumn);
+                return this.IsNull(this.tablesp_TraeInfoDenunciaTab.llave_denunciaColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public void Setllave_denunciaNull() {
-                this[this.tablesp_TraeInfoDenuncia.llave_denunciaColumn] = global::System.Convert.DBNull;
+                this[this.tablesp_TraeInfoDenunciaTab.llave_denunciaColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public bool IsllaveNull() {
-                return this.IsNull(this.tablesp_TraeInfoDenuncia.llaveColumn);
+                return this.IsNull(this.tablesp_TraeInfoDenunciaTab.llaveColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public void SetllaveNull() {
-                this[this.tablesp_TraeInfoDenuncia.llaveColumn] = global::System.Convert.DBNull;
+                this[this.tablesp_TraeInfoDenunciaTab.llaveColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public bool IstextoNull() {
-                return this.IsNull(this.tablesp_TraeInfoDenuncia.textoColumn);
+                return this.IsNull(this.tablesp_TraeInfoDenunciaTab.textoColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public void SettextoNull() {
-                this[this.tablesp_TraeInfoDenuncia.textoColumn] = global::System.Convert.DBNull;
+                this[this.tablesp_TraeInfoDenunciaTab.textoColumn] = global::System.Convert.DBNull;
             }
         }
         
@@ -1331,22 +1333,22 @@ namespace Sistema.DS_Reportes {
         ///Row event argument class
         ///</summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-        public class sp_TraeInfoDenunciaRowChangeEvent : global::System.EventArgs {
+        public class sp_TraeInfoDenunciaTabRowChangeEvent : global::System.EventArgs {
             
-            private sp_TraeInfoDenunciaRow eventRow;
+            private sp_TraeInfoDenunciaTabRow eventRow;
             
             private global::System.Data.DataRowAction eventAction;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public sp_TraeInfoDenunciaRowChangeEvent(sp_TraeInfoDenunciaRow row, global::System.Data.DataRowAction action) {
+            public sp_TraeInfoDenunciaTabRowChangeEvent(sp_TraeInfoDenunciaTabRow row, global::System.Data.DataRowAction action) {
                 this.eventRow = row;
                 this.eventAction = action;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public sp_TraeInfoDenunciaRow Row {
+            public sp_TraeInfoDenunciaTabRow Row {
                 get {
                     return this.eventRow;
                 }
@@ -1488,11 +1490,11 @@ namespace Sistema.DS_Reportes.dsRepSeguimDenTableAdapters {
             tableMapping.DataSetTable = "dtInfoDenuncia";
             tableMapping.ColumnMappings.Add("llave_denuncia", "llave_denuncia");
             tableMapping.ColumnMappings.Add("folio", "folio");
-            tableMapping.ColumnMappings.Add("fecha_envio_denuncia", "fecha_envio_denuncia");
             tableMapping.ColumnMappings.Add("tipo_denuncia", "tipo_denuncia");
             tableMapping.ColumnMappings.Add("fecha_denuncia", "fecha_denuncia");
             tableMapping.ColumnMappings.Add("usr_act_estado", "usr_act_estado");
             tableMapping.ColumnMappings.Add("EMAIL_DENUNCIANTE", "EMAIL_DENUNCIANTE");
+            tableMapping.ColumnMappings.Add("fecha_envio_denuncia", "fecha_envio_denuncia");
             this._adapter.TableMappings.Add(tableMapping);
         }
         
@@ -1512,28 +1514,32 @@ namespace Sistema.DS_Reportes.dsRepSeguimDenTableAdapters {
             this._commandCollection[0].CommandText = @"select 	  
 	  d.llave_denuncia
 	, d.folio
-	, d.FECHA_ENVIO fecha_envio_denuncia
+	, ISNULL(convert(NVARCHAR(15), d.FECHA_ENVIO, 103),'00/00/0000') fecha_envio_denuncia
 	, td.NOMBRE_INSTANCIA tipo_denuncia
 	, d.FECHA_ALTA fecha_denuncia
 	, d.usr_act_estado
-	, d.EMAIL_DENUNCIANTE
+	, ISNULL(d.EMAIL_DENUNCIANTE,'NO CORREO') EMAIL_DENUNCIANTE
+
 from DENUNCIAS_IV d
 
+
 left outer join CATALOGOS td
+
 on d.LLAVE_CAT_TIPO_DENUNCIA =  td.LLAVE_CAT
 
-WHERE d.llave_denuncia = @llave_denuncia";
+
+WHERE d.llave_denuncia =  @llaveDen_param";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
-            this._commandCollection[0].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@llave_denuncia", global::System.Data.SqlDbType.BigInt, 8, global::System.Data.ParameterDirection.Input, 0, 0, "LLAVE_DENUNCIA", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[0].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@llaveDen_param", global::System.Data.SqlDbType.BigInt, 8, global::System.Data.ParameterDirection.Input, 0, 0, "LLAVE_DENUNCIA", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, true)]
-        public virtual int Fill(dsRepSeguimDen.dtInfoDenunciaDataTable dataTable, long llave_denuncia) {
+        public virtual int Fill(dsRepSeguimDen.dtInfoDenunciaDataTable dataTable, long llaveDen_param) {
             this.Adapter.SelectCommand = this.CommandCollection[0];
-            this.Adapter.SelectCommand.Parameters[0].Value = ((long)(llave_denuncia));
+            this.Adapter.SelectCommand.Parameters[0].Value = ((long)(llaveDen_param));
             if ((this.ClearBeforeFill == true)) {
                 dataTable.Clear();
             }
@@ -1545,9 +1551,9 @@ WHERE d.llave_denuncia = @llave_denuncia";
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, true)]
-        public virtual dsRepSeguimDen.dtInfoDenunciaDataTable GetData(long llave_denuncia) {
+        public virtual dsRepSeguimDen.dtInfoDenunciaDataTable GetData(long llaveDen_param) {
             this.Adapter.SelectCommand = this.CommandCollection[0];
-            this.Adapter.SelectCommand.Parameters[0].Value = ((long)(llave_denuncia));
+            this.Adapter.SelectCommand.Parameters[0].Value = ((long)(llaveDen_param));
             dsRepSeguimDen.dtInfoDenunciaDataTable dataTable = new dsRepSeguimDen.dtInfoDenunciaDataTable();
             this.Adapter.Fill(dataTable);
             return dataTable;
@@ -1563,7 +1569,7 @@ WHERE d.llave_denuncia = @llave_denuncia";
     [global::System.ComponentModel.DesignerAttribute("Microsoft.VSDesigner.DataSource.Design.TableAdapterDesigner, Microsoft.VSDesigner" +
         ", Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
     [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-    public partial class sp_TraeInfoDenunciaTableAdapter : global::System.ComponentModel.Component {
+    public partial class sp_TraeInfoDenunciaTabTableAdapter : global::System.ComponentModel.Component {
         
         private global::System.Data.SqlClient.SqlDataAdapter _adapter;
         
@@ -1577,7 +1583,7 @@ WHERE d.llave_denuncia = @llave_denuncia";
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-        public sp_TraeInfoDenunciaTableAdapter() {
+        public sp_TraeInfoDenunciaTabTableAdapter() {
             this.ClearBeforeFill = true;
         }
         
@@ -1674,7 +1680,7 @@ WHERE d.llave_denuncia = @llave_denuncia";
             this._adapter = new global::System.Data.SqlClient.SqlDataAdapter();
             global::System.Data.Common.DataTableMapping tableMapping = new global::System.Data.Common.DataTableMapping();
             tableMapping.SourceTable = "Table";
-            tableMapping.DataSetTable = "sp_TraeInfoDenuncia";
+            tableMapping.DataSetTable = "sp_TraeInfoDenunciaTab";
             tableMapping.ColumnMappings.Add("orden", "orden");
             tableMapping.ColumnMappings.Add("seccion", "seccion");
             tableMapping.ColumnMappings.Add("llave_denuncia", "llave_denuncia");
@@ -1707,7 +1713,7 @@ WHERE d.llave_denuncia = @llave_denuncia";
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, true)]
-        public virtual int Fill(dsRepSeguimDen.sp_TraeInfoDenunciaDataTable dataTable, global::System.Nullable<long> llave_denuncia, ref string sql_error) {
+        public virtual int Fill(dsRepSeguimDen.sp_TraeInfoDenunciaTabDataTable dataTable, global::System.Nullable<long> llave_denuncia, ref string sql_error) {
             this.Adapter.SelectCommand = this.CommandCollection[0];
             if ((llave_denuncia.HasValue == true)) {
                 this.Adapter.SelectCommand.Parameters[1].Value = ((long)(llave_denuncia.Value));
@@ -1739,7 +1745,7 @@ WHERE d.llave_denuncia = @llave_denuncia";
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, true)]
-        public virtual dsRepSeguimDen.sp_TraeInfoDenunciaDataTable GetData(global::System.Nullable<long> llave_denuncia, ref string sql_error) {
+        public virtual dsRepSeguimDen.sp_TraeInfoDenunciaTabDataTable GetData(global::System.Nullable<long> llave_denuncia, ref string sql_error) {
             this.Adapter.SelectCommand = this.CommandCollection[0];
             if ((llave_denuncia.HasValue == true)) {
                 this.Adapter.SelectCommand.Parameters[1].Value = ((long)(llave_denuncia.Value));
@@ -1753,7 +1759,7 @@ WHERE d.llave_denuncia = @llave_denuncia";
             else {
                 this.Adapter.SelectCommand.Parameters[2].Value = ((string)(sql_error));
             }
-            dsRepSeguimDen.sp_TraeInfoDenunciaDataTable dataTable = new dsRepSeguimDen.sp_TraeInfoDenunciaDataTable();
+            dsRepSeguimDen.sp_TraeInfoDenunciaTabDataTable dataTable = new dsRepSeguimDen.sp_TraeInfoDenunciaTabDataTable();
             this.Adapter.Fill(dataTable);
             if (((this.Adapter.SelectCommand.Parameters[2].Value == null) 
                         || (this.Adapter.SelectCommand.Parameters[2].Value.GetType() == typeof(global::System.DBNull)))) {
