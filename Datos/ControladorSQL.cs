@@ -120,7 +120,7 @@ namespace Datos
             }
             catch (Exception _ex)
             {
-                _Exception = new Exception("Error en TraeQuery -> " + _ex.Message);
+                _Exception = new Exception("Error en Execute -> " + _ex.Message);
                 return null;
             }
             finally
@@ -134,6 +134,51 @@ namespace Datos
             }
 
         }
+
+        public bool ExecutequeryParams(string _sStoreName, List<DataParamSQL> _lParameters)
+        {
+
+            try
+            {
+
+                _cmd.CommandType = CommandType.StoredProcedure;
+                _cmd.CommandText = _sStoreName;
+                _cmd.Parameters.Clear();
+
+                if (_lParameters != null)
+                {
+                    LlenaParametrosIN(_lParameters);
+                }
+
+                LlenaParametrosOUT();
+                _cmd.Connection = _cn;
+                _cmd.CommandTimeout = 0;
+                _da.SelectCommand = _cmd;
+                _cmd.ExecuteNonQuery();
+
+                if (_cmd.Parameters["@sql_error"].Value.ToString().Length > 0)
+                {
+                    _Exception = new Exception(_cmd.Parameters["@sql_error"].Value.ToString());
+                    return false;
+                }
+
+                return true;
+
+            }
+            catch (Exception _ex)
+            {
+                _Exception = new Exception("Error en ExecutequeryParams -> " + _ex.Message);
+                return false;
+            }
+            finally
+            {
+                Dispose();
+               
+            }
+
+        }
+
+        
 
         private void LlenaParametrosIN(List<DataParamSQL> _lParameters)
         {

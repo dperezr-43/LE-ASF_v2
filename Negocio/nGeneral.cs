@@ -88,6 +88,7 @@ namespace General
         private string _Llamado = null;
         protected string _sSubClase = string.Empty;
         protected string _sMetodo = string.Empty;
+        private long _lLlaveTipoCat = 0;
         public long LlaveUsuario { get { return _LlaveUsuario; } set { _LlaveUsuario = value; } }
         public string Pagina { get { return _Pagina; } set { _Pagina = value; } }
         public string Evento { get { return _Evento; } set { _Evento = value; } }
@@ -104,6 +105,7 @@ namespace General
 
 
         public string SClaveCat { get { return _Coord; } set { _Coord = value; } }
+        public long lLlaveTipoCat { get { return _lLlaveTipoCat; } set { _lLlaveTipoCat = value; } }
 
 
         public DataSet dsDatos
@@ -222,25 +224,26 @@ namespace General
 
             try
             {
-                ValidaParams();
-                if (_Exception != null && _sMensajeError != string.Empty)
-                {
-                    Exception = _Exception;
-                    return _ds;
-                }
+                //ValidaParams();
+                //if (_Exception != null && _sMensajeError != string.Empty)
+                //{
+                //    Exception = _Exception;
+                //    return _ds;
+                //}
 
-                //ClearParameters();
-                LLenaParams();
-                if (!_bEjecuta)
-                {
-                    return _ds;
-                }
+                ////ClearParameters();
+                //LLenaParams();
+                //if (!_bEjecuta)
+                //{
+                //    return _ds;
+                //}
 
                 _dDataSQL.ClearParameters();
                 _dDataSQL.AddParameter("@clave_tipo_cat", SClaveCat);
+                _dDataSQL.AddParameter("@llave_tipo_cat", lLlaveTipoCat);
 
 
-                _ds = _dDataSQL.Ejecuta(_sStoreProc);
+                _ds = _dDataSQL.Ejecuta("sp_TraeCatalogo");
                 Exception = _dDataSQL.Exception;
                
                 if (_ds == null || _ds.Tables.Count == 0 || _ds.Tables[0].Rows.Count == 0)

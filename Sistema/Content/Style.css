@@ -122,6 +122,12 @@
     font-size: 11pt !important;
 }
 
+.CtrlFrmBold {
+    font-family: "Calibri", "Candara", "Segoe", "Segoe UI", "Optima", "Arial", "sans-serif";
+    font-size: 11pt !important;
+    font-weight:bold;
+}
+
 
 .txt_ne_normal {
 
@@ -452,6 +458,26 @@ table.dataTable tbody td.tablas_internas {
     border-image: none;
 }
 
+.letraLabel {
+    font-size: 10pt;
+}
+
+.longLabel1 {
+    width: 80px;
+}
+
+.longLabel2 {
+    width: 90px;
+}
+
+.longLabel3 {
+    width: 107px;
+}
+
+.longLabel4 {
+    width: 100px;
+}
+
 /*===========================================================================*/
 /* ESTILO PARA LAS CAJAS DE TEXTO     */
 /*===========================================================================*/
@@ -462,8 +488,88 @@ table.dataTable tbody td.tablas_internas {
     border-radius: 10px 10px;
 }
 
-
-
 .OcultaSeccion {
     visibility: hidden;
+}
+
+/*===========================================================================*/
+/* ESTILO PARA DIALOG     */
+/*===========================================================================*/
+
+.ui-dialog-buttonpane ui-widget-content ui-helper-clearfix
+{
+    height:50px;
+}
+
+.modal_dialog_icons {
+    /*background-image: url(../../Imagenes/Iconos/cancelar.png) !important; */
+    background-repeat: no-repeat;
+    background-size: cover;
+    border: none;
+    height: 33px;
+    width: 33px;
+}
+
+/*===========================================================================*/
+/* ESTILO PARA FECHAS (DATEPICKER)    */
+/*===========================================================================*/
+
+.CtrlCalendarImg {
+    background-image: url('../Imagenes/calendario.png');
+    background-position: left;
+    padding-left: 30px;
+    background-size: 19px;
+    background-repeat: no-repeat;
+    border-radius: 8px;
+    width: 125px;
+}
+
+.ui-datepicker select.ui-datepicker-month, .ui-datepicker select.ui-datepicker-year {
+    color: #8e772d;
+}
+
+/*===========================================================================*/
+/* ESTILO PARA CONTROLES TIPO FILEUPLOAD     */
+/*===========================================================================*/
+
+.ctrFileUpload {
+    /*border-radius: 25px;*/
+    border-radius: 10px 10px 10px 10px;
+    background-color: #ffeeab;
+    color: black;
+    padding: 0.4rem;
+    cursor: pointer;
+    font-size: 11px;
+}
+
+
+/*===========================================================================*/
+/* ESTILO PARA TABLAS (GENÉRICO)    */
+/*===========================================================================*/
+
+table {
+    border-collapse: collapse;
+    border-width: 0;
+    border-color: #999999;
+    font-weight: normal;
+    font-family: Verdana;
+    font-size: 10pt;
+    text-decoration: none;
+    padding: 0;
+    margin-right: 0px;
+    /*   border: 1px solid dimgray;*/
+}
+
+
+.thHead {
+    color: DarkSlateGray;
+    background-color: #D3CFC1;
+    border: solid 1px dimgray;
+    font-family: "Calibri", "Arial";
+    font-size: 10pt !important;
+}
+
+
+.thHead th {
+    padding: 5px 5px 5px 5px;
 }

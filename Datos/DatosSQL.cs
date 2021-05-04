@@ -16,6 +16,7 @@ namespace Datos
         private object _oParam;
         private string _sConexion;
         private DataSet _ds;
+        private bool _bResp;
 
         public object Param
         {
@@ -75,6 +76,36 @@ namespace Datos
             return _ds;
 
         }
+
+        public bool EjecutaDML(string _sStore)
+        {
+            _bResp = false;
+
+            try
+            {
+
+                _cBD = new ControladorSQL(_sConexion);
+                if (_cBD.Exception == null)
+                {
+                    _bResp = _cBD.ExecutequeryParams(_sStore, _lParameters);
+                }
+                _Exception = _cBD.Exception;
+
+            }
+            catch (Exception _ex)
+            {
+                _Exception = _ex;
+            }
+            finally
+            {
+                _cBD = null;
+            }
+            return _bResp;
+
+        }
+
+
+        
 
         public void AddParameter(string _sNombre, object _oValor)
         {

@@ -10,20 +10,70 @@
     }
 
     $( "#dPolitica" ).hide();
-} );
+});
+
+function BuscaEnTabla(_sTabla, _sBuscar, _iColumna) {
+
+    var table = $("#" + _sTabla).DataTable();
+
+    if (_iColumna == 0) {
+
+        table.search('' + _sBuscar + '').draw();
+    }
+    else {
+        table.columns(_iColumna).search('' + _sBuscar + '').draw();
+    }
+
+
+}
+
+
+//Función para realizar busqueda exacta en DataTable 
+//_sTabla: Nombre de la tabla donde se realizará la busqueda
+//_sBuscar: Nombre del datos a buscar
+//_iColumna: numero de columna donde se realizará la busqueda
+
+function BuscaEnTablaExacta(_sTabla, _sBuscar, _iColumna) {
+
+    var table = $("#" + _sTabla).DataTable();
+
+    if (_iColumna == 0) {
+
+        table.search('' + _sBuscar + '').draw();
+    }
+    else {
+
+        /*
+            table.column(_iColumna).search("^" + _sBuscar + "$", true, false, true).draw();
+
+            Definición de los valores pasados en la función ".search"
+
+            1.- Tratar como una expresión regular
+            2.- Búsqueda inteligente
+            3.- Hacer coincidencias entre mayúsculas y minúsculas
+        */
+        _sBuscar == '' ? BuscaEnTabla(_sTabla, _sBuscar, _iColumna) : table.column(_iColumna).search("^" + _sBuscar + "$", true, false, true).draw();
+
+
+    }
+
+
+}
+
 function MensajeOk( _psMensaje, _psTitle )
 {
     try
     {
-        $( "#divControlPopupFondo" ).height( $( document ).height() );
-        $( "#divControlPopupFondo" ).show();
+        //$( "#divControlPopupFondo" ).height( $( document ).height() );
+        //$( "#divControlPopupFondo" ).show();
 
         //$( "#lblMsjeOk" ).text( _psMensaje );
 
         $( "#diag-ok" ).attr( "title", _psTitle );
         $( "#lblMsjOk" ).text( _psMensaje );
 
-        $( "#diag-ok" ).dialog( {
+        $("#diag-ok").dialog({
+            open: function () { $(".ui-dialog-titlebar-close").hide(); },
             resizable: false,
             height: "auto",
             modal: true,
@@ -52,12 +102,13 @@ function MensajeError( _psMensaje )
 {
     try
     {
-        $( "#divControlPopupFondo" ).height( $( document ).height() );
-        $( "#divControlPopupFondo" ).show();
+        //$( "#divControlPopupFondo" ).height( $( document ).height() );
+        //$( "#divControlPopupFondo" ).show();
 
         $( "#lblMsjeError" ).text( _psMensaje );
 
         $( "#diag-error" ).dialog( {
+            open: function () { $(".ui-dialog-titlebar-close").hide(); },
             resizable: false,
             height: "auto",
             modal: true,
