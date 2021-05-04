@@ -384,15 +384,12 @@
                                                 <br />
                                             </td>
                                         </tr>
+
+                                        <!-- JLRT--: se enlazan de manera dinamica mediante ajax la lista de hechos desde tabla catalogos, se eliminan los textos en codigo duro -->
                                         <tr>
                                             <td class="txt_az_normal left_txt" style="font-size:10pt;">
-                                                <asp:CheckBoxList ID="chbHechos" runat="server" CssClass="txt_az_normal ">
-                                                    <asp:ListItem Text="&nbsp; Desvío de recursos hacia fines distintos a los autorizados." Value="1"></asp:ListItem>
-                                                    <asp:ListItem Text="&nbsp; Irregularidades en la captación o en el manejo y utilización de los recursos públicos." Value="2"></asp:ListItem>
-                                                    <asp:ListItem Text="&nbsp; Actos presuntamente irregulares en la contratación y ejecución de obras, contratación y prestación de servicios públicos, adquisición de bienes, y otorgamiento de permisos, <br /> &nbsp; licencias y concesiones entre otros." Value="3"></asp:ListItem>
-                                                    <asp:ListItem Text="&nbsp; La comisión recurrente de irregularidades en el ejercicio de los recursos públicos." Value="4"></asp:ListItem>
-                                                    <asp:ListItem Text="&nbsp; Inconsistencia en la información financiera o programática de cualquier entidad fiscalizada que oculte o pueda originar daños o perjuicios a su patrimonio." Value="5"></asp:ListItem>
-                                                    <asp:ListItem Text="&nbsp; Desconozco cómo clasificarlo en alguno de los supuestos anteriores." Value="5"></asp:ListItem>
+                                               <asp:CheckBoxList ID="chbHechosD" runat="server" CssClass="txt_az_normal ">
+                                                    <asp:ListItem Text="" Value=""></asp:ListItem>        
                                                 </asp:CheckBoxList>
                                             </td>
                                         </tr>
@@ -450,7 +447,7 @@
                                     
                                     <div class="txt_az_normal back_cel_den_NoColor">
                                         <asp:Label runat="server" Text="&nbsp;&nbsp; Selección múltiple &nbsp;"></asp:Label>
-                                        <asp:DropDownList ID="ddlCP" runat="server"></asp:DropDownList>
+                                        <asp:DropDownList ID="ddlCP" runat="server" multiple ="multiple"></asp:DropDownList>
                                     </div>                                                                  
                                     
                                 </td>
