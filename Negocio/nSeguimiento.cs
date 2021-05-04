@@ -17,6 +17,8 @@ namespace Negocio
 
         private List<cConsulta> _eListCons;
         private List<cDocumento> _eListDoc;
+        private List<cConSeguimDenuncia> _eListRespSeg;
+
         private Exception _Exception = null;
         protected string _sMensajeError = "";
         private Boolean _ConError = false;
@@ -40,6 +42,7 @@ namespace Negocio
 
         private cConsulta _eConsulta;
         private cDocumento _eDocumento;
+        private cConSeguimDenuncia _eRespSeg;
 
         public List<cConsulta> ListCons
         {
@@ -54,6 +57,14 @@ namespace Negocio
             get
             {
                 return _eListDoc;
+            }
+        }
+
+        public List<cConSeguimDenuncia> ListRespSeg
+        {
+            get
+            {
+                return _eListRespSeg;
             }
         }
 
@@ -454,6 +465,7 @@ namespace Negocio
 
         }
 
+
         public void TraeDocumentosDenuncia(long _plLlaveObj, long _plLlaveObjVinc)
         {
             _eListDoc = new List<cDocumento>();
@@ -496,6 +508,68 @@ namespace Negocio
         }
 
 
+        public void TraeRespuestaSeguimiento(string _psFolio, string _psPassword)
+        {
+            _eListRespSeg = new List<cConSeguimDenuncia>();
+            _ds = null;
+
+            try
+            {
+
+                _dDataSQL.ClearParameters();
+                _dDataSQL.AddParameter("@folio", _psFolio);
+                _dDataSQL.AddParameter("@password", _psPassword);
+
+                _ds = _dDataSQL.Ejecuta("sp_ConsultaDenunciaSeguim");
+                Exception = _dDataSQL.Exception;
+
+                if (Exception == null)
+                {
+                    if (!(_ds == null || _ds.Tables.Count == 0 || _ds.Tables[0].Rows.Count == 0))
+                    {
+
+                        foreach (DataRow _dr in _ds.Tables[0].Rows)
+                        {
+
+                            _eRespSeg = new cConSeguimDenuncia
+                            {
+
+                                Respuesta = (_dr["respuesta"] == DBNull.Value ? "" : (string)_dr["respuesta"])
+
+
+                            };
+
+                            _eListRespSeg.Add(_eRespSeg);
+                        }
+
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                Exception = ex;                
+            }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            
+
+        }
+
+
+
         public partial class cConsulta
         {
 
@@ -530,6 +604,13 @@ namespace Negocio
             public string _sVerDocumento { get; set; } = "";
         }
 
+
+        public partial class cConSeguimDenuncia
+        {
+            
+            public string Respuesta { get; set; } = "";
+           
+        }
 
     }
 }

@@ -306,5 +306,43 @@ namespace Sistema.Modulos.Denuncias_IV
             }
 
         }
+
+
+
+
+        [WebMethod]
+        public static object AJAX_ConsultaSeguimientoDenuncia( string _psFolio, string _psPassword )
+        {
+
+            nSeguimiento nSeg = new nSeguimiento();
+                      
+            try
+            {
+
+                nSeg.TraeRespuestaSeguimiento(_psFolio, _psPassword);
+
+                if (nSeg.Exception != null)
+                {
+
+                    return nSeg.Exception.Message;
+                }
+                else
+                {
+                    return nSeg.ListRespSeg;
+
+                }
+                
+            }
+            catch (Exception ex)
+            {
+                return ex.Message;
+            }
+            finally
+            {
+                nSeg = null;
+            }
+        }
+
+
     }
 }

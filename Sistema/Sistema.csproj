@@ -140,11 +140,14 @@
     </Content>
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="JS\bootstrap.min.js" />
+    <Content Include="JS\JSRegistro.js" />
     <Content Include="JS\JSSeguimDenuncia.js" />
+    <Content Include="JS\JSUtils.js" />
     <Content Include="Modulos\Denuncias_IV\Denuncias_IV.aspx" />
     <Content Include="Modulos\Denuncias_IV\Internas.aspx" />
     <Content Include="Modulos\Denuncias_IV\Seguimiento_Denuncia.aspx" />
     <Content Include="Modulos\Index\Index.html" />
+    <Content Include="Modulos\Interna\Registro.aspx" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
@@ -232,6 +235,13 @@
     </Compile>
     <Compile Include="Modulos\Denuncias_IV\Seguimiento_Denuncia.aspx.designer.cs">
       <DependentUpon>Seguimiento_Denuncia.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Modulos\Interna\Registro.aspx.cs">
+      <DependentUpon>Registro.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Modulos\Interna\Registro.aspx.designer.cs">
+      <DependentUpon>Registro.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Site.Master.cs">
