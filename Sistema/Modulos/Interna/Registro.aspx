@@ -392,14 +392,15 @@
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td class="txt_az_normal left_txt" style="font-size:10pt;">
-                                                <asp:CheckBoxList ID="chbHechos" runat="server" CssClass="txt_az_normal ">
-                                                    <asp:ListItem Text="&nbsp; Desvío de recursos hacia fines distintos a los autorizados." Value="1"></asp:ListItem>
+                                            <td class="left_txt">
+                                                <asp:CheckBoxList ID="chbHechosD" runat="server" CssClass="txt_az_normal ">
+                                                    <asp:ListItem Text="" Value=""></asp:ListItem> 
+                                                    <%--<asp:ListItem Text="&nbsp; Desvío de recursos hacia fines distintos a los autorizados." Value="1"></asp:ListItem>
                                                     <asp:ListItem Text="&nbsp; Irregularidades en la captación o en el manejo y utilización de los recursos públicos." Value="2"></asp:ListItem>
                                                     <asp:ListItem Text="&nbsp; Actos presuntamente irregulares en la contratación y ejecución de obras, contratación y prestación de servicios públicos, adquisición de bienes, y otorgamiento de permisos, <br /> &nbsp; licencias y concesiones entre otros." Value="3"></asp:ListItem>
                                                     <asp:ListItem Text="&nbsp; La comisión recurrente de irregularidades en el ejercicio de los recursos públicos." Value="4"></asp:ListItem>
                                                     <asp:ListItem Text="&nbsp; Inconsistencia en la información financiera o programática de cualquier entidad fiscalizada que oculte o pueda originar daños o perjuicios a su patrimonio." Value="5"></asp:ListItem>
-                                                    <asp:ListItem Text="&nbsp; Desconozco cómo clasificarlo en alguno de los supuestos anteriores." Value="5"></asp:ListItem>
+                                                    <asp:ListItem Text="&nbsp; Desconozco cómo clasificarlo en alguno de los supuestos anteriores." Value="5"></asp:ListItem>--%>
                                                 </asp:CheckBoxList>
                                             </td>
                                         </tr>
@@ -452,14 +453,27 @@
                                         <img src="../../Imagenes/manual.png" data-toggle="tooltip" title="." class="img_normal_size fToolLFRCArt61 fManualInfografia" />
                                     </div>                                    
                                 </td>
+                                
                                 <td style="width:.2%"></td>
-                                <td class="size_90 left_txt" >
+
+                                <td class="size_90 left_txt" style="height:120px; vertical-align:top" >
+                                    <table>
+                                        <tr>
+                                            <td  class="txt_az_normal back_cel_den_NoColor" style="height:120px; vertical-align:top">
+                                                <asp:Label runat="server" Text="&nbsp;&nbsp; Selección múltiple &nbsp;"></asp:Label>
+                                            </td>
+                                            <td class="txt_az_normal back_cel_den_NoColor" style="height:120px; vertical-align:top">
+                                                <asp:ListBox ID="lbxCP" runat="server" Width="100px" Height="120px"></asp:ListBox>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                                                            
                                     
-                                    <div class="txt_az_normal back_cel_den_NoColor">
-                                        <asp:Label runat="server" Text="&nbsp;&nbsp; Selección múltiple &nbsp;"></asp:Label>
-                                        <asp:DropDownList ID="ddlCP" runat="server"></asp:DropDownList>
+
+                                   <%-- <div class="txt_az_normal back_cel_den_NoColor" style="vertical-align:top">                                        
+                                        
                                     </div>                                                                  
-                                    
+                                    --%>
                                 </td>
                             </tr>
 
@@ -943,6 +957,17 @@
 
 
 
+
+        <div runat="server" id="dvRespuesta" title="Seguimiento de la denuncia" class="center_txt">
+            <br />
+            <asp:Label ID="lblRespuesta" runat="server" CssClass="txt_az_bold" Font-Size="25px" Text=""></asp:Label>
+            
+        </div>
+
+
+
+        <asp:HiddenField runat="server" ID="HDLlaveDocumento" Value="0" />
+        <asp:HiddenField runat="server" ID="HDLlaveTipoDocumento" Value="0" />
 
     </div>
    

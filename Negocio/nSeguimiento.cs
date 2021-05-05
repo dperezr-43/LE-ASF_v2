@@ -534,7 +534,9 @@ namespace Negocio
                             _eRespSeg = new cConSeguimDenuncia
                             {
 
-                                Respuesta = (_dr["respuesta"] == DBNull.Value ? "" : (string)_dr["respuesta"])
+                                Respuesta = (_dr["respuesta"] == DBNull.Value ? "" : (string)_dr["respuesta"]),
+                                LlaveDocumento = (_dr["llave_documento"] == DBNull.Value ? 0 : (long)_dr["llave_documento"]),
+                                LlaveTipoDoc = (_dr["llave_cat_tipo_doc"] == DBNull.Value ? 0 : (long)_dr["llave_cat_tipo_doc"])
 
 
                             };
@@ -609,7 +611,9 @@ namespace Negocio
         {
             
             public string Respuesta { get; set; } = "";
-           
+            public long LlaveDocumento { get; set; } = 0;
+            public long LlaveTipoDoc { get; set; } = 0;
+
         }
 
     }

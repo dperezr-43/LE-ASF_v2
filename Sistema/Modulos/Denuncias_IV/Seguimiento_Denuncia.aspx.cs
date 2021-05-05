@@ -69,7 +69,7 @@ namespace Sistema.Modulos.Denuncias_IV
 
 
         [WebMethod]
-        public static object AJAX_traeCatalogo(string _psClaveCatalogo, long _plLlaveTipoCat)
+        public static object AJAX_traeCatalogo(string _psClaveCatalogo, int _plLlaveTipoCat)
         {
 
             nCatalogo nCat = new nCatalogo();

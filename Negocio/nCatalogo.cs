@@ -34,7 +34,7 @@ namespace Negocio
         public long LlaveCatalogo { get; set; }
         public string Texto { get; set; }
         public string ClaveCatalogo { get; set; }
-        public long LlaveTipoCat { get; set; }
+        public int LlaveTipoCat { get; set; }
         // Procedimientos almacenados 
 
 
@@ -98,7 +98,7 @@ namespace Negocio
 
                 Procs = Procedimientos.sp_TraeCatalogo;
                 SClaveCat = ClaveCatalogo;
-                lLlaveCat = lLlaveCat;
+                lLlaveCat = LlaveTipoCat;
                 _ds = TraeCatalogo();
 
                 if (Exception == null)

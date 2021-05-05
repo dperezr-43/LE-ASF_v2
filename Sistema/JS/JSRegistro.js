@@ -1,12 +1,13 @@
 ﻿_oAJAX = null;
 
 var _Main = '#MainContent_';
+var _AjaxURL = 'Registro.aspx';
 
 $(document).ready(function () {
 
-    MensajeOk("Hola", "ss");
+    
 
-    $('#dvSiAnonima, #dvDenunciaRegistro').hide();
+    $('#dvSiAnonima, #dvDenunciaRegistro, #MainContent_dvRespuesta').hide();
 
     $("body").on("click", ".fManualInfografia", function () {
 
@@ -126,26 +127,31 @@ $(document).ready(function () {
 
 
 
-    var _NomControl = _Main + 'ddlCP';
-    var _NContenedeor = '';
 
-    _oAJAX = null;
-    cargaCatalogo('CP', 'ddl', _NomControl, _NContenedeor);
 
-    if (_oAJAX != null) {
 
-        $.when(_oAJAX).done(function (data, textStatus, jqXHR) {
 
-            if (String(data.d).indexOf("Error") == -1) {
 
-                _NomControl = 'NivelGobierno';
-                _NContenedeor = '#NivelGobierno';
+    //var _NomControl = _Main + 'ddlCP';
+    //var _NContenedeor = '';
 
-                _oAJAX = null;
-                cargaCatalogo('NG', 'rbl', _NomControl, _NContenedeor);
-            }
-        });
-    }
+    //_oAJAX = null;
+    //cargaCatalogo('CP', 'ddl', _NomControl, _NContenedeor);
+
+    //if (_oAJAX != null) {
+
+    //    $.when(_oAJAX).done(function (data, textStatus, jqXHR) {
+
+    //        if (String(data.d).indexOf("Error") == -1) {
+
+    //            _NomControl = 'NivelGobierno';
+    //            _NContenedeor = '#NivelGobierno';
+
+    //            _oAJAX = null;
+    //            cargaCatalogo('NG', 'rbl', _NomControl, _NContenedeor);
+    //        }
+    //    });
+    //}
 
 
     $("body").on("click", "input[name*='btnSegconsulta']", function () {
@@ -205,16 +211,16 @@ var onloadCallback = function () {
 
 
 
-function cargaCatalogo(_pClaveCatalogo, _pTipo, _pNomControl, _pContenedor) {
+function cargaCatalogo(_pClaveCatalogo, _pTipo, _pNomControl, _pContenedor, _pTipoCatalogo) {
 
-    _oData = "{_pClaveCatalogo:'" + _pClaveCatalogo + "'}";
+    _oData = "{ClaveCatalogo:'" + _pClaveCatalogo + "}";
 
     try {
 
 
         _oAJAX = $.ajax({
             type: "POST",
-            url: "Denuncias_IV.aspx/AJAX_cargaCP",
+            url: _AjaxURL + "/AJAX_cargaCatalogo",
             data: _oData,
             contentType: "application/json; charset=utf-8",
             dataType: "json"
@@ -228,7 +234,7 @@ function cargaCatalogo(_pClaveCatalogo, _pTipo, _pNomControl, _pContenedor) {
 
                     switch (_pTipo) {
 
-                        case 'ddl':
+                        case 'ddl', 'lbx':
 
                             $(_pNomControl).empty();
 
@@ -255,7 +261,7 @@ function cargaCatalogo(_pClaveCatalogo, _pTipo, _pNomControl, _pContenedor) {
                             $(_pContenedor).append(table);
 
                             break;
-
+                       
                     }
 
                 }
@@ -283,8 +289,8 @@ function cargaCatalogo(_pClaveCatalogo, _pTipo, _pNomControl, _pContenedor) {
 
 function ConsultaSeguimiento(_sFilio, _sPassword) {
 
-    _oData = "{ _psFolio:'" + $("#MainContent_txtSegFolio").val() + "'" +
-        ", _psPassword: '" + $("#MainContent_txtSegPsw").val() + "'" +
+    _oData = "{ _psFolio:'" + $(_Main + "txtSegFolio").val() + "'" +
+        ", _psPassword: '" + $(_Main + "txtSegPsw").val() + "'" +
         "}";
 
 
@@ -302,12 +308,70 @@ function ConsultaSeguimiento(_sFilio, _sPassword) {
 
             if (String(data.d).indexOf("Error") == -1) {
 
-                MensajeOk(data.d);
-                //$("#MainContent_dvOficioProcedencia").dialog("close");
-                //limpiarfiltros();
-                //reseteoFiltros();
-                //consultaRegDenuncias();
+                //MensajeOk(data.d[0].Respuesta, 'Mensaje');
 
+                $(_Main + 'lblRespuesta').val('');
+                $(_Main +'lblRespuesta').text(data.d[0].Respuesta);
+
+                $(_Main + "dvRespuesta").dialog({
+                    open: function () { $(".ui-dialog-titlebar-close").hide(); },
+                    modal: true,
+                    show: {
+                        effect: 'fade',
+                        duration: 700
+                    },
+                    width: 400,
+                    height: 250,
+                    //modal: true,
+                    //dialogClass: "no-close",
+                    //autoOpen:false,
+
+                    close: function () {
+
+                        $(_Main + "txtSegFolio, " + _Main + "txtSegPsw").val('');
+                        
+                    },
+
+                    buttons: {
+                        
+                        "1": {
+                            id: 'jq_btn_adjuntar_nvo',
+                            click: function () {
+
+
+                                VerDocumento(data.d[0].LlaveDocumento, data.d[0].LlaveTipoDoc);
+
+                            },
+                            
+                            class: "modal_dialog_icons",
+                            style : "background-image: url('../../Imagenes/guardar.png')",                            
+                            title: "Actualizar"
+                        },
+                        
+
+                        "2": {
+                            id: 'jq_btn_cancela',
+                            click: function () {
+
+                                $(_Main + "txtSegFolio, " + _Main + "txtSegPsw").val('');
+
+                                $(this).dialog("close");
+
+
+                            },
+
+                            class: "modal_dialog_icons",
+                            style: "background-image: url('../../Imagenes/cancelar.png')",
+                            title: "Cerrar"
+                        },
+
+                    }          
+                                        
+                });
+
+                //data.d[0].LlaveDocumento == 0 ? (_Main + "jq_btn_adjuntar_nvo").hide() : (_Main + "jq_btn_adjuntar_nvo").show();
+                data.d[0].LlaveDocumento == 0 ? (_Main + "jq_btn_adjuntar_nvo").hide() : (_Main + "jq_btn_adjuntar_nvo").show();
+                
             }
 
             else {
@@ -327,4 +391,14 @@ function ConsultaSeguimiento(_sFilio, _sPassword) {
 
     }
 
+}
+
+
+function VerDocumento(_lLlaveDocumento, _lLlaveTipoDoc) {
+
+    $(_Main + "HDLlaveDocumento").val(_lLlaveDocumento);
+    $(_Main + "HDLlaveTipoDocumento").val(_lLlaveTipoDoc);
+
+
+    __doPostBack('btnVerDocumento', 'CLICK');
 }

@@ -87,6 +87,8 @@ namespace General
         private string _Dir_IP = null;
         private string _Hostname = null;
         private string _Llamado = null;
+        private string _ClaveCat = string.Empty;
+        private int _LlaveCatalogo = 0;
         protected string _sSubClase = string.Empty;
         protected string _sMetodo = string.Empty;
         
@@ -106,8 +108,8 @@ namespace General
         public bool DsVacio { get { return _DsVacio; } set { _DsVacio = value; } }
 
 
-        public string SClaveCat { get { return _Coord; } set { _Coord = value; } }
-        public int lLlaveCat { get { return _Coord2; } set { _Coord2 = value; } }
+        public string SClaveCat { get { return _ClaveCat; } set { _ClaveCat = value; } }
+        public int lLlaveCat { get { return _LlaveCatalogo; } set { _LlaveCatalogo = value; } }
 
 
         public DataSet dsDatos
