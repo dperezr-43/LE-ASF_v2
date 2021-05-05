@@ -133,7 +133,15 @@ $(document).ready(function () {
     });
 
 
+    $("#aLinkRD").click(function () {
 
+        var _NomControl = _Main + 'chbHechos';
+        var _NContenedeor = _Main + 'dvchbHechos';
+
+        _oAJAX = null;
+        cargaCatalogo('STD1', 'chk', _NomControl, _NContenedeor, 16);
+
+    });
    
 
 
@@ -283,7 +291,7 @@ var onloadCallback = function () {
 
 function cargaCatalogo(_pClaveCatalogo, _pTipo, _pNomControl, _pContenedor, _pLlaveCatTipo) {
 
-    _oData = "{_psClaveCatalogo:'" + _pClaveCatalogo + "', _plLlaveTipoCat: " + _pLlaveCatTipo+"}";
+    _oData = "{ClaveCatalogo:'" + _pClaveCatalogo + "', LlaveTipoCat: " + _pLlaveCatTipo+"}";
 
     try {
 
@@ -368,17 +376,16 @@ function cargaCatalogo(_pClaveCatalogo, _pTipo, _pNomControl, _pContenedor, _pLl
 
             .fail(function (jqXHR, textStatus, errorThrown) {
 
-                MensajeError("Error al traer los datos [AJAX.cargaCP()]");
+                MensajeError("Error al traer los datos [AJAX_cargaCatalogo()]");
             });
 
     }
     catch (err) {
-        alert("[cargaCP] \n" + err.message);
+        alert("[cargaCatalogo] \n" + err.message);
 
     }
 
 }
-
 
 
 function ConsultaSeguimiento(_sFilio, _sPassword) {
@@ -387,9 +394,7 @@ function ConsultaSeguimiento(_sFilio, _sPassword) {
         ", _psPassword: '" + $(_Main + "txtSegPsw").val() + "'" +
         "}";
 
-
     try {
-
 
         _oAJAX = $.ajax({
             type: "POST",
@@ -402,12 +407,62 @@ function ConsultaSeguimiento(_sFilio, _sPassword) {
 
             if (String(data.d).indexOf("Error") == -1) {
 
-                MensajeOk(data.d);
-                //$("#MainContent_dvOficioProcedencia").dialog("close");
-                //limpiarfiltros();
-                //reseteoFiltros();
-                //consultaRegDenuncias();
+                //MensajeOk(data.d[0].Respuesta, 'Mensaje');
 
+                $(_Main + 'lblRespuesta').val('');
+                $(_Main + 'lblRespuesta').text(data.d[0].Respuesta);
+
+                $(_Main + "dvRespuesta").dialog({
+                    open: function () { $(".ui-dialog-titlebar-close").hide(); },
+                    modal: true,
+                    show: {
+                        effect: 'fade',
+                        duration: 700
+                    },
+                    width: 400,
+                    height: 250,
+                    //modal: true,
+                    //dialogClass: "no-close",
+                    //autoOpen:false,
+
+                    close: function () {
+
+                        $(_Main + "txtSegFolio, " + _Main + "txtSegPsw").val('');
+                    },
+
+                    buttons: {
+                        "1": {
+                            id: 'jq_btn_adjuntar_nvo',
+                            click: function () {
+
+                                VerDocumento(data.d[0].LlaveDocumento, data.d[0].LlaveTipoDoc);
+
+                            },
+                            class: "modal_dialog_icons",
+                            style: "background-image: url('../../Imagenes/guardar.png')",
+                            title: "Actualizar"
+                        },
+
+                        "2": {
+                            id: 'jq_btn_cancela',
+                            click: function () {
+
+                                $(_Main + "txtSegFolio, " + _Main + "txtSegPsw").val('');
+
+                                $(this).dialog("close");
+
+                            },
+
+                            class: "modal_dialog_icons",
+                            style: "background-image: url('../../Imagenes/cancelar.png')",
+                            title: "Cerrar"
+                        },
+
+                    }
+                });
+
+                //data.d[0].LlaveDocumento == 0 ? (_Main + "jq_btn_adjuntar_nvo").hide() : (_Main + "jq_btn_adjuntar_nvo").show();
+                data.d[0].LlaveDocumento == 0 ? (_Main + "jq_btn_adjuntar_nvo").hide() : (_Main + "jq_btn_adjuntar_nvo").show();
             }
 
             else {
@@ -427,7 +482,8 @@ function ConsultaSeguimiento(_sFilio, _sPassword) {
 
     }
 
-}
+}  
+ 
 
 
 

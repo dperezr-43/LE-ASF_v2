@@ -26,6 +26,40 @@ namespace Sistema.Modulos.Interna
 
         }
 
+
+        public void VerOficioProc()
+        {
+            nSeguimiento nSeg = new nSeguimiento();
+
+            nSeg.TraeDocumento(Convert.ToInt32(HDLlaveDocumento.Value), Convert.ToInt32(HDLlaveTipoDocumento.Value));
+
+            if (nSeg.Exception == null)
+            {
+
+                Response.Clear();
+                Response.ClearContent();
+                Response.Buffer = true;
+
+                Response.AddHeader("content-disposition", "attachment; filename=" + Path.GetFileName(nSeg.ListDoc[0]._sNombreDocumento));
+
+                Response.ContentType = " application/pdf";
+
+                Response.BinaryWrite(nSeg.ListDoc[0]._bDocumento);
+
+                Response.Flush();
+
+                Response.End();
+
+                //nSeg.Exception.Message;
+            }
+            else
+            {
+                //return "Datos modificados correctamente";
+
+            }
+
+        }
+
         [WebMethod]
         public static object AJAX_RegistraHechos(long _plLlaveDenuncia, long _plLlaveTipoDenuncia, object _poArrLlavesHechos)
         {
