@@ -7,6 +7,7 @@ using System.Web.UI.WebControls;
 using System.Web.Services;
 using Negocio;
 using System.Data;
+using System.IO;
 
 namespace Sistema.Modulos.Interna
 {
@@ -14,6 +15,14 @@ namespace Sistema.Modulos.Interna
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+
+            if (HDLlaveDocumento.Value != "0")
+            {
+
+                VerOficioProc();
+
+            }
+
 
         }
 
@@ -88,43 +97,7 @@ namespace Sistema.Modulos.Interna
             }
         }
 
-        [WebMethod]
-        public static object AJAX_traeCatalogo(string _psClaveCatalogo, long _plLlaveTipoCat)
-        {
-
-
-            nCatalogo nCat = new nCatalogo();
-
-
-
-            try
-            {
-                nCat.ClaveCatalogo = _psClaveCatalogo;
-                nCat.LlaveTipoCat = _plLlaveTipoCat;
-                nCat.Catalogos();
-
-                if (nCat.Exception != null)
-                {
-
-                    return nCat.Exception.Message;
-                }
-                else
-                {
-                    return nCat.CatList;
-
-                }
-
-
-            }
-            catch (Exception ex)
-            {
-                return ex.Message;
-            }
-            finally
-            {
-                nCat = null;
-            }
-        }
+        
 
         [WebMethod]
         public static object AJAX_ConsultaInfoDenunciaFP(string _psFolio, string _psPassword)
@@ -162,7 +135,58 @@ namespace Sistema.Modulos.Interna
             }
         }
 
+       
+
+                //nSeg.Exception.Message;
+  
+
+
+        [WebMethod]
+        public static object AJAX_cargaCatalogo(string ClaveCatalogo, int LlaveTipoCat)
+        {
+
+
+            nCatalogo nCat = new nCatalogo();
+
+
+
+            try
+            {
+                nCat.ClaveCatalogo = ClaveCatalogo;
+                nCat.LlaveTipoCat = LlaveTipoCat; 
+
+                nCat.Catalogos();
+
+                if (nCat.Exception != null)
+                {
+
+                    return nCat.Exception.Message;
+                }
+                else
+                {
+                    return nCat.CatList;
+
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+                return ex.Message;
+            }
+            finally
+            {
+                nCat = null;
+            }
+        }
+
 
 
     }
+
+
+
+ 
+
+
 }

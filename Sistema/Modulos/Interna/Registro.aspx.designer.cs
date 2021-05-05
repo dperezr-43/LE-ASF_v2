@@ -42,22 +42,22 @@ namespace Sistema.Modulos.Interna
         protected global::System.Web.UI.WebControls.TextBox TextBox4;
 
         /// <summary>
-        /// Control dvchbHechos.
+        /// Control chbHechos.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl dvchbHechos;
+        protected global::System.Web.UI.WebControls.CheckBoxList chbHechos;
 
         /// <summary>
-        /// Control ddlCP.
+        /// Control lbxCP.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlCP;
+        protected global::System.Web.UI.WebControls.ListBox lbxCP;
 
         /// <summary>
         /// Control txtRegDescArchivo.

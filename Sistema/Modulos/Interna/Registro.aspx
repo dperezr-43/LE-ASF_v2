@@ -460,14 +460,27 @@
                                         <img src="../../Imagenes/manual.png" data-toggle="tooltip" title="." class="img_normal_size fToolLFRCArt61 fManualInfografia" />
                                     </div>                                    
                                 </td>
+                                
                                 <td style="width:.2%"></td>
-                                <td class="size_90 left_txt" >
+
+                                <td class="size_90 left_txt" style="height:120px; vertical-align:top" >
+                                    <table>
+                                        <tr>
+                                            <td  class="txt_az_normal back_cel_den_NoColor" style="height:120px; vertical-align:top">
+                                                <asp:Label runat="server" Text="&nbsp;&nbsp; Selección múltiple &nbsp;"></asp:Label>
+                                            </td>
+                                            <td class="txt_az_normal back_cel_den_NoColor" style="height:120px; vertical-align:top">
+                                                <asp:ListBox ID="lbxCP" runat="server" Width="100px" Height="120px"></asp:ListBox>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                                                            
                                     
-                                    <div class="txt_az_normal back_cel_den_NoColor">
-                                        <asp:Label runat="server" Text="&nbsp;&nbsp; Selección múltiple &nbsp;"></asp:Label>
-                                        <asp:DropDownList ID="ddlCP" runat="server"></asp:DropDownList>
+
+                                   <%-- <div class="txt_az_normal back_cel_den_NoColor" style="vertical-align:top">                                        
+                                        
                                     </div>                                                                  
-                                    
+                                    --%>
                                 </td>
                             </tr>
 
@@ -980,6 +993,17 @@
         <asp:HiddenField runat="server" ID="HDLlaveTipoDenuncia" Value="0" />
         <asp:HiddenField runat="server" ID="HDFolio" Value="" />
 
+
+        <div runat="server" id="dvRespuesta" title="Seguimiento de la denuncia" class="center_txt">
+            <br />
+            <asp:Label ID="lblRespuesta" runat="server" CssClass="txt_az_bold" Font-Size="25px" Text=""></asp:Label>
+            
+        </div>
+
+
+
+        <asp:HiddenField runat="server" ID="HDLlaveDocumento" Value="0" />
+        <asp:HiddenField runat="server" ID="HDLlaveTipoDocumento" Value="0" />
 
     </div>
    

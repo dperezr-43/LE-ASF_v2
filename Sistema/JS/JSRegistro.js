@@ -1,12 +1,15 @@
 ﻿_oAJAX = null;
 
 var _Main = '#MainContent_';
+var _AjaxURL = 'Registro.aspx';
 
 $(document).ready(function () {
 
-    MensajeOk("Hola", "ss");
+   
 
-    $('#dvSiAnonima, #dvDenunciaRegistro, #MainContent_dvLogFolio').hide();
+    $('#dvSiAnonima, #dvDenunciaRegistro, #MainContent_dvLogFolio, #MainContent_dvRespuesta').hide();
+
+  
 
     $("body").on("click", ".fManualInfografia", function () {
 
@@ -131,53 +134,8 @@ $(document).ready(function () {
 
 
 
-    //var _NomControl = _Main + 'chbHechos';
-    //var _NContenedeor = _Main + 'dvchbHechos';
+   
 
-    //_oAJAX = null;
-    //cargaCatalogo('STD1', 'chk', _NomControl, _NContenedeor, 16);
-
-    //if (_oAJAX != null) {
-
-    //    $.when(_oAJAX).done(function (data, textStatus, jqXHR) {
-
-    //        if (String(data.d).indexOf("Error") == -1) {
-
-    //            _NomControl = 'NivelGobierno';
-    //            _NContenedeor = '#NivelGobierno';
-
-    //            _oAJAX = null;
-    //            cargaCatalogo('NG', 'rbl', _NomControl, _NContenedeor, 0);
-
-    //            if (_oAJAX != null) {
-
-    //                $.when(_oAJAX).done(function (data, textStatus, jqXHR) {
-
-    //                    _NContenedeor = _Main + 'ddlCP';
-    //                    _NomControl = '';
-
-    //                    _oAJAX = null;
-    //                    cargaCatalogo('CP', 'ddl', _NomControl, _NContenedeor, 0);
-
-    //                });
-    //            }
-
-    //            cargaCatalogoHechos();
-
-
-    //        }
-    //    });
-    //}
-
-    $("#aLinkRD").click(function () {
-
-        var _NomControl = _Main + 'chbHechos';
-        var _NContenedeor = _Main + 'dvchbHechos';
-
-        _oAJAX = null;
-        cargaCatalogo('STD1', 'chk', _NomControl, _NContenedeor, 16);
-
-    });
 
     $("body").on("click", "input[name*='btnSegconsulta']", function () {
 
@@ -332,8 +290,7 @@ function cargaCatalogo(_pClaveCatalogo, _pTipo, _pNomControl, _pContenedor, _pLl
 
         _oAJAX = $.ajax({
             type: "POST",
-            //url: "Denuncias_IV.aspx/AJAX_cargaCP",
-            url: "Registro.aspx/AJAX_traeCatalogo",
+            url: _AjaxURL + "/AJAX_cargaCatalogo",
             data: _oData,
             contentType: "application/json; charset=utf-8",
             dataType: "json"
@@ -347,7 +304,7 @@ function cargaCatalogo(_pClaveCatalogo, _pTipo, _pNomControl, _pContenedor, _pLl
 
                     switch (_pTipo) {
 
-                        case 'ddl':
+                        case 'ddl', 'lbx':
 
                             $(_pNomControl).empty();
 
@@ -426,8 +383,8 @@ function cargaCatalogo(_pClaveCatalogo, _pTipo, _pNomControl, _pContenedor, _pLl
 
 function ConsultaSeguimiento(_sFilio, _sPassword) {
 
-    _oData = "{ _psFolio:'" + $("#MainContent_txtSegFolio").val() + "'" +
-        ", _psPassword: '" + $("#MainContent_txtSegPsw").val() + "'" +
+    _oData = "{ _psFolio:'" + $(_Main + "txtSegFolio").val() + "'" +
+        ", _psPassword: '" + $(_Main + "txtSegPsw").val() + "'" +
         "}";
 
 
@@ -657,4 +614,14 @@ function consultaFolio() {
 
     }
 
+}
+
+
+function VerDocumento(_lLlaveDocumento, _lLlaveTipoDoc) {
+
+    $(_Main + "HDLlaveDocumento").val(_lLlaveDocumento);
+    $(_Main + "HDLlaveTipoDocumento").val(_lLlaveTipoDoc);
+
+
+    __doPostBack('btnVerDocumento', 'CLICK');
 }

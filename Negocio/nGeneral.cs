@@ -76,6 +76,7 @@ namespace General
         private bool _DsVacio = false;
         private string _Pagina = null;
         private string _Evento = null;
+        private int _Coord2 = 0;
         private string _Coord = null;
         private string _Pais = null;
         private string _Estado = null;
@@ -86,13 +87,16 @@ namespace General
         private string _Dir_IP = null;
         private string _Hostname = null;
         private string _Llamado = null;
+        private string _ClaveCat = string.Empty;
+        private int _LlaveCatalogo = 0;
         protected string _sSubClase = string.Empty;
         protected string _sMetodo = string.Empty;
-        private long _lLlaveTipoCat = 0;
+        
         public long LlaveUsuario { get { return _LlaveUsuario; } set { _LlaveUsuario = value; } }
         public string Pagina { get { return _Pagina; } set { _Pagina = value; } }
         public string Evento { get { return _Evento; } set { _Evento = value; } }
         public string Coord { get { return _Coord; } set { _Coord = value; } }
+        public int Coord2 { get { return _Coord2; } set { _Coord2 = value; } }
         public string Pais { get { return _Pais; } set { _Pais = value; } }
         public string Estado { get { return _Estado; } set { _Estado = value; } }
         public string Ciudad { get { return _Ciudad; } set { _Ciudad = value; } }
@@ -104,8 +108,8 @@ namespace General
         public bool DsVacio { get { return _DsVacio; } set { _DsVacio = value; } }
 
 
-        public string SClaveCat { get { return _Coord; } set { _Coord = value; } }
-        public long lLlaveTipoCat { get { return _lLlaveTipoCat; } set { _lLlaveTipoCat = value; } }
+        public string SClaveCat { get { return _ClaveCat; } set { _ClaveCat = value; } }
+        public int lLlaveCat { get { return _LlaveCatalogo; } set { _LlaveCatalogo = value; } }
 
 
         public DataSet dsDatos
@@ -224,26 +228,26 @@ namespace General
 
             try
             {
-                //ValidaParams();
-                //if (_Exception != null && _sMensajeError != string.Empty)
-                //{
-                //    Exception = _Exception;
-                //    return _ds;
-                //}
+                ValidaParams();
+                if (_Exception != null && _sMensajeError != string.Empty)
+                {
+                    Exception = _Exception;
+                    return _ds;
+                }
 
-                ////ClearParameters();
-                //LLenaParams();
-                //if (!_bEjecuta)
-                //{
-                //    return _ds;
-                //}
+                //ClearParameters();
+                LLenaParams();
+                if (!_bEjecuta)
+                {
+                    return _ds;
+                }
 
                 _dDataSQL.ClearParameters();
                 _dDataSQL.AddParameter("@clave_tipo_cat", SClaveCat);
-                _dDataSQL.AddParameter("@llave_tipo_cat", lLlaveTipoCat);
+                _dDataSQL.AddParameter("@llave_tipo_cat", lLlaveCat);
 
 
-                _ds = _dDataSQL.Ejecuta("sp_TraeCatalogo");
+                _ds = _dDataSQL.Ejecuta(_sStoreProc);
                 Exception = _dDataSQL.Exception;
                
                 if (_ds == null || _ds.Tables.Count == 0 || _ds.Tables[0].Rows.Count == 0)
