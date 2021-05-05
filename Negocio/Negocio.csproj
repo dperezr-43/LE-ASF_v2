@@ -43,6 +43,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="nCatalogo.cs" />
+    <Compile Include="nDenuncia.cs" />
     <Compile Include="nEntidad.cs" />
     <Compile Include="nFunciones.cs" />
     <Compile Include="nGeneral.cs" />

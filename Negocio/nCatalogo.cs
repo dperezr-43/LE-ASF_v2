@@ -105,19 +105,24 @@ namespace Negocio
                 if (Exception == null)
                 {
 
-                    if (_ds != null || _ds.Tables.Count > 0 || _ds.Tables[0].Rows.Count > 0)
+                    if (_ds != null)
                     {
-                        foreach (DataRow _dr in _ds.Tables[0].Rows)
+                        if(_ds.Tables.Count > 0 || _ds.Tables[0].Rows.Count > 0)
+
                         {
-
-                            _eCat = new ECatalogo
+                            foreach (DataRow _dr in _ds.Tables[0].Rows)
                             {
-                                Llave = (int)_dr["llave"],
-                                Texto = (string)_dr["texto"]
-                            };
 
-                            _eCatList.Add(_eCat);
+                                _eCat = new ECatalogo
+                                {
+                                    Llave = (int)_dr["llave"],
+                                    Texto = (string)_dr["texto"]
+                                };
+
+                                _eCatList.Add(_eCat);
+                            }
                         }
+                        
                     }
 
                 }

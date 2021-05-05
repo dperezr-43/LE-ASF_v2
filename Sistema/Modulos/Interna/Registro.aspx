@@ -359,7 +359,7 @@
                 <div id="Denuncia_anonima" class="set">                                       
 
 
-                    <a href="#" class="txt_az_bold"> REGISTRO DE DENUNCIA
+                    <a href="#" id="aLinkRD" class="txt_az_bold"> REGISTRO DE DENUNCIA
                     <i class="fa fa-plus"></i>
                     </a>
 
@@ -393,14 +393,22 @@
                                         </tr>
                                         <tr>
                                             <td class="txt_az_normal left_txt" style="font-size:10pt;">
-                                                <asp:CheckBoxList ID="chbHechos" runat="server" CssClass="txt_az_normal ">
+                                           <%--     <asp:CheckBoxList ID="chbHechos" runat="server" CssClass="txt_az_normal">
                                                     <asp:ListItem Text="&nbsp; Desvío de recursos hacia fines distintos a los autorizados." Value="1"></asp:ListItem>
                                                     <asp:ListItem Text="&nbsp; Irregularidades en la captación o en el manejo y utilización de los recursos públicos." Value="2"></asp:ListItem>
                                                     <asp:ListItem Text="&nbsp; Actos presuntamente irregulares en la contratación y ejecución de obras, contratación y prestación de servicios públicos, adquisición de bienes, y otorgamiento de permisos, <br /> &nbsp; licencias y concesiones entre otros." Value="3"></asp:ListItem>
                                                     <asp:ListItem Text="&nbsp; La comisión recurrente de irregularidades en el ejercicio de los recursos públicos." Value="4"></asp:ListItem>
                                                     <asp:ListItem Text="&nbsp; Inconsistencia en la información financiera o programática de cualquier entidad fiscalizada que oculte o pueda originar daños o perjuicios a su patrimonio." Value="5"></asp:ListItem>
                                                     <asp:ListItem Text="&nbsp; Desconozco cómo clasificarlo en alguno de los supuestos anteriores." Value="5"></asp:ListItem>
-                                                </asp:CheckBoxList>
+                                                </asp:CheckBoxList>--%>
+
+                                                <div runat="server" id="dvchbHechos">
+
+
+
+                                                </div>
+
+
                                             </td>
                                         </tr>
                                     </table>
@@ -507,7 +515,7 @@
                                                     &nbsp;
                                                 </td>
                                                 <td class="left_txt" style="width:5%">
-                                                    <img src="../../Imagenes/file-add.png" class="img_normal_size" />
+                                                    <img src="../../Imagenes/file-add.png" class="img_normal_size" id="imgRegDescArchivo" />
                                                     &nbsp;&nbsp;
                                                 </td>
                                                 <td class="txt_az_bold right_txt" style="width:20%">
@@ -515,11 +523,11 @@
                                                     &nbsp;
                                                 </td>
                                                 <td class="txt_az_normal left_txt" style="width:30%">
-                                                    <asp:TextBox ID="TextBox1" Width="100%" runat="server"></asp:TextBox>
+                                                    <asp:TextBox ID="txtDescArchivo" Width="100%" runat="server"></asp:TextBox>
                                                     &nbsp;
                                                 </td>
                                                 <td class="left_txt" style="width:5%">
-                                                    <img src="../../Imagenes/garbage.png" class="img_normal_size" />                                                    
+                                                    <img src="../../Imagenes/garbage.png" class="img_normal_size" id="imgDescArchivo" />                                                    
                                                    
                                                 </td>
                                             </tr>
@@ -574,11 +582,11 @@
                                                     &nbsp;
                                                 </td>
                                                 <td class="txt_az_normal left_txt" style="width:30%">
-                                                    <asp:TextBox ID="TextBox2" runat="server" Width="100%"></asp:TextBox>
+                                                    <asp:TextBox ID="txtCargarArchivo" runat="server" Width="100%"></asp:TextBox>
                                                     &nbsp;
                                                 </td>
                                                 <td class="left_txt" style="width:5%">
-                                                    <img src="../../Imagenes/file-add.png" class="img_normal_size" />
+                                                    <img src="../../Imagenes/file-add.png" class="img_normal_size" id="imgCargarArchivo" />
                                                     &nbsp;&nbsp;
                                                 </td>
                                                 <td class="txt_az_bold right_txt" style="width:20%">
@@ -586,11 +594,11 @@
                                                     &nbsp;
                                                 </td>
                                                 <td class="txt_az_normal left_txt" style="width:30%">
-                                                    <asp:TextBox ID="TextBox3" Width="100%" runat="server"></asp:TextBox>
+                                                    <asp:TextBox ID="txtDescCargaArchivo" Width="100%" runat="server"></asp:TextBox>
                                                     &nbsp;
                                                 </td>
                                                 <td class="left_txt" style="width:5%">
-                                                    <img src="../../Imagenes/garbage.png" class="img_normal_size" />                                                    
+                                                    <img src="../../Imagenes/garbage.png" class="img_normal_size" id="imgDescCargaArchivo" />                                                    
                                                    
                                                 </td>
 
@@ -658,9 +666,9 @@
                                                 <td style="width: 75%" class="left_txt">
                                                     <asp:DropDownList ID="ddlEntidadInvolucrada" runat="server"></asp:DropDownList>
                                                     &nbsp;
-                                                    <img src="../../Imagenes/file-add.png" class="img_normal_size" />
+                                                    <img src="../../Imagenes/file-add.png" class="img_normal_size" id="imgAddEntInv" />
                                                     &nbsp;
-                                                    <img src="../../Imagenes/garbage.png" class="img_normal_size" />
+                                                    <img src="../../Imagenes/garbage.png" class="img_normal_size" id="imgElimEntInv" />
                                                 </td>
                                                
                                             </tr>
@@ -939,9 +947,38 @@
 
             </div>
 
+            <div id="dvLogFolio" runat="server">
+                <table>
+                    <tr>
+                        <td>
+                            <asp:Label runat="server" ID="lblLogFolio" Text="Folio" CssClass="txt_dor_bold"></asp:Label>
+                        </td>
+                        <td>
+                            <asp:TextBox ID="txtLogFolio" runat="server" MaxLength="60" CssClass="center_txt" Width="400px"></asp:TextBox>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="height:15px">
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <asp:Label runat="server" ID="Label1" Text="Contraseña" CssClass="txt_dor_bold"></asp:Label>
+                        </td>
+                        <td>
+                            <asp:TextBox ID="txtLogPass" runat="server" CssClass="center_txt" Width="200px" ></asp:TextBox>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
         </div>  <%-- Captura de la denuncia  --%>
 
 
+        <asp:HiddenField runat="server" ID="HDLlaveDenuncia" Value="0" />
+        <asp:HiddenField runat="server" ID="HDLlaveTipoDenuncia" Value="0" />
+        <asp:HiddenField runat="server" ID="HDFolio" Value="" />
 
 
     </div>
