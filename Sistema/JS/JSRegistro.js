@@ -248,6 +248,66 @@ $(document).ready(function () {
     });
 
 
+
+    // DPR - Carga de catálogos 
+      
+
+    var NomControl = _Main + 'lbxCP';
+    var NomContenedor = '';
+
+    _oAJAX = null;
+    cargaCatalogo('CP', 'lbx', NomControl, NomContenedor, 0);
+
+    if (_oAJAX != null) {
+
+        $.when(_oAJAX).done(function (data, textStatus, jqXHR) {
+
+            if (String(data.d).indexOf("Error") == -1) {
+
+                NomControl = _Main + 'ddlOrigenRecursos';
+                NomContenedor = '';
+
+                _oAJAX = null;
+                cargaCatalogo('STD', 'ddl', NomControl, NomContenedor, 40);
+
+
+                if (_oAJAX != null) {
+
+                    $.when(_oAJAX).done(function (data, textStatus, jqXHR) {
+
+                        if (String(data.d).indexOf("Error") == -1) {
+
+                            NomControl = 'NG';
+                            NomContenedor = '#dvNivelGobierno';
+
+                            _oAJAX = null;
+                            cargaCatalogo('NG', 'rbl', NomControl, NomContenedor, 9);
+
+
+                        }
+                    });
+                }
+
+
+
+             
+            }
+        });
+    }
+
+
+
+
+    $("body").not("input,textarea").keydown(function (event) {
+        if (event.keyCode == 9) {
+            event.preventDefault();
+            return false;
+        }
+    });
+
+
+
+
 }); // Fin ready
 
 
@@ -312,7 +372,8 @@ function cargaCatalogo(_pClaveCatalogo, _pTipo, _pNomControl, _pContenedor, _pLl
 
                     switch (_pTipo) {
 
-                        case 'ddl', 'lbx':
+                        case 'ddl':
+                        case 'lbx':
 
                             $(_pNomControl).empty();
 
@@ -324,20 +385,24 @@ function cargaCatalogo(_pClaveCatalogo, _pTipo, _pNomControl, _pContenedor, _pLl
 
                         case 'rbl':
 
+                            $(_pContenedor).empty();
+                                                       
 
-                            var table = $('<table></table>');
+                            var table = $('<table></table>').attr({ id: 'ot' + _pNomControl, class: 'txt_az_normal' });
                             var counter = 0;
                             $(data.d).each(function () {
                                 table.append($('<tr></tr>').append($('<td></td>').append($('<input>').attr({
-                                    type: 'radio', name: 'rb' + _pNomControl, value: this.Llave, id: 'r' + _pClaveCatalogo + '-' + counter, class: 'css-' + _pClaveCatalogo
+                                    type: 'radio', name: _pNomControl, value: this.Llave, id: 'r' + _pClaveCatalogo + '-' + counter, class: 'css-' + _pClaveCatalogo
                                 })).append(
                                     $('<label>').attr({
-                                        for: 'rb' + _pNomControl + counter++
+                                        for: _pNomControl + counter++
                                     }).text(this.Texto))));
                             });
 
                             $(_pContenedor).append(table);
 
+
+                           
                             break;
 
                         case 'chk':
@@ -489,8 +554,12 @@ function ConsultaSeguimiento(_sFilio, _sPassword) {
 
 function Habilitardeshabilitar2Secc(_bDisable) {
 
-    $("#MainContent_ddlCP,#MainContent_txtRegDescArchivo,#imgRegDescArchivo,#MainContent_txtDescArchivo,#imgDescArchivo,#MainContent_txtCargarArchivo,#imgCargarArchivo,#MainContent_txtDescCargaArchivo,#imgDescCargaArchivo,#MainContent_ddlEntidadInvolucrada,#imAddEntInv,#imgElimEntInv,#MainContent_txtObjetoDenunciado,#MainContent_ddlOrigenRecursos").prop("disabled", _bDisable);
+    //let SeccionesHD = '#RDGeneraPSW, #RDComplementoDenuncia';
+    let SeccionesHD = '#RDComplementoDenuncia';
+    let ClassHD = 'disabledseccion';
 
+    _bDisable == true ? $(SeccionesHD).addClass(ClassHD) : $(SeccionesHD).removeClass(ClassHD);
+    
 }
 
 function seguimiento() {
@@ -680,4 +749,233 @@ function VerDocumento(_lLlaveDocumento, _lLlaveTipoDoc) {
 
 
     __doPostBack('btnVerDocumento', 'CLICK');
+}
+
+
+// DPR - Control de la selección de las CP
+
+function AgregaRemueveCP(_iOperacion) {
+
+    switch (_iOperacion) {
+        case 0:
+
+            if ($(_Main + "lbxCP option:selected").val() == undefined || $(_Main + "lbxCP option:selected").val() == "") {              
+                $(_Main + "lbxCP").css("border-color", "red");
+                return false;
+            }
+
+            $(_Main + "lbxCP").css("border-color", "");
+            
+
+            var val_cp = $(_Main + "lbxCP option:selected").val();
+            var txt_cp = $(_Main + "lbxCP option:selected").text();
+
+            $(_Main + "lbxCP option:selected").remove();
+
+            if ($(_Main +"lbxCPSeleccionados option[value='" + val_cp + "']").length == 0) {
+                $(_Main + "lbxCPSeleccionados").append($("<option     />").val(val_cp).text(txt_cp));
+
+                var $selectlbxOptions = $(_Main + "lbxCPSeleccionados option");
+                $selectlbxOptions.sort(function (a, b) {
+                    if (a.text > b.text) return -1;
+                    if (a.text == b.text) return 0;
+                    return 1;
+                });
+                $($selectlbxOptions).remove();
+                $(_Main + "lbxCPSeleccionados").append($($selectlbxOptions));
+
+            }
+
+            break;
+
+
+
+        case 1:
+
+            if ($(_Main + "lbxCPSeleccionados option:selected").val() == undefined || $(_Main + "lbxCPSeleccionados option:selected").val() == "") {                
+                $(_Main + "lbxCPSeleccionados").css("border-color", "red");
+                return false;
+            }
+
+            $(_Main + "lbxCPSeleccionados").css("border-color", "");
+            
+
+            var val_cp = $(_Main + "lbxCPSeleccionados option:selected").val();
+            var txt_cp = $(_Main + "lbxCPSeleccionados option:selected").text();
+
+            $(_Main + "lbxCPSeleccionados option:selected").remove();
+
+            if ($(_Main + "lbxCP option[value='" + val_cp + "']").length == 0) {
+                $(_Main + "lbxCP").append($("<option     />").val(val_cp).text(txt_cp));
+
+                var $selectlbxOptions = $( _Main + "lbxCP option");
+                $selectlbxOptions.sort(function (a, b) {
+                    if (a.text > b.text) return -1;
+                    if (a.text == b.text) return 0;
+                    return 1;
+                });
+                $($selectlbxOptions).remove();
+                $(_Main + "lbxCP").append($($selectlbxOptions));
+            }
+
+            break;
+
+        case 2:
+
+            for (i = 0; i < $(_Main + "lbxCP option").length; i++) {
+
+                var val_cp = $(_Main + "lbxCP option")[i].value;
+                var txt_cp = $(_Main + "lbxCP option")[i].text;
+
+                if ($(_Main + "lbxCPSeleccionados option[value='" + val_cp + "']").length == 0) {
+                    $(_Main + "lbxCPSeleccionados").append($("<option     />").val(val_cp).text(txt_cp));
+
+                    var $selectlbxOptions = $(_Main + "lbxCPSeleccionados option");
+                    $selectlbxOptions.sort(function (a, b) {
+                        if (a.text > b.text) return -1;
+                        if (a.text == b.text) return 0;
+                        return 1;
+                    });
+                    $($selectlbxOptions).remove();
+                    $(_Main + "lbxCPSeleccionados").append($($selectlbxOptions));
+
+                }
+
+            }
+
+            $(_Main + "lbxCP").empty();
+
+            break;
+
+        case 3:
+
+            for (i = 0; i < $(_Main + "lbxCPSeleccionados option").length; i++) {
+
+                var val_cp = $(_Main + "lbxCPSeleccionados option")[i].value;
+                var txt_cp = $(_Main + "lbxCPSeleccionados option")[i].text;
+
+                if ($(_Main + "lbxCP option[value='" + val_cp + "']").length == 0) {
+                    $(_Main + "lbxCP").append($("<option     />").val(val_cp).text(txt_cp));
+
+                    var $selectlbxOptions = $("#lbxCP option");
+                    $selectlbxOptions.sort(function (a, b) {
+                        if (a.text > b.text) return -1;
+                        if (a.text == b.text) return 0;
+                        return 1;
+                    });
+                    $($selectlbxOptions).remove();
+                    $("_Main + lbxCP").append($($selectlbxOptions));
+
+                }
+
+            }
+
+            $(_Main + "lbxCPSeleccionados").empty();
+
+            break;
+    }
+
+   
+
+}
+
+
+// DPR - Guardado General 
+
+function fGuardaDenuncia() {
+
+    var sPSWDenunciante = $(_Main + "txtPSW").val();
+
+    try {
+
+       
+        try {
+
+            var _sValores = "";
+
+            $('input[id*=MainContent_chbHechos]').each(function () {
+                _sValores += (this.checked ? $(this).val() + "," : "");
+            });
+
+            if (_sValores == "") {
+                MensajeError("Debe seleccionar mínimo un hecho.");
+                return;
+            }
+
+            _sValores = _sValores.substr(0, _sValores.length - 1);
+
+            var _aValores = _sValores.split(",");
+            var _aHechos = new Array();
+
+            for (var i = 0; i < _aValores.length; i++) {
+
+                _aHechos[i] = _aValores[i];
+
+            }
+
+
+
+            _oData = "{ _plLlaveDenuncia: " + $(_Main + "HDLlaveDenuncia").val() +
+                ", _plLlaveTipoDenuncia: " + $(_Main + "HDLlaveTipoDenuncia").val() +
+                ", _poArrLlavesHechos:" + (_aHechos.length == 0 ? null : JSON.stringify(_aHechos)) +
+                ", _psPSWDenunciante:'" + sPSWDenunciante + "'" +
+                "}";
+
+
+
+            _oAJAX = $.ajax({
+                type: "POST",
+                url: _AjaxURL + "/AJAX_GuardaDenuncia",
+                data: _oData,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json"
+
+            })
+
+                .done(function (data, textStatus, jqXHR) {
+
+                    if (String(data.d).indexOf("Error") == -1) {
+
+
+                        var _aResp = String(data.d).split(",");
+
+                        if (_aResp[0] == 1) {
+
+
+                            MensajeOk("El folio es: " + _aResp[1]);
+                            $("#HDFolio").val(_aResp[0]);
+                            Habilitardeshabilitar2Secc(false);
+
+                        }
+                        else {
+                            MensajeError(_aResp[1]);
+
+                        }
+
+                    }
+
+                    else {
+
+                        MensajeError("Hubo un error al traer los datos.")
+                    }
+                })
+
+                .fail(function (jqXHR, textStatus, errorThrown) {
+
+                    MensajeError("Error al traer los datos [AJAX.AJAX_RegistraHechos]");
+                });
+
+
+
+        } catch (err) {
+
+            alert("[btnGuardaDenuncia.click - (Reday)] \n" + err.message);
+        }
+
+
+
+    } catch (err) {
+
+        alert("[fGuardaDenuncia] \n" + err.message);
+    }
 }

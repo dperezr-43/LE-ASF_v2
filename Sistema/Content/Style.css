@@ -573,3 +573,10 @@ table {
 .thHead th {
     padding: 5px 5px 5px 5px;
 }
+
+
+
+.disabledseccion {
+    pointer-events: none;
+    opacity: 0.4;
+}
