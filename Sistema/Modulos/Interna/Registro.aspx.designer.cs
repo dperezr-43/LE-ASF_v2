@@ -42,13 +42,13 @@ namespace Sistema.Modulos.Interna
         protected global::System.Web.UI.WebControls.TextBox TextBox4;
 
         /// <summary>
-        /// Control chbHechos.
+        /// Control dvchbHechos.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBoxList chbHechos;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl dvchbHechos;
 
         /// <summary>
         /// Control lbxCP.
@@ -60,15 +60,6 @@ namespace Sistema.Modulos.Interna
         protected global::System.Web.UI.WebControls.ListBox lbxCP;
 
         /// <summary>
-        /// Control txtRegDescArchivo.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtRegDescArchivo;
-
-        /// <summary>
         /// Control txtDescArchivo.
         /// </summary>
         /// <remarks>
@@ -78,22 +69,49 @@ namespace Sistema.Modulos.Interna
         protected global::System.Web.UI.WebControls.TextBox txtDescArchivo;
 
         /// <summary>
-        /// Control txtCargarArchivo.
+        /// Control lblArchDoc.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtCargarArchivo;
+        protected global::System.Web.UI.WebControls.Label lblArchDoc;
 
         /// <summary>
-        /// Control txtDescCargaArchivo.
+        /// Control dvListaDocumentos.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtDescCargaArchivo;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl dvListaDocumentos;
+
+        /// <summary>
+        /// Control txtDescArchEv.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtDescArchEv;
+
+        /// <summary>
+        /// Control lblArchEv.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblArchEv;
+
+        /// <summary>
+        /// Control dvListaDocEv.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl dvListaDocEv;
 
         /// <summary>
         /// Control ddlEntidadInvolucrada.
@@ -222,6 +240,24 @@ namespace Sistema.Modulos.Interna
         protected global::System.Web.UI.WebControls.HiddenField HDFolio;
 
         /// <summary>
+        /// Control dvRespuesta.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl dvRespuesta;
+
+        /// <summary>
+        /// Control lblRespuesta.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblRespuesta;
+
+        /// <summary>
         /// Control HDLlaveDocumento.
         /// </summary>
         /// <remarks>
@@ -239,6 +275,22 @@ namespace Sistema.Modulos.Interna
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField HDLlaveTipoDocumento;
 
-        
+        /// <summary>
+        /// Control HDRutaServ.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField HDRutaServ;
+
+        /// <summary>
+        /// Control HDSeleccArchivo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField HDSeleccArchivo;
     }
 }

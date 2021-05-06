@@ -1166,8 +1166,8 @@ function limpiaFileUploadOfic() {
 
     _bLimpiaDatos = true;
 
-    $("#FirmaElectronica_FileUploadOficioProc").empty();
-    $("#FirmaElectronica_FileUploadOficioProc")[0].value = "";
+    $("#MainContent_FileUploadOficioProc").empty();
+    $("#MainContent_FileUploadOficioProc")[0].value = "";
     $("#MainContent_lblOficioProc").text("");
     
 

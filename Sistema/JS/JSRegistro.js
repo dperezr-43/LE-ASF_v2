@@ -7,7 +7,8 @@ $(document).ready(function () {
 
    
 
-    $('#dvSiAnonima, #dvDenunciaRegistro, #MainContent_dvLogFolio, #MainContent_dvRespuesta').hide();
+    $('#dvSiAnonima, #dvDenunciaRegistro, #MainContent_dvLogFolio, #MainContent_dvRespuesta, #MainContent_dvListaDocumentos, #MainContent_dvListaDocEv').hide();
+    //
 
   
 
@@ -83,6 +84,15 @@ $(document).ready(function () {
     });
 
 
+
+    $("body").on("click", "input[name*='btnGuardaSegSecc']", function () {
+
+        guardaSegSeccion();
+
+
+    });
+
+
     $("body").on("click", "input[name*='btnRegresaPresentacion']", function () {
 
         try {
@@ -140,6 +150,13 @@ $(document).ready(function () {
 
         _oAJAX = null;
         cargaCatalogo('STD1', 'chk', _NomControl, _NContenedeor, 16);
+
+
+        $("#btnArchDoc").on("click", function () {
+
+            ElegirDoc();
+
+        });
 
     });
    
@@ -216,6 +233,9 @@ $(document).ready(function () {
 
                             MensajeOk("El folio es: " + _aResp[1]);
                             $("#HDFolio").val(_aResp[0]);
+
+                            $("#MainContent_HDLlaveDenuncia").val(_aResp[2]);
+
                             Habilitardeshabilitar2Secc(false);
 
                         }
@@ -491,6 +511,11 @@ function Habilitardeshabilitar2Secc(_bDisable) {
 
     $("#MainContent_ddlCP,#MainContent_txtRegDescArchivo,#imgRegDescArchivo,#MainContent_txtDescArchivo,#imgDescArchivo,#MainContent_txtCargarArchivo,#imgCargarArchivo,#MainContent_txtDescCargaArchivo,#imgDescCargaArchivo,#MainContent_ddlEntidadInvolucrada,#imAddEntInv,#imgElimEntInv,#MainContent_txtObjetoDenunciado,#MainContent_ddlOrigenRecursos").prop("disabled", _bDisable);
 
+    _bDisable ? $("#btnArchDoc").hide() : $("#btnArchDoc").show();
+
+    
+
+
 }
 
 function seguimiento() {
@@ -610,15 +635,8 @@ function consultaFolio() {
 
             if (String(data.d).indexOf("Error") == -1) {
 
-                //MensajeOk(data.d);
-                //$("#MainContent_dvOficioProcedencia").dialog("close");
-                //limpiarfiltros();
-                //reseteoFiltros();
-                //consultaRegDenuncias();
-                //Primero almacena los datos de Hechos de Denuncias
-
-
                 var _sValoresHechosDen = "";
+                var _sValoresDocIrr = "";
 
                 $(data.d).each(function () {
 
@@ -627,9 +645,14 @@ function consultaFolio() {
                         _sValoresHechosDen += this._lLlaveCat + "#";
 
                     }
+                    else if (this._lOrden == 3) {
+                        _sValoresDocIrr += this._sTexto + "$";
+
+                    }
 
                 });
 
+                //Primero coloca los datos de Hechos de Denuncias
 
                 $.each($("input[name*=MainContent_chbHechos]"), function () {
 
@@ -643,6 +666,17 @@ function consultaFolio() {
 
                 });
 
+                //Después los documentos de presuntos hechos irregulares
+
+                if (_sValoresDocIrr.length > 0) {
+
+                    _sValoresDocIrr = _sValoresDocIrr.substr(0, _sValoresDocIrr.length - 1);
+
+                    var _arrDocIrr = _sValoresDocIrr.split("$");
+                    agregarDocumentosConsulta(0, _arrDocIrr);
+                }
+                
+
 
                 $("#MainContent_HDFolio").val($("#MainContent_txtLogFolio").val());
                 $("#MainContent_HDLlaveDenuncia").val(data.d[0]._lLlaveDenuncia);
@@ -651,6 +685,7 @@ function consultaFolio() {
                 $("#MainContent_txtLogPass").val("");
                 $("#MainContent_dvLogFolio").dialog("close");
 
+                Habilitardeshabilitar2Secc(false);
             }
 
             else {
@@ -680,4 +715,414 @@ function VerDocumento(_lLlaveDocumento, _lLlaveTipoDoc) {
 
 
     __doPostBack('btnVerDocumento', 'CLICK');
+}
+
+function ElegirDoc() {
+    var _sRutaServer = $("#MainContent_HDRutaServ").val() + "\\" +$("#MainContent_HDLlaveDenuncia").val();
+
+
+    var _sArchivo = $("#MainContent_lblArchDoc").text();
+
+    if (_sArchivo != "") {
+        _sArchivo = _sArchivo.replace(/\\/g, "//");
+        _sArchivo = _sArchivo.substr(_sArchivo.lastIndexOf("//") + 2);
+    }
+
+    var cadena_url = "../../UploadASPX.aspx?llvTipoDoc=0," + _sArchivo + "," + $("#MainContent_HDLlaveDenuncia").val();
+
+
+    //procesos para centrar el cuadro 
+
+    const dualScreenLeft = window.screenLeft !== undefined ? window.screenLeft : window.screenX;
+    const dualScreenTop = window.screenTop !== undefined ? window.screenTop : window.screenY;
+
+    const width = window.innerWidth ? window.innerWidth : document.documentElement.clientWidth ? document.documentElement.clientWidth : screen.width;
+    const height = window.innerHeight ? window.innerHeight : document.documentElement.clientHeight ? document.documentElement.clientHeight : screen.height;
+
+    const systemZoom = width / window.screen.availWidth;
+
+    //300 y 100 son los valores del tamaño de la ventana que se va a colocar, pueden cambiarse de acuerdo a la necesidad del programador
+    const left = (width - 350) / 2 / systemZoom + dualScreenLeft;
+    const top = (height - 100) / 2 / systemZoom + dualScreenTop;
+    /////////////////////////////////////////////////////////////////////////////
+
+    var objeto_window_referencia = window.open(cadena_url, "_blank", "menubar=1,resizable=1,width=350,height=100,top=" + top  + ",left=" + left ).focus();
+
+
+}
+
+//Esta función es llamada desde el JS JSUploadASPX.js
+function setValue(Valores) {
+
+    if (Valores.TipoAccion == "Guardar") {
+
+        if ($("#MainContent_HDSeleccArchivo").val() == 0) {
+
+            $("#MainContent_lblArchDoc").text(Valores.HDNombreArchivo);
+
+        }
+        else if ($("#MainContent_HDSeleccArchivo").val() == 0) {
+
+            $("#MainContent_lblArchDocEv").text(Valores.HDNombreArchivo);
+
+        }
+
+        
+
+    }
+
+}
+
+function agregarDocumento(_iOpcion) {
+
+    var con_filas = 0;
+    var nombre_tabla = "";
+    var nombre_dv = "";
+    var nombre_desc = "";
+    var nombre_id_fila = "";
+    var nombre_elim_reg = "";
+    var nombre_doc = "";
+    var nombre_ruta = "";
+
+    var _sEstiloFilaAlterna = "ItemStyleClass";
+
+    switch (_iOpcion) {
+        case 0:
+            nombre_dv = "#MainContent_dvListaDocumentos";
+            nombre_tabla = "#Tdocumentos";
+            nombre_desc = "#MainContent_txtDescArchivo";
+            nombre_id_fila = "trNivelDoc";
+            nombre_elim_reg = "btnElimDoc";
+            nombre_doc = "#MainContent_lblArchDoc";
+            nombre_ruta = "inRutaDoc";
+
+            
+            break;
+
+        case 1:
+            nombre_dv = "#MainContent_dvListaDocEv";
+            nombre_tabla = "#TdocEv";
+            nombre_desc = "#MainContent_txtDescArchEv";
+            nombre_id_fila = "trNivelEv";
+            nombre_elim_reg = "btnEliEv";
+            nombre_doc = "#MainContent_lblArchEv";
+            nombre_ruta = "inRutaEv";
+
+            break;
+
+
+    }
+
+    var _sNomDoc = $(nombre_doc).text();
+    _sNomDoc = _sNomDoc.trim();
+
+    var _sDescDoc = $(nombre_desc).val();
+    _sDescDoc = _sDescDoc.trim();
+
+    if (_sNomDoc == "") {
+
+        var _Style = $(nombre_doc).attr("style");
+        _Style += "border: 2px solid red;";
+        $(nombre_doc).attr("style", _Style);
+        MensajeError("Seleccione un documento.");
+        return;
+    }
+    var _Style = $(nombre_doc).attr("style");
+    _Style = _Style.replace("border: 2px solid red;", "");
+    $(nombre_doc).attr("style", _Style);
+
+    if (_sDescDoc == "") {
+
+        var _Style = $(nombre_desc).attr("style");
+        _Style += "border: 2px solid red;";
+        $(nombre_desc).attr("style", _Style);
+        MensajeError("Seleccione un documento.");
+        return;
+    }
+    var _Style = $(nombre_desc).attr("style");
+    _Style = _Style.replace("border: 2px solid red;", "");
+    $(nombre_desc).attr("style", _Style);
+
+    //Ver ID de la tabla, cambiarla
+    con_filas = $(nombre_tabla + "> tbody > tr").length;
+
+    var nom_id_completo = nombre_id_fila + (con_filas + 1);
+    var nom_id_eli_comp = nombre_elim_reg + (con_filas + 1);
+
+    var existe_nombre = $(nombre_tabla + " tr > td:contains('" + _sNomDoc + "')").length;
+
+
+    $(nombre_tabla + " > tbody > tr > td").css("background", "white");
+
+    if (existe_nombre == 0) {
+
+        var _sHTML = "<tr id=\"" + nom_id_completo + "\"  class=\"" + _sEstiloFilaAlterna + "\" style=\"font-size:11px;\">" +
+            "<td style=\"display:none;\">" + $("#MainContent_HDRutaServ").val() + "\\" + $("#MainContent_HDLlaveDenuncia").val() + "\\" + _sNomDoc +"</td>" +
+            "<td>" + _sNomDoc + "</td>" +
+            "<td>" + _sDescDoc + "<input type=\"hidden\" id=\"" + nombre_ruta + (con_filas + 1) + "\" value=\"" + $("#MainContent_HDRutaServ").val() + "\\" + $("#MainContent_HDLlaveDenuncia").val() + "\\" + _sNomDoc + "\" ></td>" +
+            "<td align=\"center\"> <button id=\"" + nom_id_eli_comp + "\" onclick=\"javascript: EliminarDocTabla('#" + nom_id_completo + "','" + nombre_tabla + "','" + nombre_dv + "'); return false;\"  ></button></td>" +
+            "</tr>";
+
+        $(nombre_tabla + " tbody").append(_sHTML);
+        $(nombre_desc).val("");
+        $(nombre_doc).val("");
+
+        $("#" + nom_id_eli_comp).button({
+            icons: {
+                primary: 'ui-icon-trash'
+            }
+
+        }).css("height", '28px').css("width", "30px");
+
+
+
+
+        con_filas = $(nombre_tabla + "> tbody > tr").length;
+        if (con_filas > 0) {
+            $(nombre_dv).show();
+        }
+    }
+    else {
+        $(nombre_tabla + " tr > td:contains('" + _sNomDoc + "')").css("background", "#FFE8E8");
+        //$("#rdAspecto1_E").closest('tr').css("background", "#FFE8E8");
+        //$("#tdPregunta3").css("background", "#FFE8E8");
+    }
+    
+    limpiarCamposDoc(_iOpcion);
+
+}
+
+function limpiarCamposDoc() {
+
+    if (_iOpcion == 0) {
+
+        $("#MainContent_txtDescArchivo").val("");
+        $("#MainContent_lblArchDoc").text("");
+
+    }
+    else {
+
+        $("#MainContent_txtDescArchEv").val("");
+        $("#MainContent_lblArchEv").text("");
+
+    }
+
+    
+
+}
+
+function agregarDocumentosConsulta(_iOpcion, aDatos) {
+
+    var con_filas = 0;
+    var nombre_tabla = "";
+    var nombre_dv = "";
+    var nombre_id_fila = "";
+    var nombre_elim_reg = "";
+    var nombre_ruta = "";
+
+    var _sEstiloFilaAlterna = "ItemStyleClass";
+
+    switch (_iOpcion) {
+        case 0:
+            nombre_dv = "#MainContent_dvListaDocumentos";
+            nombre_tabla = "#Tdocumentos";
+            nombre_id_fila = "trNivelDoc";
+            nombre_elim_reg = "btnElimDoc";
+            nombre_ruta = "inRutaDoc";
+
+
+            break;
+
+        case 1:
+            nombre_dv = "#MainContent_dvListaDocEv";
+            nombre_tabla = "#TdocEv";
+            nombre_id_fila = "trNivelEv";
+            nombre_elim_reg = "btnEliEv";
+            nombre_ruta = "inRutaEv";
+
+            break;
+
+
+    }
+
+    $(nombre_tabla + " tbody").empty();
+
+    for (var i = 0; i < aDatos.length; i++) {
+
+        var sDatosA = aDatos[i].split("#");
+
+        var _sNomDoc = sDatosA[0];
+        var _sDescDoc = sDatosA[1];
+
+        //Ver ID de la tabla, cambiarla
+        con_filas = $(nombre_tabla + "> tbody > tr").length;
+
+        var nom_id_completo = nombre_id_fila + (con_filas + 1);
+        var nom_id_eli_comp = nombre_elim_reg + (con_filas + 1);
+
+
+        $(nombre_tabla + " > tbody > tr > td").css("background", "white");
+
+        var _sHTML = "<tr id=\"" + nom_id_completo + "\"  class=\"" + _sEstiloFilaAlterna + "\" style=\"font-size:11px;\">" +
+            "<td style=\"display:none;\"></td>" +
+            "<td>" + _sNomDoc + "</td>" +
+            "<td>" + _sDescDoc + "</td>" +
+            "<td align=\"center\"> <button id=\"" + nom_id_eli_comp + "\" onclick=\"javascript: EliminarDocTabla('#" + nom_id_completo + "','" + nombre_tabla + "','" + nombre_dv + "'); return false;\"  ></button></td>" +
+            "</tr>";
+
+        $(nombre_tabla + " tbody").append(_sHTML);
+
+        $("#" + nom_id_eli_comp).button({
+            icons: {
+                primary: 'ui-icon-trash'
+            }
+
+        }).css("height", '28px').css("width", "30px");
+
+        con_filas = $(nombre_tabla + "> tbody > tr").length;
+        if (con_filas > 0) {
+            $(nombre_dv).show();
+        }
+        
+        
+
+    }
+
+    
+
+
+}
+
+function EliminarDocTabla(_sIdFilaRemover, _sTabla, _dvTabla) {
+    var con_filas = 0;
+
+    $(_sIdFilaRemover).remove();
+    con_filas = $(_sTabla + "> tbody > tr").length;
+
+    if (con_filas == 0) {
+        $(_dvTabla).hide();
+    }
+
+}
+
+function guardaSegSeccion() {
+
+    try {
+
+
+        
+        var _sValoresHechos = "";
+        var _sValoresDocPres = "";
+        var _sValoresDocEv = "";
+
+        //Obtener información de los hechos de denuncias
+
+        $('input[id*=MainContent_chbHechos]').each(function () {
+            _sValoresHechos += (this.checked ? $(this).val() + "," : "");
+        });
+
+        if (_sValoresHechos == "") {
+            MensajeError("Debe seleccionar mínimo un hecho.");
+            return;
+        }
+
+        _sValoresHechos = _sValoresHechos.substr(0, _sValoresHechos.length - 1);
+
+        var _aValoresHechos = _sValoresHechos.split(",");
+        var _aHechos = new Array();
+
+        for (var i = 0; i < _aValoresHechos.length; i++) {
+
+            _aHechos[i] = _aValoresHechos[i];
+
+        }
+
+
+
+
+        //Obtener información de Documentos de presuntos hechos irregulares 
+        $("#Tdocumentos > tbody  > tr").each(function (index, data) {
+            _sValoresDocPres += data.cells[0].innerText.replace(/\\/g, "//") + "#" + data.cells[1].innerText + "#" + data.cells[2].innerText + "$";
+        });
+
+        var _aDocPres = new Array();
+
+        if (_sValoresDocPres.length > 0)
+        {
+            _sValoresDocPres = _sValoresDocPres.substr(0,_sValoresDocPres.length - 1);
+
+            var _aValoresDocPres = _sValoresDocPres.split("$");
+
+            for (var i = 0; i < _aValoresDocPres.length; i++) {
+
+                _aDocPres[i] = _aValoresDocPres[i];
+
+            }
+        }
+
+        //Obtener información de Documentos de presuntos hechos irregulares 
+        //$("#TdocEv > tbody  > tr").each(function (index, data) {
+        //    _sValoresDocEv += data.cells[0].innerText.replace(/\\/g, "//") + "#" + data.cells[1].innerText + "#" + data.cells[2].innerText + "$";
+        //});
+
+        //var _aDocEv = new Array();
+
+        //if (_sValoresDocEv.length > 0) {
+        //    _sValoresDocEv = _sValoresDocEv.substr(0, _sValoresDocEv.length - 1);
+
+        //    var _aValoresDocEv = _sValoresDocEv.split("$");
+
+        //    for (var i = 0; i < _aValoresDocEv.length; i++) {
+
+        //        _aDocEv[i] = _aValoresDocEv[i];
+
+        //    }
+        //}
+
+        
+
+        _oData = "{ _plLlaveDenuncia: " + $("#MainContent_HDLlaveDenuncia").val() +
+            ", _plLlaveTipoDenuncia: " + $("#MainContent_HDLlaveTipoDenuncia").val() +
+            ", _poArrLlavesHechos:" + (_aHechos.length == 0 ? null : JSON.stringify(_aHechos)) +
+            ", _poArrDocPres:" + (_aDocPres.length == 0 ? null : JSON.stringify(_aDocPres)) +
+            "}";
+        /*", _poArrDocEv:" + (_aDocEv.length == 0 ? null : JSON.stringify(_aDocEv)) +*/
+        
+
+        _oAJAX = $.ajax({
+            type: "POST",
+            url: "Registro.aspx/AJAX_RegistraDatosDenun",
+            data: _oData,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json"
+
+        }).done(function (data, textStatus, jqXHR) {
+
+                if (String(data.d).indexOf("Error") == -1)
+                {
+                    $("#Tdocumentos > tbody  > tr").each(function (index, data) {
+                        data.cells[0].innerText= "";
+                    });
+
+                    MensajeOk("Datos registrados correctamente");
+
+                }
+
+                else {
+
+                    MensajeError("Hubo un error al traer los datos.");
+                }
+        }).fail(function (jqXHR, textStatus, errorThrown) {
+
+            MensajeError("Error al traer los datos [AJAX_RegistraDatosDenun]");
+        });
+
+
+
+    } catch (err) {
+
+        alert("[guardaSegSeccion.click - (Reday)] \n" + err.message);
+    }
+
+
 }

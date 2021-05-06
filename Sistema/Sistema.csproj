@@ -156,6 +156,7 @@
     <Content Include="JS\bootstrap.min.js" />
     <Content Include="JS\JSRegistro.js" />
     <Content Include="JS\JSSeguimDenuncia.js" />
+    <Content Include="JS\JSUploadASPX.js" />
     <Content Include="JS\JSUtils.js" />
     <Content Include="Modulos\Denuncias_IV\Denuncias_IV.aspx" />
     <Content Include="Modulos\Denuncias_IV\Internas.aspx" />
@@ -206,6 +207,7 @@
     <Content Include="SqlServerTypes\x86\SqlServerSpatial140.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="UploadASPX.aspx" />
     <Content Include="ViewSwitcher.ascx" />
     <Content Include="Web.config" />
     <Content Include="Bundle.config" />
@@ -294,6 +296,13 @@
       <DependentUpon>Site.Mobile.Master</DependentUpon>
     </Compile>
     <Compile Include="SqlServerTypes\Loader.cs" />
+    <Compile Include="UploadASPX.aspx.cs">
+      <DependentUpon>UploadASPX.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UploadASPX.aspx.designer.cs">
+      <DependentUpon>UploadASPX.aspx</DependentUpon>
+    </Compile>
     <Compile Include="ViewSwitcher.ascx.cs">
       <DependentUpon>ViewSwitcher.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

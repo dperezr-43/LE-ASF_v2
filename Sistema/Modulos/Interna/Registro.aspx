@@ -10,7 +10,7 @@
     <link href="../../CSS/jquery-ui.css" rel="stylesheet" />
     <script src="../../JS/jquery-1.11.2.min.js"></script>
     <script src="../../JS/jquery-ui-1.10.3.custom.js"></script>
-
+    <%--<script src="../../JS/JSShowModalDialog.js"></script>--%>
     <script src="../../JS/JSRegistro.js"></script>
     
 
@@ -519,18 +519,6 @@
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td class="txt_az_bold right_txt" style="width:10%">
-                                                    <asp:Label runat="server" Text="Cargar Archivo &nbsp;"></asp:Label>   
-                                                    &nbsp;
-                                                </td>
-                                                <td class="txt_az_normal left_txt" style="width:30%">
-                                                    <asp:TextBox ID="txtRegDescArchivo" runat="server" Width="100%"></asp:TextBox>
-                                                    &nbsp;
-                                                </td>
-                                                <td class="left_txt" style="width:5%">
-                                                    <img src="../../Imagenes/file-add.png" class="img_normal_size" id="imgRegDescArchivo" />
-                                                    &nbsp;&nbsp;
-                                                </td>
                                                 <td class="txt_az_bold right_txt" style="width:20%">
                                                     <asp:Label runat="server" Text="Descripción del Archivo &nbsp;"></asp:Label>   
                                                     &nbsp;
@@ -539,22 +527,67 @@
                                                     <asp:TextBox ID="txtDescArchivo" Width="100%" runat="server"></asp:TextBox>
                                                     &nbsp;
                                                 </td>
-                                                <td class="left_txt" style="width:5%">
+                                            </tr>
+                                            <tr>
+                                                <td class="txt_az_bold right_txt" style="width:10%">
+                                                    <%--<asp:Label runat="server" Text="Cargar Archivo &nbsp;"></asp:Label>   --%>
+                                                    <label class="ctrFileUpload" id="btnArchDoc">Seleccionar</label>
+                                                    &nbsp;
+                                                  
+                                                </td>
+                                                <td class="txt_az_normal left_txt" style="width:30%">
+                                                    <%--<asp:TextBox ID="txtRegDescArchivo" runat="server" Width="100%"></asp:TextBox>--%>
+                                                    <asp:Label CssClass="CtrlFrm" ID="lblArchDoc" runat="server" Text="" BorderColor="Transparent"></asp:Label>
+                                                    &nbsp;
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="width:5%" colspan="2" align="center">
+                                                    <img src="../../Imagenes/file-add.png" class="img_normal_size" id="imgRegDescArchivo" onclick="javascript:agregarDocumento(0);" />
+                                                    &nbsp;&nbsp;
+                                                </td>
+                                                
+                                                
+                                                <%--<td class="left_txt" style="width:5%">
                                                     <img src="../../Imagenes/garbage.png" class="img_normal_size" id="imgDescArchivo" />                                                    
                                                    
+                                                </td>--%>
+                                            </tr>
+                                            <tr><td class="row_height_size"></td></tr>
+                                            <tr>
+                                                <td colspan="2">
+                                                    <table align="center">
+                                                        <tr>
+                                                            <td align="center">
+                                                                <div runat="server" id="dvListaDocumentos" align="center">
+                                                                    <table border="1" id="Tdocumentos" style="border-width: 1px; border-style: solid; border-collapse: collapse;">
+                                                                        <thead>
+                                                                            <tr style="color: White; background-color: #D3CFC8; border-style: none; font-size:11px; font-weight:bold">
+                                                                                <td style="width:50px;display:none;">Llave</td>
+                                                                                <td align="center" style="width:100px;">Documento</td>
+                                                                                <td align="center" style="width:300px;">Descripción</td>
+                                                                                <td align="center" style="width:30px;">Eliminar</td>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
                                                 </td>
                                             </tr>
                                             <tr><td class="row_height_size"></td></tr>
-                                        </table>
 
+                                        </table>
                                         
                                         
                                     </div>                                                                  
                                     
+                                        
                                 </td>
                             </tr>
-
-
 
                             <tr>
                                 <td style="vertical-align:top; width:3%">
@@ -589,25 +622,14 @@
                                                     <br />
                                                 </td>
                                             </tr>
+                                            
                                             <tr>
-                                                <td class="txt_az_bold right_txt" style="width:10%">
-                                                    <asp:Label runat="server" Text="Cargar Archivo &nbsp;"></asp:Label>   
-                                                    &nbsp;
-                                                </td>
-                                                <td class="txt_az_normal left_txt" style="width:30%">
-                                                    <asp:TextBox ID="txtCargarArchivo" runat="server" Width="100%"></asp:TextBox>
-                                                    &nbsp;
-                                                </td>
-                                                <td class="left_txt" style="width:5%">
-                                                    <img src="../../Imagenes/file-add.png" class="img_normal_size" id="imgCargarArchivo" />
-                                                    &nbsp;&nbsp;
-                                                </td>
                                                 <td class="txt_az_bold right_txt" style="width:20%">
                                                     <asp:Label runat="server" Text="Descripción del Archivo &nbsp;"></asp:Label>   
                                                     &nbsp;
                                                 </td>
                                                 <td class="txt_az_normal left_txt" style="width:30%">
-                                                    <asp:TextBox ID="txtDescCargaArchivo" Width="100%" runat="server"></asp:TextBox>
+                                                    <asp:TextBox ID="txtDescArchEv" Width="100%" runat="server"></asp:TextBox>
                                                     &nbsp;
                                                 </td>
                                                 <td class="left_txt" style="width:5%">
@@ -616,7 +638,50 @@
                                                 </td>
 
                                             </tr>
+                                            <tr>
+                                                <td class="txt_az_bold right_txt" style="width:10%">
+                                                   <%-- <asp:Label runat="server" Text="Cargar Archivo &nbsp;"></asp:Label>   --%>
+                                                    <label class="ctrFileUpload" id="btnArchEv">Seleccionar</label>
+                                                    &nbsp;
+                                                </td>
+                                                <td class="txt_az_normal left_txt" style="width:30%">
+                                                    <%--<asp:TextBox ID="txtCargarArchivo" runat="server" Width="100%"></asp:TextBox>--%>
+                                                    <asp:Label CssClass="CtrlFrm" ID="lblArchEv" runat="server" Text="" BorderColor="Transparent"></asp:Label>
+                                                    &nbsp;
+                                                </td>
+                                                
+                                            </tr>
+                                            <tr>
+                                                <td class="left_txt" style="width:5%" colspan="2">
+                                                    <img src="../../Imagenes/file-add.png" class="img_normal_size" id="imgCargarEv"  onclick="javascript:agregarDocumento(1);" />
+                                                    &nbsp;&nbsp;
+                                                </td>
+                                            </tr>
                                             <tr><td class="row_height_size"></td></tr>
+                                            <tr>
+                                                <td colspan="2">
+                                                    <table align="center">
+                                                        <tr>
+                                                            <td align="center">
+                                                                <div runat="server" id="dvListaDocEv" align="center">
+                                                                    <table border="1" id="TdocEv" style="border-width: 1px; border-style: solid; border-collapse: collapse;">
+                                                                        <thead>
+                                                                            <tr style="color: White; background-color: #D3CFC8; border-style: none; font-size:11px; font-weight:bold">
+                                                                                <td style="width:50px;display:none;">Llave</td>
+                                                                                <td align="center" style="width:100px;">Documento</td>
+                                                                                <td align="center" style="width:300px;">Descripción</td>
+                                                                                <td align="center" style="width:30px;">Eliminar</td>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
                                         </table>
 
                                         
@@ -764,7 +829,7 @@
 
                             <tr>
                                 <td colspan="3" class="center_txt">
-                                    <input  type="button"  name="btnContinuaDenuncia" value="Guardar"/>
+                                    <input  type="button"  name="btnGuardaSegSecc" value="Guardar"/>
                                 </td>
                             </tr>
 
@@ -1004,6 +1069,8 @@
 
         <asp:HiddenField runat="server" ID="HDLlaveDocumento" Value="0" />
         <asp:HiddenField runat="server" ID="HDLlaveTipoDocumento" Value="0" />
+        <asp:HiddenField runat="server" ID="HDRutaServ" Value="" />
+        <asp:HiddenField runat="server" ID="HDSeleccArchivo" Value="0" />
 
     </div>
    
