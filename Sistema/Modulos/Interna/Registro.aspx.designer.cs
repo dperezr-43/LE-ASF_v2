@@ -105,7 +105,7 @@ namespace Sistema.Modulos.Interna
         protected global::System.Web.UI.WebControls.ListBox lbxCPSeleccionados;
 
         /// <summary>
-        /// Control txtRegDescArchivo.
+        /// Control txtDescArchivo.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
