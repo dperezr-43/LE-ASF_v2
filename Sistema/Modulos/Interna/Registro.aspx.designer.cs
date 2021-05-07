@@ -60,7 +60,52 @@ namespace Sistema.Modulos.Interna
         protected global::System.Web.UI.WebControls.ListBox lbxCP;
 
         /// <summary>
-        /// Control txtDescArchivo.
+        /// Control imgAddCP.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ImageButton imgAddCP;
+
+        /// <summary>
+        /// Control imgRemCP.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ImageButton imgRemCP;
+
+        /// <summary>
+        /// Control imgAddCPTodos.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ImageButton imgAddCPTodos;
+
+        /// <summary>
+        /// Control imgRemCPtODOS.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ImageButton imgRemCPtODOS;
+
+        /// <summary>
+        /// Control lbxCPSeleccionados.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ListBox lbxCPSeleccionados;
+
+        /// <summary>
+        /// Control txtRegDescArchivo.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
@@ -114,13 +159,13 @@ namespace Sistema.Modulos.Interna
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl dvListaDocEv;
 
         /// <summary>
-        /// Control ddlEntidadInvolucrada.
+        /// Control txtEntInvolucrada.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlEntidadInvolucrada;
+        protected global::System.Web.UI.WebControls.TextBox txtEntInvolucrada;
 
         /// <summary>
         /// Control txtObjetoDenunciado.

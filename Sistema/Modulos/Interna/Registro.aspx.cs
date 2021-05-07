@@ -370,6 +370,79 @@ namespace Sistema.Modulos.Interna
         }
 
 
+        // DPR - Guardado general de la denuncia 
+        [WebMethod]
+        public static object AJAX_GuardaDenuncia(long _plLlaveDenuncia, long _plLlaveTipoDenuncia, object _poArrLlavesHechos, string _psPSWDenunciante)
+        {
+
+            DataTable _dtHechosDenuncia = new DataTable();
+            nDenuncia nDen = new nDenuncia();
+            DataRow _drDts;
+            Int32 _iCont = 0;
+            string _sRespuesta = "";
+
+            object[] _oLlavesHechos = (object[])_poArrLlavesHechos;
+
+
+            try
+            {
+                _dtHechosDenuncia.Columns.Add("llave_obj_prin", typeof(Int32));
+                _dtHechosDenuncia.Columns.Add("llave_obj_sub", typeof(Int32));
+                _dtHechosDenuncia.Columns.Add("llave_obj_sub_vinc", typeof(Int32));
+                _dtHechosDenuncia.Columns.Add("llave_tipo_relacion", typeof(Int32));
+                _dtHechosDenuncia.Columns.Add("consecutivo", typeof(Int32));
+
+                if (_poArrLlavesHechos != null)
+                {
+                    _drDts = null;
+                    _iCont = 0;
+
+                    for (_iCont = 0; _iCont < _oLlavesHechos.Length; _iCont++)
+                    {
+
+                        _drDts = _dtHechosDenuncia.NewRow();
+                        _drDts["llave_obj_prin"] = 2;
+                        _drDts["llave_obj_sub"] = 3;
+                        _drDts["llave_obj_sub_vinc"] = Int32.Parse(_oLlavesHechos[_iCont].ToString());
+                        _drDts["llave_tipo_relacion"] = 36;
+                        _drDts["consecutivo"] = _iCont + 1;
+
+
+                        _dtHechosDenuncia.Rows.Add(_drDts);
+
+                    }
+
+
+
+                }
+
+                _sRespuesta = nDen.RegistroSol(_plLlaveDenuncia, _plLlaveTipoDenuncia, 0, "", 0, "", "", _psPSWDenunciante, _dtHechosDenuncia, null, null, null, null);
+
+                if (nDen.Exception != null)
+                {
+
+                    return nDen.Exception.Message;
+                }
+                else
+                {
+                    return _sRespuesta;
+
+                }
+
+                //return nSeg.ListCons;
+
+
+            }
+            catch (Exception ex)
+            {
+                return "Error:" + ex.Message;
+            }
+            finally
+            {
+                nDen = null;
+            }
+        }
+
 
     }
 
