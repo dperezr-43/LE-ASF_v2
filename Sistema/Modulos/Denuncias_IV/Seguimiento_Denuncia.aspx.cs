@@ -278,7 +278,7 @@ namespace Sistema.Modulos.Denuncias_IV
         {
             nSeguimiento nSeg = new nSeguimiento();
 
-            nSeg.TraeDocumento(Convert.ToInt32(HDLlaveDocumento.Value), Convert.ToInt32(HDLlaveTipoDocumento.Value));
+            nSeg.TraeDocumento(Convert.ToInt32(HDLlaveDocumento.Value));
 
             if (nSeg.Exception == null)
             {

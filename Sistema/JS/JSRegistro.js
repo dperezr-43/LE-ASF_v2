@@ -7,7 +7,7 @@ $(document).ready(function () {
 
    
 
-    $('#dvSiAnonima, #dvDenunciaRegistro, #MainContent_dvLogFolio, #MainContent_dvRespuesta, #MainContent_dvListaDocumentos, #MainContent_dvListaDocEv').hide();
+    $('#dvSiAnonima, #dvDenunciaRegistro, ' + _Main + 'dvLogFolio, ' + _Main + 'dvRespuesta, ' + _Main + 'dvListaDocumentos, ' + _Main + 'dvListaDocEv, ' + _Main +'dvEntidadesDen').hide();
     //
 
   
@@ -50,7 +50,7 @@ $(document).ready(function () {
 
             let _sNomControl = "#Denuncia_no_anonima";
 
-            $("#MainContent_HDLlaveTipoDenuncia").val($(this).val());
+            $(_Main + "HDLlaveTipoDenuncia").val($(this).val());
 
             $(this).val() == '1' ? $(_sNomControl).addClass("OcultaSeccion") : $(_sNomControl).removeClass("OcultaSeccion");
             $('#dvSiAnonima').show();
@@ -154,7 +154,13 @@ $(document).ready(function () {
 
         $("#btnArchDoc").on("click", function () {
 
-            ElegirDoc();
+            ElegirDoc(1);
+
+        });
+
+        $("#btnArchEv").on("click", function () {
+
+            ElegirDoc(2);
 
         });
 
@@ -205,8 +211,8 @@ $(document).ready(function () {
 
             
 
-            _oData = "{ _plLlaveDenuncia: " + $("#MainContent_HDLlaveDenuncia").val() +
-                ", _plLlaveTipoDenuncia: " + $("#MainContent_HDLlaveTipoDenuncia").val() +
+            _oData = "{ _plLlaveDenuncia: " + $(_Main + "HDLlaveDenuncia").val() +
+                ", _plLlaveTipoDenuncia: " + $(_Main + "HDLlaveTipoDenuncia").val() +
                 ", _poArrLlavesHechos:" + (_aHechos.length == 0 ? null : JSON.stringify(_aHechos) ) +
                      "}";
 
@@ -230,13 +236,17 @@ $(document).ready(function () {
 
                         if (_aResp[0] == 1) {
 
-
                             MensajeOk("El folio es: " + _aResp[1]);
-                            $("#HDFolio").val(_aResp[0]);
+                            $(_Main + "HDFolio").val(_aResp[1].trim());
 
-                            $("#MainContent_HDLlaveDenuncia").val(_aResp[2]);
+                            //QUITARLO DESPUÉS
+                            $(_Main + "HDPassword").val('hola');
+
+                            $(_Main + "HDLlaveDenuncia").val(_aResp[2]);
 
                             Habilitardeshabilitar2Secc(false);
+
+                            consultaFolio();
 
                         }
                         else {
@@ -585,10 +595,10 @@ function Habilitardeshabilitar2Secc(_bDisable) {
 function seguimiento() {
 
 
-    $("#MainContent_txtLogFolio").val("");
-    $("#MainContent_txtLogPass").val("");
+    $(_Main + "txtLogFolio").val("");
+    $(_Main + "txtLogPass").val("");
 
-    $("#MainContent_dvLogFolio").dialog({
+    $(_Main + "dvLogFolio").dialog({
         open: function () { $(".ui-dialog-titlebar-close").hide(); },
         modal: true,
         show: {
@@ -640,39 +650,42 @@ function seguimiento() {
 
 function ValidarCamposFolioLog() {
 
-    var _sLogFolio = $("#MainContent_txtLogFolio").val();
+    var _sLogFolio = $(_Main + "txtLogFolio").val();
     _sLogFolio = _sLogFolio.trim();
 
-    var _sLogPass = $("#MainContent_txtLogPass").val();
+    var _sLogPass = $(_Main + "txtLogPass").val();
     _sLogPass = _sLogPass.trim();
 
     if (_sLogFolio == "") {
 
-        var _Style = $("#MainContent_txtLogFolio").attr("style");
+        var _Style = $(_Main + "txtLogFolio").attr("style");
         _Style += "border: 2px solid red;";
-        $("#MainContent_txtLogFolio").attr("style", _Style);
+        $(_Main + "txtLogFolio").attr("style", _Style);
         MensajeError("Introduce el folio");
         return;
     }
 
-    var _Style = $("#MainContent_txtLogFolio").attr("style");
+    var _Style = $(_Main + "txtLogFolio").attr("style");
     _Style = _Style.replace("border: 2px solid red;", "");
-    $("#MainContent_txtLogFolio").attr("style", _Style);
+    $(_Main + "txtLogFolio").attr("style", _Style);
 
     if (_sLogPass == "") {
 
-        var _Style = $("#MainContent_txtLogPass").attr("style");
+        var _Style = $(_Main + "txtLogPass").attr("style");
         _Style += "border: 2px solid red;";
-        $("#MainContent_txtLogPass").attr("style", _Style);
+        $(_Main + "txtLogPass").attr("style", _Style);
 
         MensajeError("Introduce la contraseña");
         return;
     }
 
-    var _Style = $("#MainContent_txtLogPass").attr("style");
+    var _Style = $(_Main + "txtLogPass").attr("style");
     _Style = _Style.replace("border: 2px solid red;", "");
-    $("#MainContent_txtLogPass").attr("style", _Style);
+    $(_Main + "txtLogPass").attr("style", _Style);
     
+
+    $(_Main + "HDFolio").val(_sLogFolio);
+    $(_Main + "HDPassword").val(_sLogPass);
 
     consultaFolio();
 
@@ -680,8 +693,8 @@ function ValidarCamposFolioLog() {
 
 function consultaFolio() {
 
-    _oData = "{ _psFolio:'" + $("#MainContent_txtLogFolio").val() + "'" +
-        ", _psPassword: '" + $("#MainContent_txtLogPass").val() + "'" +
+    _oData = "{ _psFolio:'" + $(_Main + "HDFolio").val() + "'" +
+        ", _psPassword: '" + $(_Main + "HDPassword").val() + "'" +
         "}";
 
 
@@ -699,18 +712,49 @@ function consultaFolio() {
 
             if (String(data.d).indexOf("Error") == -1) {
 
+
+                $.each($("input[name*=MainContent_chbHechos]"), function () {
+
+                        this.checked = false;
+
+                });
+
                 var _sValoresHechosDen = "";
                 var _sValoresDocIrr = "";
+                var _sValoresDocEv = "";
+                var _sValoresEntidad = "";
+
+                var _lValorNivelGob = 0;
 
                 $(data.d).each(function () {
 
                     if (this._lOrden == 1) {
 
-                        _sValoresHechosDen += this._lLlaveCat + "#";
+                        _sValoresHechosDen += this._lLlaveGen + "#";
 
                     }
                     else if (this._lOrden == 3) {
-                        _sValoresDocIrr += this._sTexto + "$";
+
+                        /*Llave Cat es la llave_usuario*/
+                        _sValoresDocIrr += this._sTexto + "#" + this._sDescripcion + "#" + this._lLlaveGen + "$";
+
+                    }
+                    else if (this._lOrden == 4) {
+
+                        /*Llave Cat es la llave_usuario*/
+                        _sValoresDocEv += this._sTexto + "#" + this._sDescripcion + "#" + this._lLlaveGen + "$";
+
+                    }
+                    else if (this._lOrden == 5) {
+
+                        /*Llave Cat es la llave_usuario*/
+                        _lValorNivelGob = this._lLlaveGen;
+
+                    }
+                    else if (this._lOrden == 6) {
+
+                        /*Llave Cat es la llave_usuario*/
+                        _sValoresEntidad += this._sTexto + "$";
 
                     }
 
@@ -739,15 +783,43 @@ function consultaFolio() {
                     var _arrDocIrr = _sValoresDocIrr.split("$");
                     agregarDocumentosConsulta(0, _arrDocIrr);
                 }
-                
 
+                //los documentos de evidencia
 
-                $("#MainContent_HDFolio").val($("#MainContent_txtLogFolio").val());
-                $("#MainContent_HDLlaveDenuncia").val(data.d[0]._lLlaveDenuncia);
+                if (_sValoresDocEv.length > 0) {
 
-                $("#MainContent_txtLogFolio").val("");
-                $("#MainContent_txtLogPass").val("");
-                $("#MainContent_dvLogFolio").dialog("close");
+                    _sValoresDocEv = _sValoresDocEv.substr(0, _sValoresDocEv.length - 1);
+
+                    var _arrDocEv = _sValoresDocEv.split("$");
+                    agregarDocumentosConsulta(1, _arrDocEv);
+                }
+
+                //Entidades Involucradas
+
+                $('input[id*=rNG-]').each(function () {
+
+                    if (this.value == _lValorNivelGob) {
+
+                        this.checked = true;
+
+                    }
+
+                });
+
+                if (_sValoresEntidad.length > 0) {
+
+                    _sValoresEntidad = _sValoresEntidad.substr(0, _sValoresEntidad.length - 1);
+
+                    var _arrEntidades = _sValoresEntidad.split("$");
+                    agregarDocumentosConsulta(2, _arrEntidades);
+                }
+
+                //$(_Main + "HDFolio").val($(_Main + "txtLogFolio").val());
+                $(_Main + "HDLlaveDenuncia").val(data.d[0]._lLlaveDenuncia);
+
+                $(_Main + "txtLogFolio").val("");
+                $(_Main + "txtLogPass").val("");
+                $(_Main + "dvLogFolio").dialog("close");
 
                 Habilitardeshabilitar2Secc(false);
             }
@@ -774,6 +846,9 @@ function consultaFolio() {
 
 function VerDocumento(_lLlaveDocumento, _lLlaveTipoDoc) {
 
+    $(_Main + "HDVerLlaveDoc").val("0");
+    $(_Main + "HDVerRutaDoco").val("");
+
     $(_Main + "HDLlaveDocumento").val(_lLlaveDocumento);
     $(_Main + "HDLlaveTipoDocumento").val(_lLlaveTipoDoc);
 
@@ -781,18 +856,21 @@ function VerDocumento(_lLlaveDocumento, _lLlaveTipoDoc) {
     __doPostBack('btnVerDocumento', 'CLICK');
 }
 
-function ElegirDoc() {
-    var _sRutaServer = $("#MainContent_HDRutaServ").val() + "\\" +$("#MainContent_HDLlaveDenuncia").val();
+function ElegirDoc(_iOpc) {
+
+    $(_Main + "HDSeleccArchivo").val(_iOpc);
+
+    var _sRutaServer = $(_Main + "HDRutaServ").val() + "\\" + $(_Main + "HDLlaveDenuncia").val();
 
 
-    var _sArchivo = $("#MainContent_lblArchDoc").text();
+    var _sArchivo = $(_Main + "lblArchDoc").text();
 
     if (_sArchivo != "") {
         _sArchivo = _sArchivo.replace(/\\/g, "//");
         _sArchivo = _sArchivo.substr(_sArchivo.lastIndexOf("//") + 2);
     }
 
-    var cadena_url = "../../UploadASPX.aspx?llvTipoDoc=0," + _sArchivo + "," + $("#MainContent_HDLlaveDenuncia").val();
+    var cadena_url = "../../UploadASPX.aspx?llvTipoDoc=0," + _sArchivo + "," + $(_Main + "HDLlaveDenuncia").val();
 
 
     //procesos para centrar el cuadro 
@@ -820,14 +898,14 @@ function setValue(Valores) {
 
     if (Valores.TipoAccion == "Guardar") {
 
-        if ($("#MainContent_HDSeleccArchivo").val() == 0) {
+        if ($(_Main + "HDSeleccArchivo").val() == 1) {
 
-            $("#MainContent_lblArchDoc").text(Valores.HDNombreArchivo);
+            $(_Main + "lblArchDoc").text(Valores.HDNombreArchivo);
 
         }
-        else if ($("#MainContent_HDSeleccArchivo").val() == 0) {
+        else if ($(_Main + "HDSeleccArchivo").val() == 2) {
 
-            $("#MainContent_lblArchDocEv").text(Valores.HDNombreArchivo);
+            $(_Main + "lblArchEv").text(Valores.HDNombreArchivo);
 
         }
 
@@ -848,132 +926,203 @@ function agregarDocumento(_iOpcion) {
     var nombre_doc = "";
     var nombre_ruta = "";
 
+    var nombre_ver_doc = "";
+
     var _sEstiloFilaAlterna = "ItemStyleClass";
 
     switch (_iOpcion) {
         case 0:
-            nombre_dv = "#MainContent_dvListaDocumentos";
+            nombre_dv = _Main + "dvListaDocumentos";
             nombre_tabla = "#Tdocumentos";
-            nombre_desc = "#MainContent_txtDescArchivo";
+            nombre_desc = _Main + "txtDescArchivo";
             nombre_id_fila = "trNivelDoc";
             nombre_elim_reg = "btnElimDoc";
-            nombre_doc = "#MainContent_lblArchDoc";
+            nombre_doc = _Main + "lblArchDoc";
             nombre_ruta = "inRutaDoc";
+            nombre_ver_doc = "btnVerDoc";
 
-            
             break;
 
         case 1:
-            nombre_dv = "#MainContent_dvListaDocEv";
+            nombre_dv = _Main + "dvListaDocEv";
             nombre_tabla = "#TdocEv";
-            nombre_desc = "#MainContent_txtDescArchEv";
+            nombre_desc = _Main + "txtDescArchEv";
             nombre_id_fila = "trNivelEv";
             nombre_elim_reg = "btnEliEv";
-            nombre_doc = "#MainContent_lblArchEv";
+            nombre_doc = _Main + "lblArchEv";
             nombre_ruta = "inRutaEv";
+            nombre_ver_doc = "btnVerEv";
 
             break;
 
-
+        case 2:
+            nombre_dv = _Main + "dvEntidadesDen";
+            nombre_tabla = "#TEntidades";
+            nombre_desc = _Main + "txtEntInvolucrada";
+            nombre_id_fila = "trNivelEnt";
+            nombre_elim_reg = "btnEliEnt";
+            break;
     }
 
-    var _sNomDoc = $(nombre_doc).text();
-    _sNomDoc = _sNomDoc.trim();
+    if (_iOpcion == 0 || _iOpcion == 1) {
 
-    var _sDescDoc = $(nombre_desc).val();
-    _sDescDoc = _sDescDoc.trim();
+        var _sNomDoc = $(nombre_doc).text();
+        _sNomDoc = _sNomDoc.trim();
 
-    if (_sNomDoc == "") {
+        var _sDescDoc = $(nombre_desc).val();
+        _sDescDoc = _sDescDoc.trim();
 
-        var _Style = $(nombre_doc).attr("style");
-        _Style += "border: 2px solid red;";
-        $(nombre_doc).attr("style", _Style);
-        MensajeError("Seleccione un documento.");
-        return;
-    }
-    var _Style = $(nombre_doc).attr("style");
-    _Style = _Style.replace("border: 2px solid red;", "");
-    $(nombre_doc).attr("style", _Style);
+        if (_sDescDoc == "") {
 
-    if (_sDescDoc == "") {
-
+            var _Style = $(nombre_desc).attr("style");
+            _Style += "border: 2px solid red;";
+            $(nombre_desc).attr("style", _Style);
+            MensajeError("Introduzca la descripción del documento.");
+            return;
+        }
         var _Style = $(nombre_desc).attr("style");
-        _Style += "border: 2px solid red;";
+        _Style = _Style.replace("border: 2px solid red;", "");
         $(nombre_desc).attr("style", _Style);
-        MensajeError("Seleccione un documento.");
-        return;
-    }
-    var _Style = $(nombre_desc).attr("style");
-    _Style = _Style.replace("border: 2px solid red;", "");
-    $(nombre_desc).attr("style", _Style);
 
-    //Ver ID de la tabla, cambiarla
-    con_filas = $(nombre_tabla + "> tbody > tr").length;
+        if (_sNomDoc == "") {
 
-    var nom_id_completo = nombre_id_fila + (con_filas + 1);
-    var nom_id_eli_comp = nombre_elim_reg + (con_filas + 1);
-
-    var existe_nombre = $(nombre_tabla + " tr > td:contains('" + _sNomDoc + "')").length;
+            var _Style = $(nombre_doc).attr("style");
+            _Style += "border: 2px solid red;";
+            $(nombre_doc).attr("style", _Style);
+            MensajeError("Seleccione un documento.");
+            return;
+        }
+        var _Style = $(nombre_doc).attr("style");
+        _Style = _Style.replace("border: 2px solid red;", "");
+        $(nombre_doc).attr("style", _Style);
 
 
-    $(nombre_tabla + " > tbody > tr > td").css("background", "white");
 
-    if (existe_nombre == 0) {
+        //Ver ID de la tabla, cambiarla
+        con_filas = $(nombre_tabla + "> tbody > tr").length;
 
-        var _sHTML = "<tr id=\"" + nom_id_completo + "\"  class=\"" + _sEstiloFilaAlterna + "\" style=\"font-size:11px;\">" +
-            "<td style=\"display:none;\">" + $("#MainContent_HDRutaServ").val() + "\\" + $("#MainContent_HDLlaveDenuncia").val() + "\\" + _sNomDoc +"</td>" +
-            "<td>" + _sNomDoc + "</td>" +
-            "<td>" + _sDescDoc + "<input type=\"hidden\" id=\"" + nombre_ruta + (con_filas + 1) + "\" value=\"" + $("#MainContent_HDRutaServ").val() + "\\" + $("#MainContent_HDLlaveDenuncia").val() + "\\" + _sNomDoc + "\" ></td>" +
-            "<td align=\"center\"> <button id=\"" + nom_id_eli_comp + "\" onclick=\"javascript: EliminarDocTabla('#" + nom_id_completo + "','" + nombre_tabla + "','" + nombre_dv + "'); return false;\"  ></button></td>" +
-            "</tr>";
+        var nom_id_completo = nombre_id_fila + (con_filas + 1);
+        var nom_id_eli_comp = nombre_elim_reg + (con_filas + 1);
+        var nom_id_ver_comp = nombre_ver_doc + (con_filas + 1);
 
-        $(nombre_tabla + " tbody").append(_sHTML);
-        $(nombre_desc).val("");
-        $(nombre_doc).val("");
+        var existe_nombre_docIrr = $("#Tdocumentos tr > td:contains('" + _sNomDoc + "')").length;
+        var existe_nombre_docEv = $("#TdocEv tr > td:contains('" + _sNomDoc + "')").length;
 
-        $("#" + nom_id_eli_comp).button({
-            icons: {
-                primary: 'ui-icon-trash'
+        $(nombre_tabla + " > tbody > tr > td").css("background", "white");
+
+        if (existe_nombre_docIrr == 0 && existe_nombre_docEv == 0) {
+
+            var _sHTML = "<tr id=\"" + nom_id_completo + "\"  class=\"" + _sEstiloFilaAlterna + "\" style=\"font-size:11px;\">" +
+                "<td style=\"display:none;\">" + $(_Main + "HDRutaServ").val() + "\\" + $(_Main + "HDLlaveDenuncia").val() + "\\" + _sNomDoc + "</td>" +
+                "<td>" + _sNomDoc + "</td>" +
+                "<td>" + _sDescDoc + "<input type=\"hidden\" id=\"" + nombre_ruta + (con_filas + 1) + "\" value=\"" + $(_Main + "HDRutaServ").val() + "\\" + $(_Main + "HDLlaveDenuncia").val() + "\\" + _sNomDoc + "\" ></td>" +
+                "<td align=\"center\"> <button id=\"" + nom_id_eli_comp + "\" onclick=\"javascript: EliminarDocTabla('#" + nom_id_completo + "','" + nombre_tabla + "','" + nombre_dv + "'); return false;\"  ></button></td>" +
+                "<td align=\"center\"> <button id=\"" + nom_id_ver_comp + "\" onclick=\"javascript: VerDocumentoTab(0,'" + ($(_Main + "HDRutaServ").val() + "\\" + $(_Main + "HDLlaveDenuncia").val() + "\\" + _sNomDoc).replace(/\\/g, "#") + "'); return false;\"  ></button></td>" +
+                "</tr>";
+
+            $(nombre_tabla + " tbody").append(_sHTML);
+            $(nombre_desc).val("");
+            $(nombre_doc).text("");
+
+            $("#" + nom_id_eli_comp).button({
+                icons: {
+                    primary: 'ui-icon-trash'
+                }
+
+            }).css("height", '28px').css("width", "30px");
+
+            $("#" + nom_id_ver_comp).button({
+                icons: {
+                    primary: ' ui-icon-search'
+                }
+
+            }).css("height", '28px').css("width", "30px");
+
+
+            con_filas = $(nombre_tabla + "> tbody > tr").length;
+            if (con_filas > 0) {
+                $(nombre_dv).show();
+            }
+        }
+        else {
+
+            if (existe_nombre_docIrr != 0) {
+                $("#Tdocumentos tr > td:contains('" + _sNomDoc + "')").css("background", "#FFE8E8");
             }
 
-        }).css("height", '28px').css("width", "30px");
+            if (existe_nombre_docEv != 0) {
+                $("#TdocEv tr > td:contains('" + _sNomDoc + "')").css("background", "#FFE8E8");
+            }
 
 
 
+
+        }
+
+    }
+    else if (_iOpcion  == 2) {
+
+        var _sDescDoc = $(nombre_desc).val();
+        _sDescDoc = _sDescDoc.trim();
+
+        if (_sDescDoc == "") {
+
+            var _Style = $(nombre_desc).attr("style");
+            _Style += "border: 2px solid red;";
+            $(nombre_desc).attr("style", _Style);
+            MensajeError("Introduzca la descripción del documento.");
+            return;
+        }
+        var _Style = $(nombre_desc).attr("style");
+        _Style = _Style.replace("border: 2px solid red;", "");
+        $(nombre_desc).attr("style", _Style);
 
         con_filas = $(nombre_tabla + "> tbody > tr").length;
-        if (con_filas > 0) {
-            $(nombre_dv).show();
+
+        var nom_id_completo = nombre_id_fila + (con_filas + 1);
+        var nom_id_eli_comp = nombre_elim_reg + (con_filas + 1);
+
+        $(nombre_tabla + " > tbody > tr > td").css("background", "white");
+
+        var existe_entidad = $(nombre_tabla + " tr > td:contains('" + _sNomDoc + "')").length;
+
+        if (existe_entidad == 0) {
+
+            var _sHTML = "<tr id=\"" + nom_id_completo + "\"  class=\"" + _sEstiloFilaAlterna + "\" style=\"font-size:11px;\">" +
+                "<td>" + _sDescDoc + "</td>" +
+                "<td align=\"center\"> <button id=\"" + nom_id_eli_comp + "\" onclick=\"javascript: EliminarDocTabla('#" + nom_id_completo + "','" + nombre_tabla + "','" + nombre_dv + "'); return false;\"  ></button></td>" +
+                "</tr>";
+
+            $(nombre_tabla + " tbody").append(_sHTML);
+            $(nombre_desc).val("");
+            $(nombre_doc).text("");
+
+            $("#" + nom_id_eli_comp).button({
+                icons: {
+                    primary: 'ui-icon-trash'
+                }
+
+            }).css("height", '28px').css("width", "30px");
+
+            con_filas = $(nombre_tabla + "> tbody > tr").length;
+            if (con_filas > 0) {
+                $(nombre_dv).show();
+            }
+        }
+        else
+        {
+
+            $(nombre_tabla + " tr > td:contains('" + _sNomDoc + "')").css("background", "#FFE8E8");
+
         }
     }
-    else {
-        $(nombre_tabla + " tr > td:contains('" + _sNomDoc + "')").css("background", "#FFE8E8");
-        //$("#rdAspecto1_E").closest('tr').css("background", "#FFE8E8");
-        //$("#tdPregunta3").css("background", "#FFE8E8");
-    }
+
     
-    limpiarCamposDoc(_iOpcion);
+    
+    //limpiarCamposDoc(_iOpcion);
 
 }
 
-function limpiarCamposDoc() {
-
-    if (_iOpcion == 0) {
-
-        $("#MainContent_txtDescArchivo").val("");
-        $("#MainContent_lblArchDoc").text("");
-
-    }
-    else {
-
-        $("#MainContent_txtDescArchEv").val("");
-        $("#MainContent_lblArchEv").text("");
-
-    }
-
-    
-
-}
 
 function agregarDocumentosConsulta(_iOpcion, aDatos) {
 
@@ -987,66 +1136,118 @@ function agregarDocumentosConsulta(_iOpcion, aDatos) {
     var _sEstiloFilaAlterna = "ItemStyleClass";
 
     switch (_iOpcion) {
+
         case 0:
-            nombre_dv = "#MainContent_dvListaDocumentos";
+            nombre_dv = _Main + "dvListaDocumentos";
             nombre_tabla = "#Tdocumentos";
             nombre_id_fila = "trNivelDoc";
             nombre_elim_reg = "btnElimDoc";
             nombre_ruta = "inRutaDoc";
-
+            nombre_ver_doc = "btnVerDoc";
 
             break;
 
         case 1:
-            nombre_dv = "#MainContent_dvListaDocEv";
+            nombre_dv = _Main + "dvListaDocEv";
             nombre_tabla = "#TdocEv";
             nombre_id_fila = "trNivelEv";
             nombre_elim_reg = "btnEliEv";
             nombre_ruta = "inRutaEv";
-
+            nombre_ver_doc = "btnVerEv";
             break;
 
+        case 2:
+            nombre_dv = _Main + "dvEntidadesDen";
+            nombre_tabla = "#TEntidades";
+            nombre_desc = _Main + "txtEntInvolucrada";
+            nombre_id_fila = "trNivelEnt";
+            nombre_elim_reg = "btnEliEnt";
 
+            break;
     }
 
     $(nombre_tabla + " tbody").empty();
 
     for (var i = 0; i < aDatos.length; i++) {
 
-        var sDatosA = aDatos[i].split("#");
+        if (_iOpcion == 0 || _iOpcion == 1) {
 
-        var _sNomDoc = sDatosA[0];
-        var _sDescDoc = sDatosA[1];
+            var sDatosA = aDatos[i].split("#");
 
-        //Ver ID de la tabla, cambiarla
-        con_filas = $(nombre_tabla + "> tbody > tr").length;
+            var _sNomDoc = sDatosA[0];
+            var _sDescDoc = sDatosA[1];
 
-        var nom_id_completo = nombre_id_fila + (con_filas + 1);
-        var nom_id_eli_comp = nombre_elim_reg + (con_filas + 1);
+            //Ver ID de la tabla, cambiarla
+            con_filas = $(nombre_tabla + "> tbody > tr").length;
 
+            var nom_id_completo = nombre_id_fila + (con_filas + 1);
+            var nom_id_eli_comp = nombre_elim_reg + (con_filas + 1);
+            var nom_id_ver_comp = nombre_ver_doc + (con_filas + 1);
 
-        $(nombre_tabla + " > tbody > tr > td").css("background", "white");
+            $(nombre_tabla + " > tbody > tr > td").css("background", "white");
 
-        var _sHTML = "<tr id=\"" + nom_id_completo + "\"  class=\"" + _sEstiloFilaAlterna + "\" style=\"font-size:11px;\">" +
-            "<td style=\"display:none;\"></td>" +
-            "<td>" + _sNomDoc + "</td>" +
-            "<td>" + _sDescDoc + "</td>" +
-            "<td align=\"center\"> <button id=\"" + nom_id_eli_comp + "\" onclick=\"javascript: EliminarDocTabla('#" + nom_id_completo + "','" + nombre_tabla + "','" + nombre_dv + "'); return false;\"  ></button></td>" +
-            "</tr>";
+            var _sHTML = "<tr id=\"" + nom_id_completo + "\"  class=\"" + _sEstiloFilaAlterna + "\" style=\"font-size:11px;\">" +
+                "<td style=\"display:none;\"></td>" +
+                "<td>" + _sNomDoc + "</td>" +
+                "<td>" + _sDescDoc + "</td>" +
+                "<td align=\"center\"> <button id=\"" + nom_id_eli_comp + "\" onclick=\"javascript: EliminarDocTabla('#" + nom_id_completo + "','" + nombre_tabla + "','" + nombre_dv + "'); return false;\"  ></button></td>" +
+                "<td align=\"center\"> <button id=\"" + nom_id_ver_comp + "\" onclick=\"javascript: VerDocumentoTab(" + sDatosA[2] + ",''); return false;\"  ></button></td>" +
+                "</tr>";
 
-        $(nombre_tabla + " tbody").append(_sHTML);
+            $(nombre_tabla + " tbody").append(_sHTML);
 
-        $("#" + nom_id_eli_comp).button({
-            icons: {
-                primary: 'ui-icon-trash'
+            $("#" + nom_id_eli_comp).button({
+                icons: {
+                    primary: 'ui-icon-trash'
+                }
+
+            }).css("height", '28px').css("width", "30px");
+
+            $("#" + nom_id_ver_comp).button({
+                icons: {
+                    primary: ' ui-icon-search'
+                }
+
+            }).css("height", '28px').css("width", "30px");
+
+            con_filas = $(nombre_tabla + "> tbody > tr").length;
+            if (con_filas > 0) {
+                $(nombre_dv).show();
             }
 
-        }).css("height", '28px').css("width", "30px");
-
-        con_filas = $(nombre_tabla + "> tbody > tr").length;
-        if (con_filas > 0) {
-            $(nombre_dv).show();
         }
+        else if (_iOpcion == 2) {
+
+            //Ver ID de la tabla, cambiarla
+            con_filas = $(nombre_tabla + "> tbody > tr").length;
+
+            var nom_id_completo = nombre_id_fila + (con_filas + 1);
+            var nom_id_eli_comp = nombre_elim_reg + (con_filas + 1);
+
+            $(nombre_tabla + " > tbody > tr > td").css("background", "white");
+
+            var _sHTML = "<tr id=\"" + nom_id_completo + "\"  class=\"" + _sEstiloFilaAlterna + "\" style=\"font-size:11px;\">" +
+                "<td>" + aDatos[i] + "</td>" +
+                "<td align=\"center\"> <button id=\"" + nom_id_eli_comp + "\" onclick=\"javascript: EliminarDocTabla('#" + nom_id_completo + "','" + nombre_tabla + "','" + nombre_dv + "'); return false;\"  ></button></td>" +
+                "</tr>";
+
+            $(nombre_tabla + " tbody").append(_sHTML);
+
+            $("#" + nom_id_eli_comp).button({
+                icons: {
+                    primary: 'ui-icon-trash'
+                }
+
+            }).css("height", '28px').css("width", "30px");
+
+            con_filas = $(nombre_tabla + "> tbody > tr").length;
+            if (con_filas > 0) {
+                $(nombre_dv).show();
+            }
+
+        }
+
+        
         
         
 
@@ -1078,6 +1279,7 @@ function guardaSegSeccion() {
         var _sValoresHechos = "";
         var _sValoresDocPres = "";
         var _sValoresDocEv = "";
+        var _sValoresEntidades = "";
 
         //Obtener información de los hechos de denuncias
 
@@ -1124,33 +1326,67 @@ function guardaSegSeccion() {
             }
         }
 
-        //Obtener información de Documentos de presuntos hechos irregulares 
-        //$("#TdocEv > tbody  > tr").each(function (index, data) {
-        //    _sValoresDocEv += data.cells[0].innerText.replace(/\\/g, "//") + "#" + data.cells[1].innerText + "#" + data.cells[2].innerText + "$";
-        //});
+        //Obtener información de Documentos de Evidencia 
+        $("#TdocEv > tbody  > tr").each(function (index, data) {
+            _sValoresDocEv += data.cells[0].innerText.replace(/\\/g, "//") + "#" + data.cells[1].innerText + "#" + data.cells[2].innerText + "$";
+        });
 
-        //var _aDocEv = new Array();
+        var _aDocEv = new Array();
 
-        //if (_sValoresDocEv.length > 0) {
-        //    _sValoresDocEv = _sValoresDocEv.substr(0, _sValoresDocEv.length - 1);
+        if (_sValoresDocEv.length > 0) {
+            _sValoresDocEv = _sValoresDocEv.substr(0, _sValoresDocEv.length - 1);
 
-        //    var _aValoresDocEv = _sValoresDocEv.split("$");
+            var _aValoresDocEv = _sValoresDocEv.split("$");
 
-        //    for (var i = 0; i < _aValoresDocEv.length; i++) {
+            for (var i = 0; i < _aValoresDocEv.length; i++) {
 
-        //        _aDocEv[i] = _aValoresDocEv[i];
+                _aDocEv[i] = _aValoresDocEv[i];
 
-        //    }
-        //}
+            }
+        }
 
-        
+        //Obtener información de Entidades Involucradas
 
-        _oData = "{ _plLlaveDenuncia: " + $("#MainContent_HDLlaveDenuncia").val() +
-            ", _plLlaveTipoDenuncia: " + $("#MainContent_HDLlaveTipoDenuncia").val() +
+        var _lValorNivelGobierno = 0;
+
+        $('input[id*=rNG-]').each(function () {
+
+            if (this.checked) {
+
+                _lValorNivelGobierno = this.value;
+
+            }
+
+        });
+
+        $("#TEntidades > tbody  > tr").each(function (index, data) {
+            _sValoresEntidades +=  data.cells[0].innerText + "$";
+        });
+
+        var _aEntidades = new Array();
+
+        if (_sValoresEntidades.length > 0) {
+            _sValoresEntidades = _sValoresEntidades.substr(0, _sValoresEntidades.length - 1);
+
+            var _aValoresEntidades = _sValoresEntidades.split("$");
+
+            for (var i = 0; i < _aValoresEntidades.length; i++) {
+
+                _aEntidades[i] = _aValoresEntidades[i];
+
+            }
+        }
+
+
+        _oData = "{ _plLlaveDenuncia: " + $(_Main + "HDLlaveDenuncia").val() +
+            ", _plLlaveTipoDenuncia: " + $(_Main + "HDLlaveTipoDenuncia").val() +
+            ", _plNivelGobierno:" + _lValorNivelGobierno +  
             ", _poArrLlavesHechos:" + (_aHechos.length == 0 ? null : JSON.stringify(_aHechos)) +
             ", _poArrDocPres:" + (_aDocPres.length == 0 ? null : JSON.stringify(_aDocPres)) +
+            ", _poArrDocEv:" + (_aDocEv.length == 0 ? null : JSON.stringify(_aDocEv)) +
+            ", _poArrEntidades:" + (_aEntidades.length == 0 ? null : JSON.stringify(_aEntidades)) +
             "}";
-        /*", _poArrDocEv:" + (_aDocEv.length == 0 ? null : JSON.stringify(_aDocEv)) +*/
+        
         
 
         _oAJAX = $.ajax({
@@ -1164,9 +1400,16 @@ function guardaSegSeccion() {
 
                 if (String(data.d).indexOf("Error") == -1)
                 {
-                    $("#Tdocumentos > tbody  > tr").each(function (index, data) {
-                        data.cells[0].innerText= "";
-                    });
+                    
+                    consultaFolio();
+
+                    //$("#Tdocumentos > tbody  > tr").each(function (index, data) {
+                    //    data.cells[0].innerText= "";
+                    //});
+
+                    //$("#TdocEv > tbody  > tr").each(function (index, data) {
+                    //    data.cells[0].innerText = "";
+                    //});
 
                     MensajeOk("Datos registrados correctamente");
 
@@ -1303,7 +1546,7 @@ function AgregaRemueveCP(_iOperacion) {
                         return 1;
                     });
                     $($selectlbxOptions).remove();
-                    $("_Main + lbxCP").append($($selectlbxOptions));
+                    $(_Main + "lbxCP").append($($selectlbxOptions));
 
                 }
 
@@ -1318,4 +1561,14 @@ function AgregaRemueveCP(_iOperacion) {
 
 }
 
+function VerDocumentoTab(_lLlaveDocumento, _sRutaDocumento) {
 
+    $(_Main + "HDLlaveDocumento").val("0");
+
+    $(_Main + "HDVerLlaveDoc").val(_lLlaveDocumento);
+    $(_Main + "HDVerRutaDoc").val(_sRutaDocumento.replace(/#/g,"\\"));
+
+
+    __doPostBack('btnVerDocumento', 'CLICK');
+
+}

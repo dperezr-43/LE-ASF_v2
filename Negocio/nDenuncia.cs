@@ -119,9 +119,10 @@ namespace Negocio
 
         public string RegistroSol(long _plLlaveDenuncia,
                                 long _plLlaveTipoDenuncia,
-                                Int32 _plLlaveNivelGob,
+                                long _plLlaveNivelGob,
                                 string _psObjetosDenunciados,
                                 long _plLlaveOrigenRec,
+                                string _psNombreDenunciante,
                                 string _psMailDenunciante,
                                 string _psMailDenuncianteConfirm,
                                 string _psPassDenunciante,
@@ -129,7 +130,7 @@ namespace Negocio
                                 DataTable _poPeriodosDenuncia,
                                 DataTable _poEntidadesDenuncia,
                                 DataTable _poDocIrrDenuncia,
-                                DataTable _poDocDenuncia)
+                                DataTable _poDocDenunciaEv)
         {
 
             _bReps = false;
@@ -178,7 +179,7 @@ namespace Negocio
                 //{
                     _dDataSQL.AddParameter("@llave_origen_recursos", _plLlaveOrigenRec);
                 //}
-
+                _dDataSQL.AddParameter("@nombre_denunciante", _psNombreDenunciante);
                 _dDataSQL.AddParameter("@mail_denunciante", _psMailDenunciante);
                 _dDataSQL.AddParameter("@mail_denunciante_confirm", _psMailDenuncianteConfirm);
                 _dDataSQL.AddParameter("@password_denunciante",  _psPassDenunciante);
@@ -186,7 +187,7 @@ namespace Negocio
                 _dDataSQL.AddParameter("@periodos_denuncia", _poPeriodosDenuncia);
                 _dDataSQL.AddParameter("@entidades_denuncia", _poEntidadesDenuncia);
                 _dDataSQL.AddParameter("@doc_irreg_denuncia", _poDocIrrDenuncia);
-                _dDataSQL.AddParameter("@doc_evidencia_denuncia", _poDocDenuncia);
+                _dDataSQL.AddParameter("@doc_evidencia_denuncia", _poDocDenunciaEv);
 
 
 
@@ -375,8 +376,9 @@ namespace Negocio
                                 _lOrden = (_dr["orden"] == DBNull.Value ? 0 : Convert.ToInt32(_dr["orden"])),
                                 _sSeccion  = (_dr["seccion"] == DBNull.Value ? "" : (string)_dr["seccion"]),
                                 _lLlaveDenuncia = (_dr["llave_denuncia"] == DBNull.Value ? 0 : Convert.ToInt32(_dr["llave_denuncia"])),
-                                _lLlaveCat = (_dr["llave"] == DBNull.Value ? 0 : Convert.ToInt32(_dr["llave"])),
-                                _sTexto = (_dr["texto"] == DBNull.Value ? "" : (string)_dr["texto"])
+                                _lLlaveGen = (_dr["llave"] == DBNull.Value ? 0 : Convert.ToInt32(_dr["llave"])),
+                                _sTexto = (_dr["texto"] == DBNull.Value ? "" : (string)_dr["texto"]),
+                                _sDescripcion = (_dr["descripcion_documento"] == DBNull.Value ? "" : (string)_dr["descripcion_documento"])
 
 
                             };
@@ -412,8 +414,9 @@ namespace Negocio
 
             public long _lOrden { get; set; } = 0;
             public string _sSeccion { get; set; } = "";
+            public string _sDescripcion { get; set; } = "";
             public long _lLlaveDenuncia { get; set; } = 0;
-            public long _lLlaveCat { get; set; } = 0;
+            public long _lLlaveGen { get; set; } = 0;
             public string _sTexto { get; set; } = "";
         }
 

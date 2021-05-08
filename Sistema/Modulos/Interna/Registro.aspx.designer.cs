@@ -168,6 +168,15 @@ namespace Sistema.Modulos.Interna
         protected global::System.Web.UI.WebControls.TextBox txtEntInvolucrada;
 
         /// <summary>
+        /// Control dvEntidadesDen.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl dvEntidadesDen;
+
+        /// <summary>
         /// Control txtObjetoDenunciado.
         /// </summary>
         /// <remarks>
@@ -285,6 +294,15 @@ namespace Sistema.Modulos.Interna
         protected global::System.Web.UI.WebControls.HiddenField HDFolio;
 
         /// <summary>
+        /// Control HDPassword.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField HDPassword;
+
+        /// <summary>
         /// Control dvRespuesta.
         /// </summary>
         /// <remarks>
@@ -337,5 +355,32 @@ namespace Sistema.Modulos.Interna
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField HDSeleccArchivo;
+
+        /// <summary>
+        /// Control HDVerLlaveDoc.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField HDVerLlaveDoc;
+
+        /// <summary>
+        /// Control HDVerRutaDoc.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField HDVerRutaDoc;
+
+        /// <summary>
+        /// Control HDVerTipoDoc.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField HDVerTipoDoc;
     }
 }

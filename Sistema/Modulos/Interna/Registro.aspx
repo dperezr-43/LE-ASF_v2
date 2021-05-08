@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#"  MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Registro.aspx.cs" Inherits="Sistema.Modulos.Interna.Registro" %>
+﻿<%@ Page Language="C#"  MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Registro.aspx.cs" Inherits="Sistema.Modulos.Interna.Registro" EnableEventValidation="false"  %>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
     <%--<h2><%: Title %>.</h2>
@@ -604,6 +604,7 @@
                                                                                 <td align="center" style="width:100px;">Documento</td>
                                                                                 <td align="center" style="width:300px;">Descripción</td>
                                                                                 <td align="center" style="width:30px;">Eliminar</td>
+                                                                                <td align="center" style="width:30px;">Ver</td>
                                                                             </tr>
                                                                         </thead>
                                                                         <tbody>
@@ -671,10 +672,10 @@
                                                     <asp:TextBox ID="txtDescArchEv" Width="100%" runat="server"></asp:TextBox>
                                                     &nbsp;
                                                 </td>
-                                                <td class="left_txt" style="width:5%">
+                                            <%--    <td class="left_txt" style="width:5%">
                                                     <img src="../../Imagenes/garbage.png" class="img_normal_size" id="imgDescCargaArchivo" />                                                    
                                                    
-                                                </td>
+                                                </td>--%>
 
                                             </tr>
                                             <tr>
@@ -691,7 +692,7 @@
                                                 
                                             </tr>
                                             <tr>
-                                                <td class="left_txt" style="width:5%" colspan="2">
+                                                <td style="width:5%" colspan="2" align="center">
                                                     <img src="../../Imagenes/file-add.png" class="img_normal_size" id="imgCargarEv"  onclick="javascript:agregarDocumento(1);" />
                                                     &nbsp;&nbsp;
                                                 </td>
@@ -710,6 +711,7 @@
                                                                                 <td align="center" style="width:100px;">Documento</td>
                                                                                 <td align="center" style="width:300px;">Descripción</td>
                                                                                 <td align="center" style="width:30px;">Eliminar</td>
+                                                                                <td align="center" style="width:30px;">Ver</td>
                                                                             </tr>
                                                                         </thead>
                                                                         <tbody>
@@ -721,6 +723,7 @@
                                                     </table>
                                                 </td>
                                             </tr>
+                                                <tr><td class="row_height_size"></td></tr>
                                             </table>
 
 
@@ -785,7 +788,7 @@
                                                         <asp:TextBox ID="txtEntInvolucrada" runat="server" Width="100%" MaxLength="300"></asp:TextBox>
 
                                                         &nbsp;
-                                                    <img src="../../Imagenes/file-add.png" class="img_normal_size" id="imgAddEntInv" />
+                                                    <img src="../../Imagenes/file-add.png" class="img_normal_size" id="imgAddEntInv" onclick="javascript:agregarDocumento(2);"  />
 
                                                     </td>
 
@@ -794,7 +797,31 @@
                                                 <tr>
                                                     <td class="row_height_size"></td>
                                                 </tr>
-
+                                                <tr>
+                                                    <td colspan="2">
+                                                        <table align="center">
+                                                            <tr>
+                                                                <td align="center">
+                                                                    <div runat="server" id="dvEntidadesDen" align="center">
+                                                                        <table border="1" id="TEntidades" style="border-width: 1px; border-style: solid; border-collapse: collapse;">
+                                                                            <thead>
+                                                                                <tr style="color: White; background-color: #D3CFC8; border-style: none; font-size:11px; font-weight:bold">
+                                                                                    <td align="center" style="width:100px;">Entidades</td>
+                                                                                    <td align="center" style="width:30px;">Eliminar</td>
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tbody>
+                                                                            </tbody>
+                                                                        </table>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="row_height_size"></td>
+                                                </tr>
                                             </table>
 
 
@@ -1124,6 +1151,7 @@
         <asp:HiddenField runat="server" ID="HDLlaveDenuncia" Value="0" />
         <asp:HiddenField runat="server" ID="HDLlaveTipoDenuncia" Value="0" />
         <asp:HiddenField runat="server" ID="HDFolio" Value="" />
+        <asp:HiddenField runat="server" ID="HDPassword" Value="" />
 
 
         <div runat="server" id="dvRespuesta" title="Seguimiento de la denuncia" class="center_txt">
@@ -1138,6 +1166,10 @@
         <asp:HiddenField runat="server" ID="HDLlaveTipoDocumento" Value="0" />
         <asp:HiddenField runat="server" ID="HDRutaServ" Value="" />
         <asp:HiddenField runat="server" ID="HDSeleccArchivo" Value="0" />
+
+        <asp:HiddenField runat="server" ID="HDVerLlaveDoc" Value="0" />
+        <asp:HiddenField runat="server" ID="HDVerRutaDoc" Value="" />
+        <asp:HiddenField runat="server" ID="HDVerTipoDoc" Value="0" />
 
     </div>
    

@@ -429,7 +429,7 @@ namespace Negocio
             }
         }
 
-        public void TraeDocumento(long _plLlaveDocumento, long _plLlaveTipoDoc)
+        public void TraeDocumento(long _plLlaveDocumento)
         {
             _eListDoc = new List<cDocumento>();
 
@@ -437,7 +437,7 @@ namespace Negocio
 
             _dDataSQL.ClearParameters();
             _dDataSQL.AddParameter("@llave_documento", _plLlaveDocumento);
-            _dDataSQL.AddParameter("@llave_tipo_doc", _plLlaveTipoDoc);
+            //_dDataSQL.AddParameter("@llave_tipo_doc", _plLlaveTipoDoc);
 
             _ds = _dDataSQL.Ejecuta("sp_TraeDocDenuncia");
             Exception = _dDataSQL.Exception;
