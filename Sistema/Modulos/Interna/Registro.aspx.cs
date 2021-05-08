@@ -8,6 +8,8 @@ using System.Web.Services;
 using Negocio;
 using System.Data;
 using System.IO;
+using System.Configuration;
+using System.Net;
 
 namespace Sistema.Modulos.Interna
 {
@@ -28,6 +30,15 @@ namespace Sistema.Modulos.Interna
                 VerOficioProc();
 
             }
+
+
+
+
+            hdnCvePrivadaReCaptcha.Value = ConfigurationManager.AppSettings["CvePrivadaReCaptcha"];
+            hdnCvePublicaReCaptcha.Value = ConfigurationManager.AppSettings["CvePublicaRecaptcha"];
+
+
+
 
 
         }
@@ -144,6 +155,7 @@ namespace Sistema.Modulos.Interna
                                                     , long _plLlaveTipoDenuncia
                                                     , object _poArrLlavesHechos
                                                     , object _poArrDocPres
+                                                    , string sPSWDenunciante 
                                                     )
         {
 
@@ -252,7 +264,7 @@ namespace Sistema.Modulos.Interna
 
 
 
-                _sRespuesta = nDen.RegistroSol(_plLlaveDenuncia, _plLlaveTipoDenuncia, 0, "", 0, "", "", "", _dtHechosDenuncia, null, null, _dtDocPresIrr, null);
+                _sRespuesta = nDen.RegistroSol(_plLlaveDenuncia, _plLlaveTipoDenuncia, 0, "", 0, "", "", sPSWDenunciante, _dtHechosDenuncia, null, null, _dtDocPresIrr, null);
 
                 if(sRutaServidor!="")
                 {
@@ -442,6 +454,20 @@ namespace Sistema.Modulos.Interna
                 nDen = null;
             }
         }
+
+        
+        [WebMethod]
+
+        public static string AJAX_verificaReCaptcha(string _sResponse, string _psCvePrivada)
+        {
+            
+            string _sReCaptchaSecret = _psCvePrivada;
+
+            string url = "https://www.google.com/recaptcha/api/siteverify?secret=" + _sReCaptchaSecret + "&response=" + _sResponse;
+            return (new WebClient()).DownloadString(url);
+        }
+
+
 
 
     }

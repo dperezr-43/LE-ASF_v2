@@ -38,9 +38,7 @@ $(document).ready(function () {
 
     $('.fToolLFRCArt61').prop('title', 'De acuerdo con la Ley de Fiscalización y Rendición de Cuentas de la Federación (artículo 61), su denuncia debe hacer referencia a alguno de los siguientes supuestos de presuntos daños o perjuicios a la Hacienda Pública Federal o al patrimonio de los entes públicos. Clic en el ícono para ver el tutorial');
 
-    setTimeout(function () {
-        $('[data-toggle="tooltip"]').tooltip();
-    }, 3000);
+   
 
 
 
@@ -50,9 +48,10 @@ $(document).ready(function () {
 
             let _sNomControl = "#Denuncia_no_anonima";
 
-            $("#MainContent_HDLlaveTipoDenuncia").val($(this).val());
+            $(_Main + "HDLlaveTipoDenuncia").val($(this).val());
 
-            $(this).val() == '1' ? $(_sNomControl).addClass("OcultaSeccion") : $(_sNomControl).removeClass("OcultaSeccion");
+            $(this).val() == '14' ? $(_sNomControl).addClass("OcultaSeccion") : $(_sNomControl).removeClass("OcultaSeccion");
+            $(_Main + "hdnPGuarda").val(0);
             $('#dvSiAnonima').show();
 
         } catch (err) {
@@ -166,6 +165,8 @@ $(document).ready(function () {
 
         try {
 
+
+
             ConsultaSeguimiento();
 
 
@@ -214,7 +215,7 @@ $(document).ready(function () {
 
             _oAJAX = $.ajax({
                 type: "POST",
-                url: "Registro.aspx/AJAX_RegistraHechos",
+                url: _AjaxURL + "/AJAX_RegistraHechos",
                 data: _oData,
                 contentType: "application/json; charset=utf-8",
                 dataType: "json"
@@ -263,6 +264,12 @@ $(document).ready(function () {
 
             alert("[btnGuardaDenuncia.click - (Reday)] \n" + err.message);
         }
+
+
+
+        setTimeout(function () {
+            $('[data-toggle="tooltip"]').tooltip();
+        }, 3000);
 
 
     });
@@ -360,11 +367,6 @@ function fMuestraDocumento(_sRuta, _sTitulo, _iBase, _iAltura) {
 }
 
 
-var onloadCallback = function () {
-    grecaptcha.render(document.getElementById('ckCaptcha'), {
-        'sitekey': $("#hdnCvePublicaReCaptcha").val()
-    });
-};
 
 
 
@@ -1069,15 +1071,17 @@ function EliminarDocTabla(_sIdFilaRemover, _sTabla, _dvTabla) {
 
 }
 
-function guardaSegSeccion() {
+function fGuardaDenuncia() {
 
     try {
 
 
-        
         var _sValoresHechos = "";
         var _sValoresDocPres = "";
         var _sValoresDocEv = "";
+        var _sPSWDenunciante = "";
+
+        $(_Main + "hdnPGuarda").val(0);
 
         //Obtener información de los hechos de denuncias
 
@@ -1111,9 +1115,8 @@ function guardaSegSeccion() {
 
         var _aDocPres = new Array();
 
-        if (_sValoresDocPres.length > 0)
-        {
-            _sValoresDocPres = _sValoresDocPres.substr(0,_sValoresDocPres.length - 1);
+        if (_sValoresDocPres.length > 0) {
+            _sValoresDocPres = _sValoresDocPres.substr(0, _sValoresDocPres.length - 1);
 
             var _aValoresDocPres = _sValoresDocPres.split("$");
 
@@ -1143,43 +1146,48 @@ function guardaSegSeccion() {
         //    }
         //}
 
-        
+
+
+        _sPSWDenunciante = $(_Main + "txtPSW").val();
 
         _oData = "{ _plLlaveDenuncia: " + $("#MainContent_HDLlaveDenuncia").val() +
             ", _plLlaveTipoDenuncia: " + $("#MainContent_HDLlaveTipoDenuncia").val() +
             ", _poArrLlavesHechos:" + (_aHechos.length == 0 ? null : JSON.stringify(_aHechos)) +
             ", _poArrDocPres:" + (_aDocPres.length == 0 ? null : JSON.stringify(_aDocPres)) +
+            ", sPSWDenunciante: '" + _sPSWDenunciante + "'" +
             "}";
         /*", _poArrDocEv:" + (_aDocEv.length == 0 ? null : JSON.stringify(_aDocEv)) +*/
-        
+
 
         _oAJAX = $.ajax({
             type: "POST",
-            url: "Registro.aspx/AJAX_RegistraDatosDenun",
+            url: _AjaxURL + "/AJAX_RegistraDatosDenun",
             data: _oData,
             contentType: "application/json; charset=utf-8",
             dataType: "json"
 
         }).done(function (data, textStatus, jqXHR) {
 
-                if (String(data.d).indexOf("Error") == -1)
-                {
-                    $("#Tdocumentos > tbody  > tr").each(function (index, data) {
-                        data.cells[0].innerText= "";
-                    });
+            if (String(data.d).indexOf("Error") == -1) {
+                $("#Tdocumentos > tbody  > tr").each(function (index, data) {
+                    data.cells[0].innerText = "";
+                });
 
-                    MensajeOk("Datos registrados correctamente");
+                $(_Main + "hdnPGuarda").val(1);
+                MensajeOk("Datos registrados correctamente");
 
-                }
+            }
 
-                else {
+            else {
 
-                    MensajeError("Hubo un error al traer los datos.");
-                }
+                MensajeError("Hubo un error al traer los datos.");
+            }
         }).fail(function (jqXHR, textStatus, errorThrown) {
 
             MensajeError("Error al traer los datos [AJAX_RegistraDatosDenun]");
         });
+      
+        
 
 
 
@@ -1319,3 +1327,80 @@ function AgregaRemueveCP(_iOperacion) {
 }
 
 
+
+function fVerificaReCaptcha() {
+
+    try {
+
+
+
+        _oData = null;
+        _oData = "{ _sResponse: '" + grecaptcha.getResponse() + "', _psCvePrivada: '" + $(_Main + "hdnCvePrivadaReCaptcha").val() + "' }";
+
+        
+        _oAJAX = $.ajax({
+            type: "POST",
+            url: _AjaxURL + "/AJAX_verificaReCaptcha",
+            data: _oData,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json"
+
+        }).done(function (data, textStatus, jqXHR) {
+
+            let _aResp2 = JSON.parse(data.d);
+
+            if (_aResp2.success) {
+
+                fGuardaDenuncia();
+
+            } else {
+
+                MensajeError("[fVerificaReCaptcha] - \n Captcha incorrecto, intente de nuevo.");
+                
+            }
+           
+        }).fail(function (jqXHR, textStatus, errorThrown) {
+
+            MensajeError("[fVerificaReCaptcha] - \n Error al verificar el Captcha");
+        });
+
+
+
+    } catch (err) {
+
+        alert("[guardaSegSeccion.click - (Reday)] \n" + err.message);
+    }
+
+
+}
+
+
+function fGuarda() {
+
+    try {
+
+
+        if ($(_Main + "hdnPGuarda").val() == 0) {
+
+            fVerificaReCaptcha();
+
+        }
+        else {
+            fGuardaDenuncia();
+        }
+       
+
+    } catch (err) {
+
+        alert("[fGuarda] \n" + err.message);
+    }
+
+
+}
+
+
+var onloadCallback = function () {
+    grecaptcha.render(document.getElementById('ckCaptcha'), {
+        'sitekey': $(_Main + "hdnCvePublicaReCaptcha").val()
+    });
+};
