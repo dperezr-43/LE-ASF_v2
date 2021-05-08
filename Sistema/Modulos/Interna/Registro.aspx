@@ -980,7 +980,7 @@
 
                                             <tr>
                                                 <td colspan="2" class="center_txt size_100">
-                                                    <input type="button" name="btnContinuaDenuncia" value="Guardar" onclick="javascript: fGuardaDenuncia(); return false;" />
+                                                    <input type="button" name="btnContinuaDenuncia" value="Guardar" onclick="javascript: fGuarda(); return false;" />
                                                     &nbsp;&nbsp;&nbsp;
                                                 <img src="../../Imagenes/garbage.png" class="img_normal_size" />
 

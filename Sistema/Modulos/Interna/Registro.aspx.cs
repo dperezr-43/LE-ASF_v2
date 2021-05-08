@@ -458,7 +458,7 @@ namespace Sistema.Modulos.Interna
 
                     }
 
-
+                }
 
            
 
@@ -538,7 +538,7 @@ namespace Sistema.Modulos.Interna
 
 
         [WebMethod]
-        public static object AJAX_ConsultaInfoDenunciaFP(string _psFolio, string _psPassword)
+        public static object AJAX_ConsultaInfoDenunciaFP(string _psFolio, string _psPassword, long _plLlaveDenuncia)
         {
 
 
@@ -548,7 +548,7 @@ namespace Sistema.Modulos.Interna
 
             try
             {
-                nDen.TraeInfoDenunciasFP(_psFolio, _psPassword);
+                nDen.TraeInfoDenunciasFP(_psFolio, _psPassword, _plLlaveDenuncia);
 
                 if (nDen.Exception != null)
                 {

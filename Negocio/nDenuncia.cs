@@ -347,7 +347,7 @@ namespace Negocio
         }
 
 
-        public void TraeInfoDenunciasFP(string _psFolio, string _psPassword)
+        public void TraeInfoDenunciasFP(string _psFolio, string _psPassword, long _plLlaveDenuncia)
         {
             _eListInfoDen = new List<cInfoDenuncia>();
             _ds = null;
@@ -358,6 +358,7 @@ namespace Negocio
                 _dDataSQL.ClearParameters();
                 _dDataSQL.AddParameter("@folio", _psFolio);
                 _dDataSQL.AddParameter("@password", _psPassword);
+                _dDataSQL.AddParameter("@llave_denuncia", _plLlaveDenuncia);
 
                 _ds = _dDataSQL.Ejecuta("sp_TraeDenunciaFP");
                 Exception = _dDataSQL.Exception;

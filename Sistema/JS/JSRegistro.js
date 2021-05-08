@@ -86,7 +86,7 @@ $(document).ready(function () {
 
     $("body").on("click", "input[name*='btnGuardaSegSecc']", function () {
 
-        guardaSegSeccion();
+        fGuarda();
 
 
     });
@@ -186,100 +186,103 @@ $(document).ready(function () {
 
     $("body").on("click", "input[name*='btnGuardaDenuncia']", function () {
 
-        try {
 
-            var _sValores = "";
+        fGuarda();
 
-            $('input[id*=MainContent_chbHechos]').each(function () {
-                _sValores += (this.checked ? $(this).val() + "," : "");
-            });
+        //try {
 
-            if (_sValores == "") {
-                MensajeError("Debe seleccionar mínimo un hecho.");
-                return;
-            }
+        //    var _sValores = "";
 
-            _sValores = _sValores.substr(0, _sValores.length - 1);
+        //    $('input[id*=MainContent_chbHechos]').each(function () {
+        //        _sValores += (this.checked ? $(this).val() + "," : "");
+        //    });
 
-            var _aValores = _sValores.split(",");
-            var _aHechos = new Array();
+        //    if (_sValores == "") {
+        //        MensajeError("Debe seleccionar mínimo un hecho.");
+        //        return;
+        //    }
 
-            for (var i = 0; i < _aValores.length; i++) {
+        //    _sValores = _sValores.substr(0, _sValores.length - 1);
 
-                _aHechos[i] = _aValores[i];
+        //    var _aValores = _sValores.split(",");
+        //    var _aHechos = new Array();
 
-            }
+        //    for (var i = 0; i < _aValores.length; i++) {
+
+        //        _aHechos[i] = _aValores[i];
+
+        //    }
 
             
 
-            _oData = "{ _plLlaveDenuncia: " + $(_Main + "HDLlaveDenuncia").val() +
-                ", _plLlaveTipoDenuncia: " + $(_Main + "HDLlaveTipoDenuncia").val() +
-                ", _poArrLlavesHechos:" + (_aHechos.length == 0 ? null : JSON.stringify(_aHechos) ) +
-                     "}";
+        //    _oData = "{ _plLlaveDenuncia: " + $(_Main + "HDLlaveDenuncia").val() +
+        //        ", _plLlaveTipoDenuncia: " + $(_Main + "HDLlaveTipoDenuncia").val() +
+        //        ", _poArrLlavesHechos:" + (_aHechos.length == 0 ? null : JSON.stringify(_aHechos) ) +
+        //             "}";
 
 
 
-            _oAJAX = $.ajax({
-                type: "POST",
-                url: _AjaxURL + "/AJAX_RegistraHechos",
-                data: _oData,
-                contentType: "application/json; charset=utf-8",
-                dataType: "json"
+        //    _oAJAX = $.ajax({
+        //        type: "POST",
+        //        url: _AjaxURL + "/AJAX_RegistraHechos",
+        //        data: _oData,
+        //        contentType: "application/json; charset=utf-8",
+        //        dataType: "json"
 
-            })
+        //    })
 
-                .done(function (data, textStatus, jqXHR) {
+        //        .done(function (data, textStatus, jqXHR) {
 
-                    if (String(data.d).indexOf("Error") == -1) {
-
-
-                        var _aResp = String(data.d).split(",");
-
-                        if (_aResp[0] == 1) {
-
-                            MensajeOk("El folio es: " + _aResp[1]);
-                            $(_Main + "HDFolio").val(_aResp[1].trim());
-
-                            //QUITARLO DESPUÉS
-                            $(_Main + "HDPassword").val('hola');
-
-                            $(_Main + "HDLlaveDenuncia").val(_aResp[2]);
-
-                            Habilitardeshabilitar2Secc(false);
-
-                            consultaFolio();
-
-                        }
-                        else {
-                            MensajeError(_aResp[1]);
-
-                        }
-
-                    }
-
-                    else {
-
-                        MensajeError("Hubo un error al traer los datos.")
-                    }
-                })
-
-                .fail(function (jqXHR, textStatus, errorThrown) {
-
-                    MensajeError("Error al traer los datos [AJAX.AJAX_RegistraHechos]");
-                });
+        //            if (String(data.d).indexOf("Error") == -1) {
 
 
+        //                var _aResp = String(data.d).split(",");
 
-        } catch (err) {
+        //                if (_aResp[0] == 1) {
 
-            alert("[btnGuardaDenuncia.click - (Reday)] \n" + err.message);
-        }
+        //                    MensajeOk("El folio es: " + _aResp[1]);
+        //                    $(_Main + "HDFolio").val(_aResp[1].trim());
+
+        //                    //QUITARLO DESPUÉS
+        //                    $(_Main + "HDPassword").val('hola');
+
+        //                    $(_Main + "HDLlaveDenuncia").val(_aResp[2]);
+
+        //                    Habilitardeshabilitar2Secc(false);
+
+        //                    consultaFolio();
+
+        //                }
+        //                else {
+        //                    MensajeError(_aResp[1]);
+
+        //                }
+
+        //            }
+
+        //            else {
+
+        //                MensajeError("Hubo un error al traer los datos.")
+        //            }
+        //        })
+
+        //        .fail(function (jqXHR, textStatus, errorThrown) {
+
+        //            MensajeError("Error al traer los datos [AJAX.AJAX_RegistraHechos]");
+        //        });
 
 
 
-        setTimeout(function () {
-            $('[data-toggle="tooltip"]').tooltip();
-        }, 3000);
+        //} catch (err) {
+
+        //    alert("[btnGuardaDenuncia.click - (Reday)] \n" + err.message);
+        //}
+
+
+
+        //setTimeout(function () {
+        //    $('[data-toggle="tooltip"]').tooltip();
+        //}, 3000);
 
 
     });
@@ -697,6 +700,7 @@ function consultaFolio() {
 
     _oData = "{ _psFolio:'" + $(_Main + "HDFolio").val() + "'" +
         ", _psPassword: '" + $(_Main + "HDPassword").val() + "'" +
+        ", _plLlaveDenuncia: " + $(_Main + "HDLlaveDenuncia").val() +
         "}";
 
 
@@ -1405,10 +1409,25 @@ function fGuardaDenuncia() {
 
         }).done(function (data, textStatus, jqXHR) {
 
-                if (String(data.d).indexOf("Error") == -1)
-                {
-                    
-                    consultaFolio();
+            if (String(data.d).indexOf("Error") == -1)
+            {
+                
+
+                var ADatos = data.d.split(",");
+
+                if ($(_Main + "HDLlaveDenuncia").val() == 0) {
+
+                    MensajeOk("El folio es: " + ADatos[1]);
+                    Habilitardeshabilitar2Secc(false);
+
+                }
+                else {
+                    MensajeOk("Datos registrados correctamente");
+                }
+
+                $(_Main + "HDLlaveDenuncia").val(ADatos[2]);
+
+                consultaFolio();
 
                     //$("#Tdocumentos > tbody  > tr").each(function (index, data) {
                     //    data.cells[0].innerText= "";
@@ -1419,7 +1438,7 @@ function fGuardaDenuncia() {
                     //});
 
                 $(_Main + "hdnPGuarda").val(1);
-                MensajeOk("Datos registrados correctamente");
+                
 
             }
 
