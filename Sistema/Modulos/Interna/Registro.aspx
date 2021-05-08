@@ -16,7 +16,7 @@
 
 
     <script src="../../JS/JSUtils.js"></script>
-    
+    <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit" async defer></script>
     
 
     <div class="contenedor" >
@@ -199,8 +199,8 @@
 
                             <td style="width:75%" class="left_txt txt_ne_normal">
                                 <asp:RadioButtonList id="rblDenunciaAnonima" runat="server" RepeatDirection="Horizontal">
-                                    <asp:ListItem Text="&nbsp; Si &nbsp;" Value="1"></asp:ListItem>                                    
-                                    <asp:ListItem Text="&nbsp; No" Value="0"></asp:ListItem>
+                                    <asp:ListItem Text="&nbsp; Si &nbsp;" Value="14"></asp:ListItem>                                    
+                                    <asp:ListItem Text="&nbsp; No" Value="15"></asp:ListItem>
                                 </asp:RadioButtonList>
                             
                             </td>
@@ -1059,13 +1059,13 @@
                             <tr class="center_txt">
                                    
                                 <td class="txt_az_normal">                                                                                                           
-                                    <asp:TextBox ID="txtSegFolio" runat="server" MaxLength="60" CssClass="center_txt" Width="100%"></asp:TextBox>
+                                    <asp:TextBox ID="txtSegFolio" runat="server" MaxLength="60" CssClass="center_txt" Width="100%" data-toggle="tooltip" ToolTip="Folio generado por el sistema cuando se registro la deuncia"></asp:TextBox>
                                 </td>
 
                                 <td></td>
 
                                 <td class="txt_az_normal">                                                                                                           
-                                    <asp:TextBox ID="txtSegPsw" runat="server" MaxLength="20" CssClass="center_txt" Width="100%" TextMode="Password"></asp:TextBox>                                    
+                                    <asp:TextBox ID="txtSegPsw" runat="server" MaxLength="8" CssClass="center_txt" Width="100%" TextMode="Password" placeholder="Debe estar conformada por 8 caracteres"></asp:TextBox>                                    
                                 </td>
 
                             </tr>    
@@ -1166,6 +1166,11 @@
         <asp:HiddenField runat="server" ID="HDLlaveTipoDocumento" Value="0" />
         <asp:HiddenField runat="server" ID="HDRutaServ" Value="" />
         <asp:HiddenField runat="server" ID="HDSeleccArchivo" Value="0" />
+        <asp:HiddenField ID="hdnCvePrivadaReCaptcha" runat="server" />
+        <asp:HiddenField runat="server" ID="hdnCvePublicaReCaptcha" Value="0" />
+        <asp:HiddenField ID="hdnEstatusLiga" runat="server" />
+
+        <asp:HiddenField runat="server" ID="hdnPGuarda" Value="0" />
 
         <asp:HiddenField runat="server" ID="HDVerLlaveDoc" Value="0" />
         <asp:HiddenField runat="server" ID="HDVerRutaDoc" Value="" />
