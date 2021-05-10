@@ -709,7 +709,7 @@ function consultaFolio() {
 
         _oAJAX = $.ajax({
             type: "POST",
-            url: "Registro.aspx/AJAX_ConsultaInfoDenunciaFP",
+            url: _AjaxURL + "/AJAX_ConsultaInfoDenunciaFP",
             data: _oData,
             contentType: "application/json; charset=utf-8",
             dataType: "json"
@@ -726,9 +726,12 @@ function consultaFolio() {
                 });
 
                 var _sValoresHechosDen = "";
+                var _sValoresCP = "";
                 var _sValoresDocIrr = "";
                 var _sValoresDocEv = "";
                 var _sValoresEntidad = "";
+                var _sValorObjetosDen = "";
+                var _iValorOrigenRec = 0;
 
                 var _lValorNivelGob = 0;
 
@@ -737,6 +740,13 @@ function consultaFolio() {
                     if (this._lOrden == 1) {
 
                         _sValoresHechosDen += this._lLlaveGen + "#";
+
+                    }
+                    else if (this._lOrden == 2) {
+
+                        // CP
+                        /*Llave Cat es la llave_usuario*/
+                        _sValoresCP += this._sTexto + "#" + this._sDescripcion + "#" + this._lLlaveGen + "$";
 
                     }
                     else if (this._lOrden == 3) {
@@ -763,8 +773,20 @@ function consultaFolio() {
                         _sValoresEntidad += this._sTexto + "$";
 
                     }
+                    else if (this._lOrden == 7) {
+                        
+                        _sValorObjetosDen = this._sTexto;
+
+                    }
+
+                    else if (this._lOrden == 8) {
+
+                        _iValorOrigenRec = this._lLlaveGen;
+
+                    }
 
                 });
+
 
                 //Primero coloca los datos de Hechos de Denuncias
 
@@ -779,6 +801,24 @@ function consultaFolio() {
                     }
 
                 });
+
+                
+
+                $(_Main + 'lbxCP option').each(function () {
+
+                    var _sVal = this.value;
+                    var _sTxt = this.text;
+
+                    if (_sValoresCP.indexOf(_sVal + "$") != -1) {
+
+                        $(_Main + "lbxCPSeleccionados").append($("<option     />").val(this.value).text(this.text));
+
+                        $(_Main + "lbxCP option[value=" + this.value + "]").remove();
+                    }
+                })
+
+              
+
 
                 //Después los documentos de presuntos hechos irregulares
 
@@ -819,6 +859,18 @@ function consultaFolio() {
                     var _arrEntidades = _sValoresEntidad.split("$");
                     agregarDocumentosConsulta(2, _arrEntidades);
                 }
+
+
+                if (_sValorObjetosDen.length > 0) {
+
+                    $(_Main + "txtObjetoDenunciado").val(_sValorObjetosDen);                    
+                                        
+                }
+
+
+                $(_Main + "ddlOrigenRecursos").val(_iValorOrigenRec);
+
+              
 
                 //$(_Main + "HDFolio").val($(_Main + "txtLogFolio").val());
                 $(_Main + "HDLlaveDenuncia").val(data.d[0]._lLlaveDenuncia);
@@ -1313,6 +1365,17 @@ function fGuardaDenuncia() {
 
 
 
+        // Cuentas Publicas
+
+        var _aLlaveCP = new Array;
+
+        for (i = 0; i < $(_Main + "lbxCPSeleccionados option").length; i++) {
+
+            _aLlaveCP[i] = $(_Main + "lbxCPSeleccionados option")[i].value;           
+        }
+
+
+
 
         //Obtener información de Documentos de presuntos hechos irregulares 
         $("#Tdocumentos > tbody  > tr").each(function (index, data) {
@@ -1385,17 +1448,20 @@ function fGuardaDenuncia() {
         }
 
 
-
+        
         _sPSWDenunciante = $(_Main + "txtPSW").val();
 
         _oData = "{ _plLlaveDenuncia: " + $(_Main + "HDLlaveDenuncia").val() +
             ", _plLlaveTipoDenuncia: " + $(_Main + "HDLlaveTipoDenuncia").val() +
             ", _plNivelGobierno:" + _lValorNivelGobierno +  
             ", _poArrLlavesHechos:" + (_aHechos.length == 0 ? null : JSON.stringify(_aHechos)) +
+            ", _poArrLlavesCP:" + (_aLlaveCP.length == 0 ? null : JSON.stringify(_aLlaveCP)) +
             ", _poArrDocPres:" + (_aDocPres.length == 0 ? null : JSON.stringify(_aDocPres)) +
             ", _poArrDocEv:" + (_aDocEv.length == 0 ? null : JSON.stringify(_aDocEv)) +
             ", _poArrEntidades:" + (_aEntidades.length == 0 ? null : JSON.stringify(_aEntidades)) +
-            ", sPSWDenunciante: '" + _sPSWDenunciante + "'" +
+            ", _psObjetosDenunciados: '" + $(_Main + "txtObjetoDenunciado").val() + "'" +
+            ", _piOrigenRecursos: " + $(_Main + "ddlOrigenRecursos").val() + 
+            ", _psPSWDenunciante: '" + _sPSWDenunciante + "'" +
             "}";
         
         

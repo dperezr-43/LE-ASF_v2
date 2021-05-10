@@ -293,16 +293,20 @@ namespace Sistema.Modulos.Interna
                                                     , long _plLlaveTipoDenuncia
                                                     , long _plNivelGobierno
                                                     , object _poArrLlavesHechos
+                                                    , object _poArrLlavesCP
                                                     , object _poArrDocPres
                                                     , object _poArrDocEv
                                                     , object _poArrEntidades
-                                                    , string sPSWDenunciante 
+                                                    , string _psObjetosDenunciados
+                                                    , int _piOrigenRecursos
+                                                    , string _psPSWDenunciante 
                                                     )
         {
 
             //
 
             DataTable _dtHechosDenuncia = new DataTable();
+            DataTable _dtCP = new DataTable();
             DataTable _dtDocPresIrr = new DataTable();
             DataTable _dtDocEvid = new DataTable();
             DataTable _dtEntidades = new DataTable();
@@ -312,6 +316,7 @@ namespace Sistema.Modulos.Interna
             string _sRespuesta = "";
 
             object[] _oLlavesHechos = (object[])_poArrLlavesHechos;
+            object[] _oLlavesCP = (object[])_poArrLlavesCP;
             object[] _oDocPresIrr = (object[])_poArrDocPres;
             object[] _oDocEv = (object[])_poArrDocEv;
             object[] _oEntidades = (object[])_poArrEntidades;
@@ -351,6 +356,41 @@ namespace Sistema.Modulos.Interna
 
 
                 }
+
+                // Cuentas Públicas 
+
+
+                _dtCP.Columns.Add("llave_obj_prin", typeof(Int32));
+                _dtCP.Columns.Add("llave_obj_sub", typeof(Int32));
+                _dtCP.Columns.Add("llave_obj_sub_vinc", typeof(Int32));
+                _dtCP.Columns.Add("llave_tipo_relacion", typeof(Int32));
+                _dtCP.Columns.Add("consecutivo", typeof(Int32));
+
+
+                if (_poArrLlavesCP != null)
+                {
+                    _drDts = null;
+                    _iCont = 0;
+
+                    for (_iCont = 0; _iCont < _oLlavesCP.Length; _iCont++)
+                    {
+
+                        _drDts = _dtCP.NewRow();
+                        _drDts["llave_obj_prin"] = 2;
+                        _drDts["llave_obj_sub"] = 4;
+                        _drDts["llave_obj_sub_vinc"] = Int32.Parse(_oLlavesCP[_iCont].ToString());
+                        _drDts["llave_tipo_relacion"] = 31;
+                        _drDts["consecutivo"] = _iCont + 1;
+
+                        _dtCP.Rows.Add(_drDts);
+
+                    }
+
+
+
+                }
+
+
 
                 //Documentos Irregularidades
 
@@ -501,7 +541,7 @@ namespace Sistema.Modulos.Interna
                 }
 
                 //QUITAR EL HOLA
-                _sRespuesta = nDen.RegistroSol(_plLlaveDenuncia, _plLlaveTipoDenuncia, _plNivelGobierno, "", 0, "","", "", sPSWDenunciante, _dtHechosDenuncia, null, _dtEntidades, _dtDocPresIrr, _dtDocEvid);
+                _sRespuesta = nDen.RegistroSol(_plLlaveDenuncia, _plLlaveTipoDenuncia, _plNivelGobierno, _psObjetosDenunciados, _piOrigenRecursos, "","", "", _psPSWDenunciante, _dtHechosDenuncia, _dtCP, _dtEntidades, _dtDocPresIrr, _dtDocEvid);
 
                 if(sRutaServidor!="")
                 {
