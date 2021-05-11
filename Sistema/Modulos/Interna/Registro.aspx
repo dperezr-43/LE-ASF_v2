@@ -1031,7 +1031,8 @@
 
                             <tr>
                                 <td colspan="3">
-                                    <img src="../../Imagenes/Consulta_v2.png" />
+                                    <br />                                    
+                                    <img src="../../Imagenes/Consulta_v1.png" style="height:170px" />
                                 </td>
                             </tr>
                             <tr>
@@ -1085,7 +1086,7 @@
                                 </td>
                             </tr>
 
-                            <tr>
+                            <%--<tr>
                                 <td class="center_txt txt_az_normal" colspan="3">                                   
                                     
                                     <input  type="button" name="btnSegRecuperaPsw" value="Olvide mi contraseña"/>
@@ -1093,7 +1094,7 @@
                                     <br />
                                     
                                 </td>
-                            </tr>
+                            </tr>--%>
 
                            
                   
@@ -1173,15 +1174,15 @@
 
         <div runat="server" id="dvRespuesta" title="Seguimiento de la denuncia" class="center_txt">
             <br />
-            <asp:Label ID="lblRespuesta" runat="server" CssClass="txt_az_bold" Font-Size="25px" Text=""></asp:Label>
+            <div id="dvRDRespuesta" class="txt_az_normal wrap-text"></div>                       
             
         </div>
 
         <div runat="server" id="dvRegistroDen" title="Folio de Registro de la Denuncia" class="center_txt">
             <br />
-            <asp:Label ID="lblRDFolio" runat="server" CssClass="txt_az_normal" Text=""></asp:Label>
+            <div id="dvRDFolio" class="txt_az_normal wrap-text"></div>            
             <br />
-            <asp:Label ID="lblRDVencimiento" runat="server" CssClass="txt_az_normal" Text=""></asp:Label>
+            <div id="dvRDVencimiento" class="txt_az_normal wrap-text"></div>                        
         </div>
 
         <div runat="server" id="dvValidDEnuncia" title="Validación Denuncia" class="center_txt">
