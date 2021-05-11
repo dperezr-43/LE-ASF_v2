@@ -11,6 +11,31 @@ $(document).ready(function () {
     $('#dvSiAnonima, #dvDenunciaRegistro, ' + _Main + 'dvLogFolio, ' + _Main + 'dvRespuesta, ' + _Main + 'dvListaDocumentos, ' + _Main + 'dvListaDocEv, ' + _Main + 'dvEntidadesDen, #RDGeneraPSW').hide();
     //
 
+       
+
+    $(document).ajaxStart(function () {
+        $(_Main + "dvControlPopup-Den").height($(document).height());
+        $(_Main + "dvControlPopup-Den").show();
+
+        $("#load").dialog({
+            //dialogClass: "no-close",
+            resizable: false,
+            height: 200,
+            modal: true,
+            open: function (event, ui) {                
+                $(this).parent().find(".ui-dialog-titlebar-close").remove();
+            },
+            closeOnEscape: false
+        });
+    });
+
+
+    $(document).ajaxStop(function () {
+        $("#load").dialog("close");
+    });
+
+
+
   
 
     $("body").on("click", ".fManualInfografia", function () {
@@ -1570,11 +1595,15 @@ function fGuardaDenuncia() {
             if (String(data.d).indexOf("Error") == -1)
             {
                 
-                
+
                 var ADatos = data.d.split("ß");
+
                 if ($(_Main + "HDLlaveDenuncia").val() == 0) {
 
-                    MensajeOk("El folio es: " + ADatos[1]);
+                   // MensajeOk("El folio es: " + ADatos[1]);
+
+                    MensajeRegistroOK(ADatos[1], ADatos[3]);
+
                     Habilitardeshabilitar2Secc(false);
 
                 }
@@ -1840,7 +1869,7 @@ var onloadCallback = function () {
 
 function fValidarDenuncia() {
 
-    _oData = "{ plLlaveDenuncia: "+$(_Main + "HDLlaveDenuncia").val()+"}";
+    _oData = "{ plLlaveDenuncia: " + $(_Main + "HDLlaveDenuncia").val() + "}";
 
     try {
 
@@ -1920,6 +1949,45 @@ function envioDenuncia() {
     catch (err) {
         alert("[cargaCatalogo] \n" + err.message);
 
+    }
+
+}
+
+function MensajeRegistroOK(_psFolio, _psVencimiento) {
+
+    
+    try {
+
+        //$("#dvControlPopup-Den").height($(document).height());
+        //$("#dvControlPopup-Den").show();
+               
+
+        $(_Main + "dvRegistroDen").attr("title", "Folio de Registro de la Denuncia");
+        $(_Main + "lblRDFolio").text(_psFolio);
+        $(_Main + "lblRDVencimiento").text("El plazo para concluir el registro de su denuncia vence el " + _psVencimiento);
+        $("#load").dialog("close");
+
+        $(_Main + "dvRegistroDen").dialog({
+            open: function () { $(".ui-dialog-titlebar-close").hide(); },
+            resizable: false,
+            width: 700,
+            height: 200,            
+            modal: true,
+            dialogClass: "no-close",
+            buttons: {
+                "Aceptar": function () {
+                    $(_Main + "dvRegistroDen").dialog("close");                    
+                    //$(_Main + "dvControlPopup-Den").hide();
+                }
+            },
+            close: function () {
+                $(_Main + "dvRegistroDen").dialog("close");
+                //$("#dvControlPopup-Den").hide();
+            }
+        });
+    }
+    catch (err) {
+        alert("[MensajeRegistroOK] \n" + err.message);
     }
 
 }

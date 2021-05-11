@@ -321,6 +321,33 @@ namespace Sistema.Modulos.Interna
         protected global::System.Web.UI.WebControls.Label lblRespuesta;
 
         /// <summary>
+        /// Control dvRegistroDen.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl dvRegistroDen;
+
+        /// <summary>
+        /// Control lblRDFolio.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblRDFolio;
+
+        /// <summary>
+        /// Control lblRDVencimiento.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblRDVencimiento;
+
+        /// <summary>
         /// Control HDLlaveDocumento.
         /// </summary>
         /// <remarks>
