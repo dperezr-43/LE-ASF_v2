@@ -1154,12 +1154,31 @@
         <asp:HiddenField runat="server" ID="HDPassword" Value="" />
 
 
+        <div id="dvControlPopup-Den" style="width: 100%; height: 100%; top: 0px; left: 0px; display: none;"></div>
+
+        <div id="load" title="Cargando...">
+            <table style="margin-left: auto; margin-right: auto; width: 170px;">
+                <tr>
+                    <td colspan="2" style="text-align: center">
+                        <img src="../../Imagenes/cargando.gif" style="width: 150px;" />
+                    </td>
+                </tr>
+                
+            </table>
+         </div>
+
         <div runat="server" id="dvRespuesta" title="Seguimiento de la denuncia" class="center_txt">
             <br />
             <asp:Label ID="lblRespuesta" runat="server" CssClass="txt_az_bold" Font-Size="25px" Text=""></asp:Label>
             
         </div>
 
+        <div runat="server" id="dvRegistroDen" title="Folio de Registro de la Denuncia" class="center_txt">
+            <br />
+            <asp:Label ID="lblRDFolio" runat="server" CssClass="txt_az_normal" Text=""></asp:Label>
+            <br />
+            <asp:Label ID="lblRDVencimiento" runat="server" CssClass="txt_az_normal" Text=""></asp:Label>
+        </div>
 
 
         <asp:HiddenField runat="server" ID="HDLlaveDocumento" Value="0" />
