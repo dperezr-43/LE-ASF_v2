@@ -139,46 +139,19 @@ namespace Negocio
 
             try
             {
-                //ValidaParams();
-                //if (_Exception != null && _sMensajeError != string.Empty)
-                //{
-                //    Exception = _Exception;
-                //    return _ds;
-                //}
 
-                ////ClearParameters();
-                //LLenaParams();
-                //if (!_bEjecuta)
-                //{
-                //    return _ds;
-                //}
 
 
                 _dDataSQL.ClearParameters();
                 _dDataSQL.AddParameter("@llave_denuncia", _plLlaveDenuncia);
                 _dDataSQL.AddParameter("@llave_tipo_denuncia", _plLlaveTipoDenuncia);
 
-                //if (_plLlaveNivelGob == 0)
-                //{
-                //    _dDataSQL.AddParameter("@llave_nivel_gobierno", null );
-                //}
-                //else
-                //{
-                    _dDataSQL.AddParameter("@llave_nivel_gobierno", _plLlaveNivelGob);
-                //}
+                _dDataSQL.AddParameter("@llave_nivel_gobierno", _plLlaveNivelGob);
 
-
-                //_dDataSQL.AddParameter("@objetos_denunciados", _psObjetosDenunciados == null ? null: _psObjetosDenunciados);
                 _dDataSQL.AddParameter("@objetos_denunciados", _psObjetosDenunciados);
 
-                //if (_plLlaveOrigenRec == 0)
-                //{
-                //    _dDataSQL.AddParameter("@llave_origen_recursos", null);
-                //}
-                //else
-                //{
-                    _dDataSQL.AddParameter("@llave_origen_recursos", _plLlaveOrigenRec);
-                //}
+                _dDataSQL.AddParameter("@llave_origen_recursos", _plLlaveOrigenRec);
+
                 _dDataSQL.AddParameter("@nombre_denunciante", _psNombreDenunciante);
                 _dDataSQL.AddParameter("@mail_denunciante", _psMailDenunciante);
                 _dDataSQL.AddParameter("@mail_denunciante_confirm", _psMailDenuncianteConfirm);
@@ -379,13 +352,18 @@ namespace Negocio
                                 _lLlaveDenuncia = (_dr["llave_denuncia"] == DBNull.Value ? 0 : Convert.ToInt32(_dr["llave_denuncia"])),
                                 _lLlaveGen = (_dr["llave"] == DBNull.Value ? 0 : Convert.ToInt32(_dr["llave"])),
                                 _sTexto = (_dr["texto"] == DBNull.Value ? "" : (string)_dr["texto"]),
-                                _sDescripcion = (_dr["descripcion_documento"] == DBNull.Value ? "" : (string)_dr["descripcion_documento"])
-
+                                _sDescripcion = (_dr["descripcion_documento"] == DBNull.Value ? "" : (string)_dr["descripcion_documento"]),
+                                _lLlaveTipoDenuncia = (_dr["llave"] == DBNull.Value ? 0 : Convert.ToInt32(_dr["llave_cat_tipo_denuncia"])),
 
                             };
 
                             _eListInfoDen.Add(_eInfoDen);
                         }
+
+                    }
+                    else
+                    {
+                        Exception = new Exception("Sin datos");
 
                     }
                 }
@@ -402,6 +380,66 @@ namespace Negocio
 
         }
 
+        public void validarDenuncia( long _plLlaveDenuncia)
+        {
+            _eListInfoDen = new List<cInfoDenuncia>();
+            _ds = null;
+
+            try
+            {
+
+                _dDataSQL.ClearParameters();
+                _dDataSQL.AddParameter("@llave_denuncia", _plLlaveDenuncia);
+
+                _ds = _dDataSQL.Ejecuta("");
+                Exception = _dDataSQL.Exception;
+
+                if (Exception == null)
+                {
+                    if (!(_ds == null || _ds.Tables.Count == 0 || _ds.Tables[0].Rows.Count == 0))
+                    {
+
+                        _sMensajeError = _ds.Tables[0].Rows[0]["respuesta"].ToString();
+
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                Exception = ex;
+            }
+
+        }
+
+        public void envioDenuncia(long _plLlaveDenuncia)
+        {
+
+            _bReps = false;
+
+            _ds = null;
+
+            try
+            {
+
+                _dDataSQL.ClearParameters();
+                _dDataSQL.AddParameter("@llave_denuncia", _plLlaveDenuncia);
+
+
+
+                _dDataSQL.EjecutaDML("");
+                Exception = _dDataSQL.Exception;
+
+             
+            }
+            catch (Exception ex)
+            {
+                Exception = ex;
+      
+            }
+
+
+        }
 
         public partial class cConSeguimDenuncia
         {
@@ -419,6 +457,7 @@ namespace Negocio
             public long _lLlaveDenuncia { get; set; } = 0;
             public long _lLlaveGen { get; set; } = 0;
             public string _sTexto { get; set; } = "";
+            public long _lLlaveTipoDenuncia { get; set; } = 0;
         }
 
     }

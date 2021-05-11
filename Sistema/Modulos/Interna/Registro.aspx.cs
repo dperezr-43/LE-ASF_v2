@@ -613,10 +613,72 @@ namespace Sistema.Modulos.Interna
             }
         }
 
-       
+        [WebMethod]
+        public static object AJAX_validacionDenuncia(long plLlaveDenuncia)
+        {
 
-                //nSeg.Exception.Message;
-  
+
+            nDenuncia nDen = new nDenuncia();
+
+
+
+            try
+            {
+                nDen.validarDenuncia(plLlaveDenuncia);
+
+                return nDen.MensajeError;
+
+
+            }
+            catch (Exception ex)
+            {
+                return ex.Message;
+            }
+            finally
+            {
+                nDen = null;
+            }
+        }
+
+
+
+        [WebMethod]
+        public static object AJAX_envioDenuncia(long _plLlaveDenuncia)
+        {
+
+           
+            nDenuncia nDen = new nDenuncia();
+
+            //QUITAR EL HOLA
+            nDen.envioDenuncia(_plLlaveDenuncia);
+
+            try 
+            { 
+                if (nDen.Exception != null)
+                {
+
+                    return nDen.Exception.Message;
+                }
+                else
+                {
+                    return "Denuncia enviada correctamente";
+
+                }
+
+
+
+            }
+            catch (Exception ex)
+            {
+                return "Error:" + ex.Message;
+            }
+            finally
+            {
+                nDen = null;
+            }
+        }
+
+
 
 
         [WebMethod]

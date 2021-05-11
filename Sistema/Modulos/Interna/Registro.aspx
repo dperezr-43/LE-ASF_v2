@@ -418,7 +418,7 @@
                                     <td colspan="3" class="center_txt size_100">
                                         <br />
                                         <br />
-                                        <input type="button" name="btnGuardaDenuncia" value="Guardar" />
+                                        <input type="button" name="btnGuardaDenuncia" id="btnGuardaDenuncia" value="Guardar" />
                                         <br />
                                         <br />
                                         <hr class="linesHTML" />
@@ -550,7 +550,7 @@
                                                 <tr>
                                                     <td class="txt_az_normal" colspan="6">
                                                         <br />
-                                                        <asp:Label runat="server" Text="Si usted cuenta con un escrito, en formato de .doc y .docs o PDF (1 MB de tamaño máximo), puede  cargarlo por medio del siguiente campo. Tome en cuenta que su escrito debe estar fundado y motivado. &nbsp;"></asp:Label>
+                                                        <asp:Label runat="server" Text="Si usted cuenta con un escrito, en formato DOC/DOCX o PDF (100 MB de tamaño máximo), puede cargarlo por medio del siguiente campo. Tome en cuenta que su escrito debe estar fundado y motivado. &nbsp;"></asp:Label>
                                                         <br />
                                                         <br />
                                                     </td>
@@ -658,7 +658,7 @@
                                                 <tr>
                                                     <td class="txt_az_normal" colspan="6">
                                                         <br />
-                                                        <asp:Label runat="server" Text="Son admisibles formatos PDF, xls, doc y docs, XML, JPG, JPEG, TIF, BMP, MP3, MP4, CVS o cualquier otro archivo gráfico o de texto. (Tamaño máximo por archivo 100 MB por archivo digital: Tamaño del repositorio 50GB). Por cuestiones de seguridad no se aceptan archivos en formato comprimido .zip o .rar. &nbsp;"></asp:Label>
+                                                        <asp:Label runat="server" Text="Son admisibles formatos PDF, XLS, DOC, DOCX, XML, JPG, JPEG, TIF, BMP, MP3, MP4, CVS o cualquier otro archivo gráfico o de texto. (Tamaño máximo por archivo 100 MB por archivo digital: Tamaño del repositorio 50GB). Por cuestiones de seguridad no se aceptan archivos en formato comprimido .zip o .rar. &nbsp;"></asp:Label>
                                                         <br />
                                                         <br />
                                                     </td>
@@ -806,7 +806,7 @@
                                                                         <table border="1" id="TEntidades" style="border-width: 1px; border-style: solid; border-collapse: collapse;">
                                                                             <thead>
                                                                                 <tr style="color: White; background-color: #D3CFC8; border-style: none; font-size:11px; font-weight:bold">
-                                                                                    <td align="center" style="width:100px;">Entidades</td>
+                                                                                    <td align="center" style="width:250px;">Entidades</td>
                                                                                     <td align="center" style="width:30px;">Eliminar</td>
                                                                                 </tr>
                                                                             </thead>
@@ -908,11 +908,7 @@
                                     <input type="button" name="btnGuardaSegSecc" value="Guardar" />
                                 </td>
                             </tr>
-                            <tr>
-                                <td class="row_height_size" colspan="3">
-                                    <hr class="linesHTML" />
-                                </td>
-                            </tr>
+                            
                             </table>
 
                         </div>
@@ -925,11 +921,15 @@
 
 
                             <table class="size_95" style="margin: 0px auto;">
-                                
+                                <tr>
+                                    <td class="row_height_size" colspan="3">
+                                        <hr class="linesHTML" />
+                                    </td>
+                                </tr>
                                 <tr>
                                     <td colspan="3">
 
-                                        <table class="size_100">
+                                        <table class="size_100" style="display:flex;">
 
                                             <tr>
                                                 <td class="center_txt" colspan="2" style="font-size: 20px">
@@ -954,7 +954,7 @@
                                                     <asp:Label CssClass="txt_az_normal" runat="server" Text="Contraseña"></asp:Label>
                                                     &nbsp;
                                                 </td>
-                                                <td class="left_txt" style="width: 90%">
+                                                <td class="left_txt" style="width: 90%;display:flex;align-items:center;">
                                                     <asp:TextBox ID="txtPSW" runat="server" Width="30%" MaxLength="8" CssClass="center_txt"></asp:TextBox>
                                                     <br />
                                                     <br />
@@ -981,8 +981,11 @@
                                             <tr>
                                                 <td colspan="2" class="center_txt size_100">
                                                     <input type="button" name="btnContinuaDenuncia" value="Guardar" onclick="javascript: fGuarda(); return false;" />
+                                            <%--        &nbsp;&nbsp;&nbsp;
+                                                <img src="../../Imagenes/garbage.png" class="img_normal_size" />--%>
                                                     &nbsp;&nbsp;&nbsp;
-                                                <img src="../../Imagenes/garbage.png" class="img_normal_size" />
+                                                    &nbsp;&nbsp;&nbsp;
+                                                    <input type="button" name="btnEnvioDenuncia" value="Enviar" onclick="javascript: fValidarDenuncia(); return false;" />
 
                                                 </td>
 

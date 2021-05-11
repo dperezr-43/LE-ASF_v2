@@ -1,4 +1,5 @@
 ﻿_oAJAX = null;
+_oAJAXCat = null;
 
 var _Main = '#MainContent_';
 var _AjaxURL = 'Registro.aspx';
@@ -7,7 +8,7 @@ $(document).ready(function () {
 
    
 
-    $('#dvSiAnonima, #dvDenunciaRegistro, ' + _Main + 'dvLogFolio, ' + _Main + 'dvRespuesta, ' + _Main + 'dvListaDocumentos, ' + _Main + 'dvListaDocEv, ' + _Main +'dvEntidadesDen').hide();
+    $('#dvSiAnonima, #dvDenunciaRegistro, ' + _Main + 'dvLogFolio, ' + _Main + 'dvRespuesta, ' + _Main + 'dvListaDocumentos, ' + _Main + 'dvListaDocEv, ' + _Main + 'dvEntidadesDen, #RDGeneraPSW').hide();
     //
 
   
@@ -147,7 +148,7 @@ $(document).ready(function () {
         var _NomControl = _Main + 'chbHechos';
         var _NContenedeor = _Main + 'dvchbHechos';
 
-        _oAJAX = null;
+        _oAJAXCat = null;
         cargaCatalogo('STD1', 'chk', _NomControl, _NContenedeor, 16);
 
 
@@ -186,104 +187,7 @@ $(document).ready(function () {
 
     $("body").on("click", "input[name*='btnGuardaDenuncia']", function () {
 
-
-        fGuarda();
-
-        //try {
-
-        //    var _sValores = "";
-
-        //    $('input[id*=MainContent_chbHechos]').each(function () {
-        //        _sValores += (this.checked ? $(this).val() + "," : "");
-        //    });
-
-        //    if (_sValores == "") {
-        //        MensajeError("Debe seleccionar mínimo un hecho.");
-        //        return;
-        //    }
-
-        //    _sValores = _sValores.substr(0, _sValores.length - 1);
-
-        //    var _aValores = _sValores.split(",");
-        //    var _aHechos = new Array();
-
-        //    for (var i = 0; i < _aValores.length; i++) {
-
-        //        _aHechos[i] = _aValores[i];
-
-        //    }
-
-            
-
-        //    _oData = "{ _plLlaveDenuncia: " + $(_Main + "HDLlaveDenuncia").val() +
-        //        ", _plLlaveTipoDenuncia: " + $(_Main + "HDLlaveTipoDenuncia").val() +
-        //        ", _poArrLlavesHechos:" + (_aHechos.length == 0 ? null : JSON.stringify(_aHechos) ) +
-        //             "}";
-
-
-
-        //    _oAJAX = $.ajax({
-        //        type: "POST",
-        //        url: _AjaxURL + "/AJAX_RegistraHechos",
-        //        data: _oData,
-        //        contentType: "application/json; charset=utf-8",
-        //        dataType: "json"
-
-        //    })
-
-        //        .done(function (data, textStatus, jqXHR) {
-
-        //            if (String(data.d).indexOf("Error") == -1) {
-
-
-        //                var _aResp = String(data.d).split(",");
-
-        //                if (_aResp[0] == 1) {
-
-        //                    MensajeOk("El folio es: " + _aResp[1]);
-        //                    $(_Main + "HDFolio").val(_aResp[1].trim());
-
-        //                    //QUITARLO DESPUÉS
-        //                    $(_Main + "HDPassword").val('hola');
-
-        //                    $(_Main + "HDLlaveDenuncia").val(_aResp[2]);
-
-        //                    Habilitardeshabilitar2Secc(false);
-
-        //                    consultaFolio();
-
-        //                }
-        //                else {
-        //                    MensajeError(_aResp[1]);
-
-        //                }
-
-        //            }
-
-        //            else {
-
-        //                MensajeError("Hubo un error al traer los datos.")
-        //            }
-        //        })
-
-        //        .fail(function (jqXHR, textStatus, errorThrown) {
-
-        //            MensajeError("Error al traer los datos [AJAX.AJAX_RegistraHechos]");
-        //        });
-
-
-
-        //} catch (err) {
-
-        //    alert("[btnGuardaDenuncia.click - (Reday)] \n" + err.message);
-        //}
-
-
-
-        //setTimeout(function () {
-        //    $('[data-toggle="tooltip"]').tooltip();
-        //}, 3000);
-
+        validarcamposHechosDen();
 
     });
 
@@ -295,32 +199,33 @@ $(document).ready(function () {
     var NomControl = _Main + 'lbxCP';
     var NomContenedor = '';
 
-    _oAJAX = null;
+    _oAJAXCat = null;
     cargaCatalogo('CP', 'lbx', NomControl, NomContenedor, 0);
 
-    if (_oAJAX != null) {
+    if (_oAJAXCat != null) {
 
-        $.when(_oAJAX).done(function (data, textStatus, jqXHR) {
+        $.when(_oAJAXCat).done(function (data, textStatus, jqXHR) {
 
             if (String(data.d).indexOf("Error") == -1) {
 
                 NomControl = _Main + 'ddlOrigenRecursos';
                 NomContenedor = '';
 
-                _oAJAX = null;
+                _oAJAXCat = null;
                 cargaCatalogo('STD', 'ddl', NomControl, NomContenedor, 40);
 
+                $(_Main + 'ddlOrigenRecursos option:selected').val(1000);
 
-                if (_oAJAX != null) {
+                if (_oAJAXCat != null) {
 
-                    $.when(_oAJAX).done(function (data, textStatus, jqXHR) {
+                    $.when(_oAJAXCat).done(function (data, textStatus, jqXHR) {
 
                         if (String(data.d).indexOf("Error") == -1) {
 
                             NomControl = 'NG';
                             NomContenedor = '#dvNivelGobierno';
 
-                            _oAJAX = null;
+                            _oAJAXCat = null;
                             cargaCatalogo('NG', 'rbl', NomControl, NomContenedor, 9);
 
 
@@ -350,6 +255,50 @@ $(document).ready(function () {
 
 }); // Fin ready
 
+function validarcamposHechosDen() {
+
+    var _bUnoMinSelec = false;
+
+    $.each($("input[name*=" + _Main.replace("#","")+"chbHechos]"), function () {
+        if (this.checked) {
+
+            _bUnoMinSelec = true;
+        }
+
+    });
+
+    if (!_bUnoMinSelec) {
+
+        $.each($("input[name*=" + _Main.replace("#", "") +"chbHechos]"), function () {
+
+            this.style.outline = "1px solid red";
+
+        });
+
+        MensajeError("Seleccione mínimo un hecho de denuncia");
+        return;
+
+    }
+
+    $.each($("input[name*=" + _Main.replace("#", "") +"chbHechos]"), function () {
+
+        this.style.outline  = "";
+
+    });
+
+    fDialogContrasena();
+
+}
+
+function fDialogContrasena() {
+
+    $(_Main + "HDDialogCont").val(1);
+
+    $("#RDGeneraPSW").show();
+    $("#RDComplementoDenuncia, #RDHechos").hide();
+
+
+}
 
 
 function fMuestraDocumento(_sRuta, _sTitulo, _iBase, _iAltura) {
@@ -391,7 +340,7 @@ function cargaCatalogo(_pClaveCatalogo, _pTipo, _pNomControl, _pContenedor, _pLl
     try {
 
 
-        _oAJAX = $.ajax({
+        _oAJAXCat = $.ajax({
             type: "POST",
             url: _AjaxURL + "/AJAX_cargaCatalogo",
             data: _oData,
@@ -449,7 +398,7 @@ function cargaCatalogo(_pClaveCatalogo, _pTipo, _pNomControl, _pContenedor, _pLl
                             var counter = 0;
                             $(data.d).each(function () {
                                 table.append($('<tr></tr>').append($('<td></td>').append($('<input>').attr({
-                                    type: 'checkbox', name: _pNomControl.replace("#", "") + "_" + counter, value: this.Llave, id: _pNomControl.replace("#", "") + "_" + counter
+                                    type: 'checkbox', name: _pNomControl.replace("#", "") + "_" + counter, value: this.Llave, id: _pNomControl.replace("#", "") + "_" + counter, style:"color:black;"
                                 }))).append($('<td></td>').attr({style:"width:15px;"})
                                     ).append($('<td></td>').append(
                                     $('<label>').attr({
@@ -470,7 +419,7 @@ function cargaCatalogo(_pClaveCatalogo, _pTipo, _pNomControl, _pContenedor, _pLl
 
                 else {
 
-                    MensajeError("Hubo un error al traer los datos.")
+                    MensajeError(data.d);
                 }
             })
 
@@ -567,7 +516,7 @@ function ConsultaSeguimiento(_sFilio, _sPassword) {
 
             else {
 
-                MensajeError("Hubo un error al traer los datos.");
+                MensajeError(data.d);
             }
         })
 
@@ -698,6 +647,8 @@ function ValidarCamposFolioLog() {
 
 function consultaFolio() {
 
+    var bEstuvoOculto = false;
+
     _oData = "{ _psFolio:'" + $(_Main + "HDFolio").val() + "'" +
         ", _psPassword: '" + $(_Main + "HDPassword").val() + "'" +
         ", _plLlaveDenuncia: " + $(_Main + "HDLlaveDenuncia").val() +
@@ -716,10 +667,47 @@ function consultaFolio() {
 
         }).done(function (data, textStatus, jqXHR) {
 
-            if (String(data.d).indexOf("Error") == -1) {
+            if (String(data.d).indexOf("Error") == -1 && String(data.d).indexOf("Sin datos") == -1) {
+
+                //Primero se verifica la sección en el que se encuentra el usuario
+                
+
+                if ($("#otInfo").is(":visible")) {
 
 
-                $.each($("input[name*=MainContent_chbHechos]"), function () {
+
+                    data.d[0]._lLlaveTipoDenuncia == 14 ? $("#Denuncia_no_anonima").addClass("OcultaSeccion") : $("#Denuncia_no_anonima").removeClass("OcultaSeccion");
+                    $('#otInfo').hide();
+                    $('#dvDenunciaRegistro').show();
+                    //$("#Denuncia_anonima").click();
+                    $("#aLinkRD").click();
+
+                    Habilitardeshabilitar2Secc(true);
+
+                    bEstuvoOculto = true;
+                }
+                else if (!$("#RDHechos").is(":visible")) {
+
+                    data.d[0]._lLlaveTipoDenuncia == 14 ? $("#Denuncia_no_anonima").addClass("OcultaSeccion") : $("#Denuncia_no_anonima").removeClass("OcultaSeccion");
+                    //$("#Denuncia_anonima").click();
+                    $("#aLinkRD").click();
+
+                    Habilitardeshabilitar2Secc(true);
+
+                    bEstuvoOculto = true;
+                    
+                }
+
+
+                //////////////////////////////////////////////////////////////////
+
+                $(_Main + "hdnPGuarda").val(1);
+                $("#btnGuardaDenuncia").hide();
+                $("#RDGeneraPSW").hide();
+                $("#RDComplementoDenuncia, #RDHechos").show();
+             
+
+                $.each($("input[name*=" + _Main.replace("#", "") +"chbHechos]"), function () {
 
                         this.checked = false;
 
@@ -731,7 +719,7 @@ function consultaFolio() {
                 var _sValoresDocEv = "";
                 var _sValoresEntidad = "";
                 var _sValorObjetosDen = "";
-                var _iValorOrigenRec = 0;
+                var _iValorOrigenRec = 1000;
 
                 var _lValorNivelGob = 0;
 
@@ -787,104 +775,208 @@ function consultaFolio() {
 
                 });
 
+                if (bEstuvoOculto) {
+                    $.when(_oAJAXCat).done(function (data2, textStatus, jqXHR) {
 
-                //Primero coloca los datos de Hechos de Denuncias
+                        //Primero coloca los datos de Hechos de Denuncias
 
-                $.each($("input[name*=MainContent_chbHechos]"), function () {
+                        $.each($("input[name*=" + _Main.replace("#", "") + "chbHechos]"), function () {
 
-                    var _sVal = this.value;
+                            var _sVal = this.value;
 
-                    if (_sValoresHechosDen.indexOf(_sVal + "#") != -1) {
+                            if (_sValoresHechosDen.indexOf(_sVal + "#") != -1) {
 
-                        this.checked = true;
+                                this.checked = true;
+
+                            }
+
+                        });
+
+
+
+                        $(_Main + 'lbxCP option').each(function () {
+
+                            var _sVal = this.value;
+                            var _sTxt = this.text;
+
+                            if (_sValoresCP.indexOf(_sVal + "$") != -1) {
+
+                                $(_Main + "lbxCPSeleccionados").append($("<option     />").val(this.value).text(this.text));
+
+                                $(_Main + "lbxCP option[value=" + this.value + "]").remove();
+                            }
+                        })
+
+
+
+
+                        //Después los documentos de presuntos hechos irregulares
+
+                        if (_sValoresDocIrr.length > 0) {
+
+                            _sValoresDocIrr = _sValoresDocIrr.substr(0, _sValoresDocIrr.length - 1);
+
+                            var _arrDocIrr = _sValoresDocIrr.split("$");
+                            agregarDocumentosConsulta(0, _arrDocIrr);
+                        }
+
+                        //los documentos de evidencia
+
+                        if (_sValoresDocEv.length > 0) {
+
+                            _sValoresDocEv = _sValoresDocEv.substr(0, _sValoresDocEv.length - 1);
+
+                            var _arrDocEv = _sValoresDocEv.split("$");
+                            agregarDocumentosConsulta(1, _arrDocEv);
+                        }
+
+                        //Entidades Involucradas
+
+                        $('input[id*=rNG-]').each(function () {
+
+                            if (this.value == _lValorNivelGob) {
+
+                                this.checked = true;
+
+                            }
+
+                        });
+
+                        if (_sValoresEntidad.length > 0) {
+
+                            _sValoresEntidad = _sValoresEntidad.substr(0, _sValoresEntidad.length - 1);
+
+                            var _arrEntidades = _sValoresEntidad.split("$");
+                            agregarDocumentosConsulta(2, _arrEntidades);
+                        }
+
+
+                        if (_sValorObjetosDen.length > 0) {
+
+                            $(_Main + "txtObjetoDenunciado").val(_sValorObjetosDen);
+
+                        }
+
+
+                        $(_Main + "ddlOrigenRecursos").val(_iValorOrigenRec);
+
+
+
+                        //$(_Main + "HDFolio").val($(_Main + "txtLogFolio").val());
+                        $(_Main + "HDLlaveDenuncia").val(data.d[0]._lLlaveDenuncia);
+
+                        $(_Main + "txtLogFolio").val("");
+                        $(_Main + "txtLogPass").val("");
+                        $(_Main + "dvLogFolio").dialog("close");
+
+                        Habilitardeshabilitar2Secc(false);
+
+
+                    });
+                }
+                else {
+
+                    //Primero coloca los datos de Hechos de Denuncias
+
+                    $.each($("input[name*=" + _Main.replace("#", "") + "chbHechos]"), function () {
+
+                        var _sVal = this.value;
+
+                        if (_sValoresHechosDen.indexOf(_sVal + "#") != -1) {
+
+                            this.checked = true;
+
+                        }
+
+                    });
+
+
+
+                    $(_Main + 'lbxCP option').each(function () {
+
+                        var _sVal = this.value;
+                        var _sTxt = this.text;
+
+                        if (_sValoresCP.indexOf(_sVal + "$") != -1) {
+
+                            $(_Main + "lbxCPSeleccionados").append($("<option     />").val(this.value).text(this.text));
+
+                            $(_Main + "lbxCP option[value=" + this.value + "]").remove();
+                        }
+                    })
+
+
+
+
+                    //Después los documentos de presuntos hechos irregulares
+
+                    if (_sValoresDocIrr.length > 0) {
+
+                        _sValoresDocIrr = _sValoresDocIrr.substr(0, _sValoresDocIrr.length - 1);
+
+                        var _arrDocIrr = _sValoresDocIrr.split("$");
+                        agregarDocumentosConsulta(0, _arrDocIrr);
+                    }
+
+                    //los documentos de evidencia
+
+                    if (_sValoresDocEv.length > 0) {
+
+                        _sValoresDocEv = _sValoresDocEv.substr(0, _sValoresDocEv.length - 1);
+
+                        var _arrDocEv = _sValoresDocEv.split("$");
+                        agregarDocumentosConsulta(1, _arrDocEv);
+                    }
+
+                    //Entidades Involucradas
+
+                    $('input[id*=rNG-]').each(function () {
+
+                        if (this.value == _lValorNivelGob) {
+
+                            this.checked = true;
+
+                        }
+
+                    });
+
+                    if (_sValoresEntidad.length > 0) {
+
+                        _sValoresEntidad = _sValoresEntidad.substr(0, _sValoresEntidad.length - 1);
+
+                        var _arrEntidades = _sValoresEntidad.split("$");
+                        agregarDocumentosConsulta(2, _arrEntidades);
+                    }
+
+
+                    if (_sValorObjetosDen.length > 0) {
+
+                        $(_Main + "txtObjetoDenunciado").val(_sValorObjetosDen);
 
                     }
 
-                });
+
+                    $(_Main + "ddlOrigenRecursos").val(_iValorOrigenRec);
+
+
+
+                    //$(_Main + "HDFolio").val($(_Main + "txtLogFolio").val());
+                    $(_Main + "HDLlaveDenuncia").val(data.d[0]._lLlaveDenuncia);
+
+                    $(_Main + "txtLogFolio").val("");
+                    $(_Main + "txtLogPass").val("");
+                    $(_Main + "dvLogFolio").dialog("close");
+
+                    Habilitardeshabilitar2Secc(false);
+
+                }
 
                 
-
-                $(_Main + 'lbxCP option').each(function () {
-
-                    var _sVal = this.value;
-                    var _sTxt = this.text;
-
-                    if (_sValoresCP.indexOf(_sVal + "$") != -1) {
-
-                        $(_Main + "lbxCPSeleccionados").append($("<option     />").val(this.value).text(this.text));
-
-                        $(_Main + "lbxCP option[value=" + this.value + "]").remove();
-                    }
-                })
-
-              
-
-
-                //Después los documentos de presuntos hechos irregulares
-
-                if (_sValoresDocIrr.length > 0) {
-
-                    _sValoresDocIrr = _sValoresDocIrr.substr(0, _sValoresDocIrr.length - 1);
-
-                    var _arrDocIrr = _sValoresDocIrr.split("$");
-                    agregarDocumentosConsulta(0, _arrDocIrr);
-                }
-
-                //los documentos de evidencia
-
-                if (_sValoresDocEv.length > 0) {
-
-                    _sValoresDocEv = _sValoresDocEv.substr(0, _sValoresDocEv.length - 1);
-
-                    var _arrDocEv = _sValoresDocEv.split("$");
-                    agregarDocumentosConsulta(1, _arrDocEv);
-                }
-
-                //Entidades Involucradas
-
-                $('input[id*=rNG-]').each(function () {
-
-                    if (this.value == _lValorNivelGob) {
-
-                        this.checked = true;
-
-                    }
-
-                });
-
-                if (_sValoresEntidad.length > 0) {
-
-                    _sValoresEntidad = _sValoresEntidad.substr(0, _sValoresEntidad.length - 1);
-
-                    var _arrEntidades = _sValoresEntidad.split("$");
-                    agregarDocumentosConsulta(2, _arrEntidades);
-                }
-
-
-                if (_sValorObjetosDen.length > 0) {
-
-                    $(_Main + "txtObjetoDenunciado").val(_sValorObjetosDen);                    
-                                        
-                }
-
-
-                $(_Main + "ddlOrigenRecursos").val(_iValorOrigenRec);
-
-              
-
-                //$(_Main + "HDFolio").val($(_Main + "txtLogFolio").val());
-                $(_Main + "HDLlaveDenuncia").val(data.d[0]._lLlaveDenuncia);
-
-                $(_Main + "txtLogFolio").val("");
-                $(_Main + "txtLogPass").val("");
-                $(_Main + "dvLogFolio").dialog("close");
-
-                Habilitardeshabilitar2Secc(false);
             }
 
             else {
 
-                MensajeError("Hubo un error al traer los datos.");
+                MensajeError(data.d);
             }
         })
 
@@ -1343,7 +1435,7 @@ function fGuardaDenuncia() {
 
         //Obtener información de los hechos de denuncias
 
-        $('input[id*=MainContent_chbHechos]').each(function () {
+        $('input[id*=' + _Main.replace("#", "") +'chbHechos]').each(function () {
             _sValoresHechos += (this.checked ? $(this).val() + "," : "");
         });
 
@@ -1478,9 +1570,8 @@ function fGuardaDenuncia() {
             if (String(data.d).indexOf("Error") == -1)
             {
                 
-
-                var ADatos = data.d.split(",");
-
+                
+                var ADatos = data.d.split("ß");
                 if ($(_Main + "HDLlaveDenuncia").val() == 0) {
 
                     MensajeOk("El folio es: " + ADatos[1]);
@@ -1493,6 +1584,8 @@ function fGuardaDenuncia() {
 
                 $(_Main + "HDLlaveDenuncia").val(ADatos[2]);
 
+                
+
                 consultaFolio();
 
                     //$("#Tdocumentos > tbody  > tr").each(function (index, data) {
@@ -1503,14 +1596,14 @@ function fGuardaDenuncia() {
                     //    data.cells[0].innerText = "";
                     //});
 
-                $(_Main + "hdnPGuarda").val(1);
+               
                 
 
             }
 
             else {
 
-                MensajeError("Hubo un error al traer los datos.");
+                MensajeError(data.d);
             }
         }).fail(function (jqXHR, textStatus, errorThrown) {
 
@@ -1744,3 +1837,89 @@ var onloadCallback = function () {
         'sitekey': $(_Main + "hdnCvePublicaReCaptcha").val()
     });
 };
+
+function fValidarDenuncia() {
+
+    _oData = "{ plLlaveDenuncia: "+$(_Main + "HDLlaveDenuncia").val()+"}";
+
+    try {
+
+
+        _oAJAX = $.ajax({
+            type: "POST",
+            url: _AjaxURL + "/AJAX_validacionDenuncia",
+            data: _oData,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json"
+
+        })
+
+            .done(function (data, textStatus, jqXHR) {
+
+                if (String(data.d).indexOf("Error") == -1) {
+
+                    envioDenuncia();
+
+                }
+
+                else {
+
+                    MensajeError(data.d);
+                }
+            })
+
+            .fail(function (jqXHR, textStatus, errorThrown) {
+
+                MensajeError("Error al traer los datos [AJAX_cargaCatalogo()]");
+            });
+
+    }
+    catch (err) {
+        alert("[cargaCatalogo] \n" + err.message);
+
+    }
+
+}
+
+function envioDenuncia() {
+
+    _oData = "{ plLlaveDenuncia: " + $(_Main + "HDLlaveDenuncia").val() + "}";
+
+    try {
+
+
+        _oAJAX = $.ajax({
+            type: "POST",
+            url: _AjaxURL + "/AJAX_envioDenuncia",
+            data: _oData,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json"
+
+        })
+
+            .done(function (data, textStatus, jqXHR) {
+
+                if (String(data.d).indexOf("Error") == -1) {
+
+                    MensajeOk("Denuncia enviada correctamente");
+
+                }
+
+                else {
+
+                    MensajeError(data.d);
+                }
+            })
+
+            .fail(function (jqXHR, textStatus, errorThrown) {
+
+                MensajeError("Error al traer los datos [AJAX_cargaCatalogo()]");
+            });
+
+    }
+    catch (err) {
+        alert("[cargaCatalogo] \n" + err.message);
+
+    }
+
+}
