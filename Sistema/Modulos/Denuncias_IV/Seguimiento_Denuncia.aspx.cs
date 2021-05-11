@@ -324,7 +324,7 @@ namespace Sistema.Modulos.Denuncias_IV
                 if (nSeg.Exception != null)
                 {
 
-                    return nSeg.Exception.Message;
+                    return "Error --> " + nSeg.Exception.Message;
                 }
                 else
                 {

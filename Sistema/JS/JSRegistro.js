@@ -197,7 +197,23 @@ $(document).ready(function () {
 
         try {
 
+            var _cvFolio = _Main + 'txtSegFolio';            
+            var _cvPSW = _Main + 'txtSegPsw';
 
+
+            if ($(_cvFolio).val() == '') {
+                $(_cvFolio).addClass('con-err');
+                return;
+            } else {
+                $(_cvFolio).removeClass('con-err');
+            }
+
+            if ($(_cvPSW).val() == '') {
+                $(_cvPSW).addClass('con-err');
+                return;
+            } else {
+                $(_cvPSW).removeClass('con-err');
+            }
 
             ConsultaSeguimiento();
 
@@ -480,11 +496,11 @@ function ConsultaSeguimiento(_sFilio, _sPassword) {
         }).done(function (data, textStatus, jqXHR) {
 
             if (String(data.d).indexOf("Error") == -1) {
+                                
+                $("#load").dialog("close");
 
-                //MensajeOk(data.d[0].Respuesta, 'Mensaje');
-
-                $(_Main + 'lblRespuesta').val('');
-                $(_Main + 'lblRespuesta').text(data.d[0].Respuesta);
+                $('#dvRDRespuesta').empty();
+                $('#dvRDRespuesta').append(data.d[0].Respuesta);
 
                 $(_Main + "dvRespuesta").dialog({
                     open: function () { $(".ui-dialog-titlebar-close").hide(); },
@@ -495,9 +511,7 @@ function ConsultaSeguimiento(_sFilio, _sPassword) {
                     },
                     width: 400,
                     height: 250,
-                    //modal: true,
-                    //dialogClass: "no-close",
-                    //autoOpen:false,
+                    
 
                     close: function () {
 
@@ -536,19 +550,19 @@ function ConsultaSeguimiento(_sFilio, _sPassword) {
                 });
 
                 //data.d[0].LlaveDocumento == 0 ? (_Main + "jq_btn_adjuntar_nvo").hide() : (_Main + "jq_btn_adjuntar_nvo").show();
-                data.d[0].LlaveDocumento == 0 ? (_Main + "jq_btn_adjuntar_nvo").hide() : (_Main + "jq_btn_adjuntar_nvo").show();
+                data.d[0].LlaveDocumento == 0 ? ("#jq_btn_adjuntar_nvo").addClass(disabledseccion) : ("#jq_btn_adjuntar_nvo").addClass(disabledseccion);
             }
 
             else {
 
-                MensajeError(data.d);
+                MensajeError(data.d.replace("Error", ""));
             }
         })
 
-            .fail(function (jqXHR, textStatus, errorThrown) {
+        .fail(function (jqXHR, textStatus, errorThrown) {
 
-                MensajeError("Error al traer los datos [ConsultaSeguimiento]");
-            });
+            MensajeError("Error al traer los datos [ConsultaSeguimiento]");
+        });
 
     }
     catch (err) {
@@ -1963,15 +1977,16 @@ function MensajeRegistroOK(_psFolio, _psVencimiento) {
                
 
         $(_Main + "dvRegistroDen").attr("title", "Folio de Registro de la Denuncia");
-        $(_Main + "lblRDFolio").text(_psFolio);
-        $(_Main + "lblRDVencimiento").text("El plazo para concluir el registro de su denuncia vence el " + _psVencimiento);
+        $("#dvRDFolio").append(_psFolio)
+        $("#dvRDVencimiento").append("El plazo para concluir el registro de su denuncia vence el <strong>" + _psVencimiento + "</strong>");
+        
         $("#load").dialog("close");
 
         $(_Main + "dvRegistroDen").dialog({
             open: function () { $(".ui-dialog-titlebar-close").hide(); },
             resizable: false,
-            width: 700,
-            height: 200,            
+            width: 350,
+            height: 260,            
             modal: true,
             dialogClass: "no-close",
             buttons: {
