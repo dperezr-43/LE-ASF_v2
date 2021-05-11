@@ -8,31 +8,16 @@ $(document).ready(function () {
 
    
 
-    $('#dvSiAnonima, #dvDenunciaRegistro, ' + _Main + 'dvLogFolio, ' + _Main + 'dvRespuesta, ' + _Main + 'dvListaDocumentos, ' + _Main + 'dvListaDocEv, ' + _Main + 'dvEntidadesDen, #RDGeneraPSW').hide();
+    $('#dvSiAnonima, #dvDenunciaRegistro, ' + _Main + 'dvLogFolio, ' + _Main + 'dvRespuesta, ' + _Main + 'dvListaDocumentos, ' + _Main + 'dvListaDocEv, ' + _Main + 'dvEntidadesDen, #RDGeneraPSW, ' + _Main +"dvValidDEnuncia").hide();
     //
 
-       
+    //Poner estilo de tamaño al txtarea de Información Validación Denuncia
 
-    $(document).ajaxStart(function () {
-        $(_Main + "dvControlPopup-Den").height($(document).height());
-        $(_Main + "dvControlPopup-Den").show();
+    var _StyleDiv = $(_Main + "txtValiDenuncia").attr("style");
+    _StyleDiv += "max-width:700px;width:700px;";
+    $(_Main + "txtValiDenuncia").attr("style", _StyleDiv);
 
-        $("#load").dialog({
-            //dialogClass: "no-close",
-            resizable: false,
-            height: 200,
-            modal: true,
-            open: function (event, ui) {                
-                $(this).parent().find(".ui-dialog-titlebar-close").remove();
-            },
-            closeOnEscape: false
-        });
-    });
-
-
-    $(document).ajaxStop(function () {
-        $("#load").dialog("close");
-    });
+    
 
 
 
@@ -704,24 +689,39 @@ function consultaFolio() {
                     data.d[0]._lLlaveTipoDenuncia == 14 ? $("#Denuncia_no_anonima").addClass("OcultaSeccion") : $("#Denuncia_no_anonima").removeClass("OcultaSeccion");
                     $('#otInfo').hide();
                     $('#dvDenunciaRegistro').show();
-                    //$("#Denuncia_anonima").click();
-                    $("#aLinkRD").click();
 
-                    Habilitardeshabilitar2Secc(true);
+                    if (!$("#RDHechos").is(":visible")) {
+                        $("#aLinkRD").click();
+                        bEstuvoOculto = true;
+                    }
+
+                    
+
+                    //Habilitardeshabilitar2Secc(true);
 
                     bEstuvoOculto = true;
                 }
                 else if (!$("#RDHechos").is(":visible")) {
 
                     data.d[0]._lLlaveTipoDenuncia == 14 ? $("#Denuncia_no_anonima").addClass("OcultaSeccion") : $("#Denuncia_no_anonima").removeClass("OcultaSeccion");
-                    //$("#Denuncia_anonima").click();
-                    $("#aLinkRD").click();
 
-                    Habilitardeshabilitar2Secc(true);
+                    if ($(_Main + "HDIntrodujoContrasenia").val() == 1) {
+
+                        $(_Main + "HDIntrodujoContrasenia").val(0);
+
+                    }
+                    else {
+                        $("#aLinkRD").click();
+                    }
+                    
+
+                    //Habilitardeshabilitar2Secc(true);
 
                     bEstuvoOculto = true;
                     
                 }
+
+                Habilitardeshabilitar2Secc(false);
 
 
                 //////////////////////////////////////////////////////////////////
@@ -894,7 +894,7 @@ function consultaFolio() {
                         $(_Main + "txtLogPass").val("");
                         $(_Main + "dvLogFolio").dialog("close");
 
-                        Habilitardeshabilitar2Secc(false);
+                        //Habilitardeshabilitar2Secc(false);
 
 
                     });
@@ -992,7 +992,7 @@ function consultaFolio() {
                     $(_Main + "txtLogPass").val("");
                     $(_Main + "dvLogFolio").dialog("close");
 
-                    Habilitardeshabilitar2Secc(false);
+                    //Habilitardeshabilitar2Secc(false);
 
                 }
 
@@ -1464,21 +1464,31 @@ function fGuardaDenuncia() {
             _sValoresHechos += (this.checked ? $(this).val() + "," : "");
         });
 
-        if (_sValoresHechos == "") {
-            MensajeError("Debe seleccionar mínimo un hecho.");
-            return;
-        }
+        //if (_sValoresHechos == "") {
+        //    MensajeError("Debe seleccionar mínimo un hecho.");
+        //    return;
+        //}
 
-        _sValoresHechos = _sValoresHechos.substr(0, _sValoresHechos.length - 1);
+        
 
-        var _aValoresHechos = _sValoresHechos.split(",");
+        
+
+
         var _aHechos = new Array();
 
-        for (var i = 0; i < _aValoresHechos.length; i++) {
+        if (_sValoresHechos.length > 0) {
 
-            _aHechos[i] = _aValoresHechos[i];
+            _sValoresHechos = _sValoresHechos.substr(0, _sValoresHechos.length - 1);
+            var _aValoresHechos = _sValoresHechos.split(",");
 
+            for (var i = 0; i < _aValoresHechos.length; i++) {
+
+                _aHechos[i] = _aValoresHechos[i];
+
+            }
         }
+
+        
 
 
 
@@ -1816,7 +1826,7 @@ function fVerificaReCaptcha() {
                 fGuardaDenuncia();
 
             } else {
-
+                $(_Main + "HDIntrodujoContrasenia").val(0);
                 MensajeError("[fVerificaReCaptcha] - \n Captcha incorrecto, intente de nuevo.");
 
             }
@@ -1842,8 +1852,9 @@ function fGuarda() {
     try {
 
 
-        if ($(_Main + "hdnPGuarda").val() == 0) {
-
+        //if ($(_Main + "hdnPGuarda").val() == 0) {
+        if ($(_Main + "HDLlaveDenuncia").val() ==0) {
+            $(_Main + "HDIntrodujoContrasenia").val(1);
             fVerificaReCaptcha();
 
         }
@@ -1885,15 +1896,15 @@ function fValidarDenuncia() {
 
             .done(function (data, textStatus, jqXHR) {
 
-                if (String(data.d).indexOf("Error") == -1) {
+                if (data.d == "") {
 
-                    envioDenuncia();
+                    //envioDenuncia();
 
                 }
 
                 else {
 
-                    MensajeError(data.d);
+                    MensajeValidDenuncia(data.d);
                 }
             })
 
@@ -1981,13 +1992,49 @@ function MensajeRegistroOK(_psFolio, _psVencimiento) {
                 }
             },
             close: function () {
-                $(_Main + "dvRegistroDen").dialog("close");
+                //$(_Main + "dvRegistroDen").dialog("close");
                 //$("#dvControlPopup-Den").hide();
             }
         });
     }
     catch (err) {
         alert("[MensajeRegistroOK] \n" + err.message);
+    }
+
+}
+
+
+function MensajeValidDenuncia(_psDatos) {
+
+
+    try {
+
+        //$("#dvControlPopup-Den").height($(document).height());
+        //$("#dvControlPopup-Den").show();
+        $(_Main + "txtValiDenuncia").val(_psDatos);
+        $("#load").dialog("close");
+
+        $(_Main + "dvValidDEnuncia").dialog({
+            open: function () { $(".ui-dialog-titlebar-close").hide(); },
+            resizable: false,
+            width: 1000,
+            height: 450,
+            modal: true,
+            dialogClass: "no-close",
+            buttons: {
+                "Aceptar": function () {
+                    $(_Main + "dvValidDEnuncia").dialog("close");
+                    //$(_Main + "dvControlPopup-Den").hide();
+                }
+            },
+            close: function () {
+                //$(_Main + "dvRegistroDen").dialog("close");
+                //$("#dvControlPopup-Den").hide();
+            }
+        });
+    }
+    catch (err) {
+        alert("[MensajeValidDenuncia] \n" + err.message);
     }
 
 }

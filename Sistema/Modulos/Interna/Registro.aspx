@@ -10,12 +10,12 @@
     <link href="../../CSS/jquery-ui.css" rel="stylesheet" />
     <script src="../../JS/jquery-1.11.2.min.js"></script>
     <script src="../../JS/jquery-ui-1.10.3.custom.js"></script>
-
+    <script src="../../JS/JSUtils.js"></script>
     <script src="../../JS/JSRegistro.js"></script>
     
 
 
-    <script src="../../JS/JSUtils.js"></script>
+    
     <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit" async defer></script>
     
 
@@ -906,6 +906,9 @@
                             <tr>
                                 <td colspan="3" class="center_txt">
                                     <input type="button" name="btnGuardaSegSecc" value="Guardar" />
+                                     &nbsp;&nbsp;&nbsp;
+                                                    &nbsp;&nbsp;&nbsp;
+                                                    <input type="button" name="btnEnvioDenuncia" value="Enviar" onclick="javascript: fValidarDenuncia(); return false;" />
                                 </td>
                             </tr>
                             
@@ -983,9 +986,7 @@
                                                     <input type="button" name="btnContinuaDenuncia" value="Guardar" onclick="javascript: fGuarda(); return false;" />
                                             <%--        &nbsp;&nbsp;&nbsp;
                                                 <img src="../../Imagenes/garbage.png" class="img_normal_size" />--%>
-                                                    &nbsp;&nbsp;&nbsp;
-                                                    &nbsp;&nbsp;&nbsp;
-                                                    <input type="button" name="btnEnvioDenuncia" value="Enviar" onclick="javascript: fValidarDenuncia(); return false;" />
+                                                   
 
                                                 </td>
 
@@ -1183,6 +1184,14 @@
             <asp:Label ID="lblRDVencimiento" runat="server" CssClass="txt_az_normal" Text=""></asp:Label>
         </div>
 
+        <div runat="server" id="dvValidDEnuncia" title="Validación Denuncia" class="center_txt">
+            <br />
+            <asp:Label ID="lblAdv" runat="server" CssClass="txt_az_normal" Text="Información que falta por registrarse en el sistema:"></asp:Label>
+            <br />
+            <br />
+            <asp:TextBox ID="txtValiDenuncia" runat="server" Height="250px" TextMode="MultiLine"></asp:TextBox>
+        </div>
+
 
         <asp:HiddenField runat="server" ID="HDLlaveDocumento" Value="0" />
         <asp:HiddenField runat="server" ID="HDLlaveTipoDocumento" Value="0" />
@@ -1197,7 +1206,7 @@
         <asp:HiddenField runat="server" ID="HDVerLlaveDoc" Value="0" />
         <asp:HiddenField runat="server" ID="HDVerRutaDoc" Value="" />
         <asp:HiddenField runat="server" ID="HDVerTipoDoc" Value="0" />
-
+        <asp:HiddenField runat="server" ID="HDIntrodujoContrasenia" Value="0" />
     </div>
    
     

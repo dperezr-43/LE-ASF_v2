@@ -348,6 +348,33 @@ namespace Sistema.Modulos.Interna
         protected global::System.Web.UI.WebControls.Label lblRDVencimiento;
 
         /// <summary>
+        /// Control dvValidDEnuncia.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl dvValidDEnuncia;
+
+        /// <summary>
+        /// Control lblAdv.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblAdv;
+
+        /// <summary>
+        /// Control txtValiDenuncia.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtValiDenuncia;
+
+        /// <summary>
         /// Control HDLlaveDocumento.
         /// </summary>
         /// <remarks>
@@ -445,5 +472,14 @@ namespace Sistema.Modulos.Interna
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField HDVerTipoDoc;
+
+        /// <summary>
+        /// Control HDIntrodujoContrasenia.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField HDIntrodujoContrasenia;
     }
 }

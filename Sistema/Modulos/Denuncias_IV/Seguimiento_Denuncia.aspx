@@ -297,6 +297,8 @@
     
             <asp:HiddenField runat="server" ID="HDLlaveDocumento" Value="0" />
             <asp:HiddenField runat="server" ID="HDLlaveTipoDocumento" Value="0" />
+
+        <asp:HiddenField runat="server" ID="HDIntrodujoContrasenia" Value="0" />
   
     </div>
 </asp:Content>

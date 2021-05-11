@@ -391,7 +391,7 @@ namespace Negocio
                 _dDataSQL.ClearParameters();
                 _dDataSQL.AddParameter("@llave_denuncia", _plLlaveDenuncia);
 
-                _ds = _dDataSQL.Ejecuta("");
+                _ds = _dDataSQL.Ejecuta("sp_ValidacionDenuncia");
                 Exception = _dDataSQL.Exception;
 
                 if (Exception == null)

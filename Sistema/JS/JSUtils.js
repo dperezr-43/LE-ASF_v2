@@ -9,7 +9,29 @@
         $( "#lTitulo" ).prop( "width", "5px" );
     }
 
-    $( "#dPolitica" ).hide();
+    $("#dPolitica").hide();
+
+    $(document).ajaxStart(function () {
+        $(_Main + "dvControlPopup-Den").height($(document).height());
+        $(_Main + "dvControlPopup-Den").show();
+
+        $("#load").dialog({
+            //dialogClass: "no-close",
+            resizable: false,
+            height: 200,
+            modal: true,
+            open: function (event, ui) {
+                $(this).parent().find(".ui-dialog-titlebar-close").remove();
+            },
+            closeOnEscape: false
+        });
+    });
+
+
+    $(document).ajaxStop(function () {
+        $("#load").dialog("close");
+    });
+
 });
 
 function BuscaEnTabla(_sTabla, _sBuscar, _iColumna) {
