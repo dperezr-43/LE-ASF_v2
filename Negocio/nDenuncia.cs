@@ -417,17 +417,13 @@ namespace Negocio
 
             _bReps = false;
 
-            _ds = null;
-
             try
             {
 
                 _dDataSQL.ClearParameters();
                 _dDataSQL.AddParameter("@llave_denuncia", _plLlaveDenuncia);
 
-
-
-                _dDataSQL.EjecutaDML("");
+                _dDataSQL.EjecutaDML("sp_EnvioDenuncia");
                 Exception = _dDataSQL.Exception;
 
              
@@ -436,6 +432,47 @@ namespace Negocio
             {
                 Exception = ex;
       
+            }
+
+
+        }
+
+        public string ConsultaEnvioDenuncia(string _psFolio, string _psPassword)
+        {
+
+            _bReps = false;
+
+            _ds = null;
+
+            try
+            {
+
+                _dDataSQL.ClearParameters();
+                _dDataSQL.AddParameter("@folio", _psFolio);
+                _dDataSQL.AddParameter("@password", _psPassword);
+
+
+
+                _ds = _dDataSQL.Ejecuta("sp_ConsultaEnvioDen");
+                Exception = _dDataSQL.Exception;
+
+                if (Exception == null)
+                {
+                    if (!(_ds == null || _ds.Tables.Count == 0 || _ds.Tables[0].Rows.Count == 0))
+                    {
+
+                        return _ds.Tables[0].Rows[0]["respuesta"].ToString();
+
+                    }
+                }
+
+                return "No";
+
+            }
+            catch (Exception ex)
+            {
+                Exception = ex;
+                return "No";
             }
 
 

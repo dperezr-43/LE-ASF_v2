@@ -10,6 +10,11 @@ using System.Data;
 using System.IO;
 using System.Configuration;
 using System.Net;
+using iTextSharp;
+using iTextSharp.text;
+using iTextSharp.text.pdf;
+using System.Globalization;
+using System.Threading;
 
 namespace Sistema.Modulos.Interna
 {
@@ -17,6 +22,8 @@ namespace Sistema.Modulos.Interna
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            HDUrlSitio.Value = ConfigurationManager.AppSettings["URLSitio"];
+
 
             HDRutaServ.Value = Server.MapPath("");
             HDRutaServ.Value = HDRutaServ.Value.Substring(0, HDRutaServ.Value.LastIndexOf(@"\"));
@@ -34,9 +41,17 @@ namespace Sistema.Modulos.Interna
             {
                 VerDocumentacion();
             }
+            else if (HDImprimirFolio.Value == "1")
+            {
+
+                ImprimirFolio();
+
+            }
 
             hdnCvePrivadaReCaptcha.Value = ConfigurationManager.AppSettings["CvePrivadaReCaptcha"];
             hdnCvePublicaReCaptcha.Value = ConfigurationManager.AppSettings["CvePublicaRecaptcha"];
+
+            
 
         }
 
@@ -212,6 +227,170 @@ namespace Sistema.Modulos.Interna
                 //return "Datos modificados correctamente";
 
             }
+
+        }
+
+        public void ImprimirFolio()
+        {
+            string _sNombreArchCompleto = HDRutaServ.Value + @"\Folio_" + HDLlaveDenuncia.Value + ".pdf";
+            string _sLogoRuta = HDRutaServ.Value.Substring(0, HDRutaServ.Value.LastIndexOf(@"\")) + @"\Imagenes\logo.png";
+            string _sImgFolio = HDRutaServ.Value.Substring(0, HDRutaServ.Value.LastIndexOf(@"\")) + @"\Imagenes\folio_capturado.png";
+
+
+
+            iTextSharp.text.Document docPDF = new iTextSharp.text.Document(PageSize.LETTER, 30, 30, 20, 50);
+            iTextSharp.text.pdf.PdfWriter writer = PdfWriter.GetInstance(docPDF, new FileStream(_sNombreArchCompleto, FileMode.Create));
+
+            iTextSharp.text.BaseColor FontLetraColor = new iTextSharp.text.BaseColor(4, 34, 106);
+
+            docPDF.Open();
+
+            iTextSharp.text.Image _iLogo = iTextSharp.text.Image.GetInstance(_sLogoRuta);
+            _iLogo.ScaleAbsolute(140, 50);
+
+            iTextSharp.text.pdf.PdfPTable _tEncabezado = new iTextSharp.text.pdf.PdfPTable(2);
+            _tEncabezado.WidthPercentage = 100.0F;
+
+            float[] _fTEwidth  = { 200.0F, 500.0F};
+            _tEncabezado.SetWidths(_fTEwidth);
+
+            iTextSharp.text.pdf.PdfPCell _cLogo = new iTextSharp.text.pdf.PdfPCell(_iLogo);
+
+            _cLogo.Border = Rectangle.NO_BORDER;
+
+            _tEncabezado.AddCell(_cLogo);
+
+            iTextSharp.text.Paragraph pTitulo = new iTextSharp.text.Paragraph()
+            {
+                // Font = 
+                Font = new iTextSharp.text.Font(iTextSharp.text.FontFactory.GetFont("Calibri", 14, iTextSharp.text.Font.BOLD)),
+                Alignment = iTextSharp.text.Element.ALIGN_RIGHT,
+                
+            };
+
+            DateTime _dHoy = DateTime.Now;
+            string _sFechaHoy = _dHoy.ToString("D", new CultureInfo("es-MX"));
+
+            _sFechaHoy = _sFechaHoy.Substring(_sFechaHoy.IndexOf(",")+2);
+
+            pTitulo.Add("Ciudad de México, a " + _sFechaHoy);
+
+            PdfPCell _cTituloEnc = new PdfPCell();
+
+            _cTituloEnc.Border = iTextSharp.text.Rectangle.NO_BORDER;
+
+            _cTituloEnc.AddElement(pTitulo);
+
+            _tEncabezado.AddCell(_cTituloEnc);
+
+            docPDF.Add(_tEncabezado);
+
+            iTextSharp.text.Paragraph pPEspacio = new iTextSharp.text.Paragraph();
+            pPEspacio.Add(Environment.NewLine);
+            docPDF.Add(pPEspacio);
+
+
+
+            iTextSharp.text.Image _iFolio = iTextSharp.text.Image.GetInstance(_sImgFolio);
+            _iFolio.ScaleAbsolute(140,120);
+
+            iTextSharp.text.pdf.PdfPTable _tCuerpo1 = new iTextSharp.text.pdf.PdfPTable(2);
+            _tCuerpo1.WidthPercentage = 80.0F;
+
+            float[] _fCwidth = { 40.0F, 60.0F };
+            _tCuerpo1.SetWidths(_fCwidth);
+
+            iTextSharp.text.pdf.PdfPCell _cFolio = new iTextSharp.text.pdf.PdfPCell(_iFolio);
+
+            _cFolio.Border = Rectangle.NO_BORDER;
+
+            _tCuerpo1.AddCell(_cFolio);
+
+            iTextSharp.text.Paragraph p1 = new iTextSharp.text.Paragraph()
+            {
+                // Font = 
+                Font = new iTextSharp.text.Font(iTextSharp.text.FontFactory.GetFont("Verdana", 11, iTextSharp.text.Font.NORMAL, FontLetraColor)),
+                Alignment = iTextSharp.text.Element.ALIGN_CENTER
+
+            };
+
+            p1.Add("Su denuncia fue recibida");
+
+            iTextSharp.text.Paragraph p2 = new iTextSharp.text.Paragraph()
+            {
+                // Font = 
+                Font = new iTextSharp.text.Font(iTextSharp.text.FontFactory.GetFont("Verdana", 11, iTextSharp.text.Font.BOLD, FontLetraColor)),
+                Alignment = iTextSharp.text.Element.ALIGN_CENTER
+
+            };
+
+            p2.Add("¡Agradecemos su participación!");
+            p2.Add(Environment.NewLine);
+            p2.Add(Environment.NewLine);
+            p2.Add("Folio de registro de la denuncia");
+
+            iTextSharp.text.Paragraph p3 = new iTextSharp.text.Paragraph()
+            {
+                // Font = 
+                Font = new iTextSharp.text.Font(iTextSharp.text.FontFactory.GetFont("Verdana", 11, iTextSharp.text.Font.NORMAL, FontLetraColor)),
+                Alignment = iTextSharp.text.Element.ALIGN_CENTER
+
+            };
+            p3.Add(HDFolio.Value);
+
+            PdfPCell _cMensaje = new PdfPCell();
+
+            _cMensaje.Border = iTextSharp.text.Rectangle.NO_BORDER;
+
+            _cMensaje.AddElement(p1);
+            _cMensaje.AddElement(p2);
+            _cMensaje.AddElement(p3);
+
+            _tCuerpo1.AddCell(_cMensaje);
+
+            docPDF.Add(_tCuerpo1);
+
+            //Meter otro espacio
+            docPDF.Add(pPEspacio);
+
+            iTextSharp.text.Paragraph pMensajeFinal = new iTextSharp.text.Paragraph()
+            {
+                // Font = 
+                Font = new iTextSharp.text.Font(iTextSharp.text.FontFactory.GetFont("Verdana", 11, iTextSharp.text.Font.NORMAL, FontLetraColor)),
+                Alignment = iTextSharp.text.Element.ALIGN_CENTER
+
+            };
+            pMensajeFinal.Add("La ASF emitirá la respuesta que proceda por las áreas competentes, y se le comunicará por alguno de los siguientes medios:");
+            pMensajeFinal.Add(Environment.NewLine);
+            pMensajeFinal.Add(Environment.NewLine);
+            pMensajeFinal.Add("Por el correo electrónico proporcionado o el Folio de Registro de la Denuncia");
+
+            docPDF.Add(pMensajeFinal);
+
+            docPDF.Close();
+
+            Thread.Sleep(3000);
+
+            byte[] _bData = File.ReadAllBytes(_sNombreArchCompleto);
+
+            Thread.Sleep(3000);
+
+            File.Delete(_sNombreArchCompleto);
+
+            Response.Clear();
+            Response.ClearContent();
+            Response.Buffer = true;
+
+            Response.AddHeader("content-disposition", "attachment; filename=" + Path.GetFileName(_sNombreArchCompleto));
+
+            Response.ContentType = " application/pdf";
+
+
+            Response.BinaryWrite(_bData);
+
+            Response.Flush();
+
+            Response.End();
 
         }
 
@@ -540,7 +719,7 @@ namespace Sistema.Modulos.Interna
 
                 }
 
-                //QUITAR EL HOLA
+        
                 _sRespuesta = nDen.RegistroSol(_plLlaveDenuncia, _plLlaveTipoDenuncia, _plNivelGobierno, _psObjetosDenunciados, _piOrigenRecursos, "","", "", _psPSWDenunciante, _dtHechosDenuncia, _dtCP, _dtEntidades, _dtDocPresIrr, _dtDocEvid);
 
                 if(sRutaServidor!="")
@@ -643,17 +822,19 @@ namespace Sistema.Modulos.Interna
 
 
         [WebMethod]
-        public static object AJAX_envioDenuncia(long _plLlaveDenuncia)
+        public static object AJAX_envioDenuncia(long plLlaveDenuncia)
         {
 
            
             nDenuncia nDen = new nDenuncia();
 
-            //QUITAR EL HOLA
-            nDen.envioDenuncia(_plLlaveDenuncia);
+
+            
 
             try 
-            { 
+            {
+                nDen.envioDenuncia(plLlaveDenuncia);
+
                 if (nDen.Exception != null)
                 {
 
@@ -678,7 +859,44 @@ namespace Sistema.Modulos.Interna
             }
         }
 
+        [WebMethod]
+        public static object AJAX_ConsultaEnvioDenuncia(string _psFolio, string _psPassword)
+        {
 
+
+            nDenuncia nDen = new nDenuncia();
+            string _sResp = "";
+
+            
+
+            try
+            {
+
+                _sResp = nDen.ConsultaEnvioDenuncia(_psFolio, _psPassword);
+
+                if (nDen.Exception != null)
+                {
+
+                    return nDen.Exception.Message;
+                }
+                else
+                {
+                    return _sResp;
+
+                }
+
+
+
+            }
+            catch (Exception ex)
+            {
+                return "Error:" + ex.Message;
+            }
+            finally
+            {
+                nDen = null;
+            }
+        }
 
 
         [WebMethod]
@@ -734,6 +952,39 @@ namespace Sistema.Modulos.Interna
             string url = "https://www.google.com/recaptcha/api/siteverify?secret=" + _sReCaptchaSecret + "&response=" + _sResponse;
             return (new WebClient()).DownloadString(url);
         }
+
+        [WebMethod]
+        public static object AJAX_enviarCorreo(string _psCorreo,
+                                               string _psURL)
+        {
+
+
+            nDenuncia nDen = new nDenuncia();
+
+            string _sUrl= _psURL + "Registro.aspx?datos=";
+
+            try
+            {
+
+
+                //nDen.EnvioValCorreo(_psURL, _psCorreo, _psCCO, _sMensaje);
+
+
+                return "Correo enviado correctamente";
+
+            }
+            catch (Exception ex)
+            {
+                return ex.Message;
+            }
+            finally
+            {
+                nDen = null;
+            }
+        }
+
+        
+       
 
 
 

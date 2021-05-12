@@ -581,6 +581,10 @@ table {
     opacity: 0.4;
 }
 
+.disabledsecc2 {
+    pointer-events: none;
+    opacity: 0.8;
+}
 
 /*===========================================================================*/
 /* AJUSTAR TEXTOS                                                            */

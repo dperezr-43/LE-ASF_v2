@@ -7,7 +7,7 @@ using System.Configuration;
 using System.IO;
 using System.Web;
 using Datos;
-
+using System.Security.Cryptography;
 
 namespace General
 {
@@ -37,6 +37,8 @@ namespace General
         public string Llamado { get { return _Llamado; } set { _Llamado = value; } }
         public long LlaveSesion { get; set; } //DSanchezCa 19-Mar-21
         public int TipoBuzon { get; set; } = 0;
+        private string EncryptionIV = "AfRr4gBtjZ34GerTgTyu2E==";
+        private string EncryptionKey = "ac907a9aE2da0c4e24X94d==";
         public Exception Exception
         {
 
@@ -365,7 +367,77 @@ namespace General
             }
         } //private void GuardaLog
 
+        public string EncryptString(string _sCadenaEncriptar)
+        {
+            string _sCadenaEncriptada = "";
 
+            byte[] iv = Convert.FromBase64String(EncryptionIV);
+            byte[] array;
+
+            try
+            {
+                using(Aes aes = Aes.Create())
+                {
+
+                    aes.Mode = CipherMode.CBC;
+                    aes.Key = Convert.FromBase64String(EncryptionKey);
+                    aes.IV = iv;
+                    ICryptoTransform encryptor = aes.CreateEncryptor(aes.Key, aes.IV);
+
+                    using (MemoryStream memorystream = new MemoryStream())
+                    {
+                        using (CryptoStream cryptostream = new CryptoStream(memorystream, encryptor, CryptoStreamMode.Write))
+                        {
+
+                            using(StreamWriter streamwriter = new StreamWriter((Stream)cryptostream))
+                            {
+                                streamwriter.Write(_sCadenaEncriptar);
+                            }
+                            array = memorystream.ToArray();
+                        }
+                    }
+
+                }
+
+                return _sCadenaEncriptada;
+
+
+
+            }
+            catch (Exception ex)
+            {
+                return "Error: " + ex.Message;
+            }
+
+
+            //Dim iv As Byte() = Convert.FromBase64String(EncryptionIV) 
+
+            //Dim array As Byte()
+
+            //Try
+            //    Using aes As Aes = Aes.Create()
+            //        aes.Mode = CipherMode.CBC
+
+            //        aes.Key = Convert.FromBase64String(EncryptionKey)
+            //        aes.IV = iv
+            //        Dim encryptor As ICryptoTransform = aes.CreateEncryptor(aes.Key, aes.IV)
+            //        Using memoryStream As MemoryStream = New MemoryStream()
+            //            Using cryptoStream As CryptoStream = New CryptoStream(memoryStream, encryptor, CryptoStreamMode.Write)
+            //                Using streamWriter As StreamWriter = New StreamWriter(CType(cryptoStream, Stream))
+            //                    streamWriter.Write(CadenaEncriptar)
+            //                End Using
+            //                array = memoryStream.ToArray()
+            //            End Using
+            //        End Using
+            //    End Using
+            //    CadenaEncriptada = Convert.ToBase64String(array)
+            //    Return True
+            //Catch ex As Exception
+            //    MensajeResp = ex.Message
+            //    Return False
+            //End Try
+
+        }
 
 
     }

@@ -266,8 +266,103 @@ namespace Negocio
             }
         }
 
-    
-       
+        public void EnviaValidacionCorreo()
+        {
+
+            // -----------------------------------------------------------------------------------------------------
+            // PRODUCCION
+            // -----------------------------------------------------------------------------------------------------
+            MailMessage _mMessage = new MailMessage();
+            SmtpClient _smptClient = new SmtpClient();
+            string _sFrom = _sDirMail;
+            string _sHTML = "";
+
+
+            AlternateView _aHTML;
+            //LinkedResource _rPie;
+            //LinkedResource _rLogo;
+
+            try
+            {
+                _mMessage.From = new MailAddress(_sFrom, "Participación Ciudadana");
+
+                _mMessage.To.Add(eMail.Email);
+
+                //if (eMail.Folio.Contains("ALERTA") | eMail.Folio.Contains("INFOR"))
+                // Copia oculta para administrador
+                //_mMessage.Bcc.Add("jmanrique@asf.gob.mx");
+
+                if (eMail.CCO != "")
+                    _mMessage.Bcc.Add(eMail.CCO);
+
+                //_rPie = new LinkedResource(ConfigurationManager.AppSettings("rutaPie") + @"\pie.PNG");
+                //_rLogo = new LinkedResource(ConfigurationManager.AppSettings("rutaPie") + @"\logo2.PNG");
+
+                //_rPie.ContentId = "pie";
+                //_rLogo.ContentId = "logo";
+
+                _sHTML = "<table style=\"width: 800px; border: solid black 2px\">"
+                            + "<tr>"
+                                + "<td style=\"width: 45%\"><img src=\"cid:logo\" /></td>"
+                                + "<td style=\"text-align: right; width: 45%\"><strong>Ciudad de México, a " + DateTime.Now.Day + " de " + mes(DateTime.Now.Month) + " de " + DateTime.Now.Year + "</strong></td>"
+                                + "<td style=\"width: 5%\">&nbsp;</td>"
+                            + "</tr>"
+                            + "<tr>"
+                                + "<td colspan=\"3\">"
+                                    + "<br />"
+                                    + "<table style=\"width: 100%\">"
+                                        + "<tr>"
+                                            + "<td style=\"width: 5%\">&nbsp;</td>"
+                                            + "<td style=\"width: 90%\">"
+                                                + eMail.Mensaje
+                                            + "</td>"
+                                        + "</tr>"
+                                    + "</table>"
+                                + "</td>"
+                            + "</tr>"
+                            + "<tr>"
+                                + "<td colspan=\"3\" style=\"width: 100%;\">"
+                                    + "<img src=\"cid:pie\" style=\"width: 100%\" />"
+                                + "</td>"
+                            + "</tr>"
+                        + "</table>";
+
+                _mMessage.Subject = "Seguimiento Folio: " + eMail.Folio;
+
+                _aHTML = null;
+                _aHTML = AlternateView.CreateAlternateViewFromString(_sHTML, null, "text/html");
+
+                _aHTML.LinkedResources.Clear();
+                //_aHTML.LinkedResources.Add(_rPie);
+                //_aHTML.LinkedResources.Add(_rLogo);
+
+                _mMessage.AlternateViews.Clear();
+                _mMessage.AlternateViews.Add(_aHTML);
+
+                _mMessage.Priority = MailPriority.High;
+                // _smptClient.Host = "envios.appevent.com.mx"
+                _smptClient.Host = _sHost;
+                _smptClient.Credentials = new System.Net.NetworkCredential(_sDirMail, "");
+                _smptClient.Timeout = 10675199;
+                _smptClient.Port = 25;
+                _smptClient.Send(_mMessage);
+
+                _sMensaje = "Correos enviados correctamente";
+            }
+
+
+            catch (Exception ex)
+            {
+                //Exception = ex;
+                _sMensaje = "Error al enviar el correo";
+            }
+            finally
+            {
+                _mMessage = null;
+                _smptClient = null;
+            }
+        }
+
     }
 
     public class eMail

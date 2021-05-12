@@ -8,7 +8,7 @@ $(document).ready(function () {
 
    
 
-    $('#dvSiAnonima, #dvDenunciaRegistro, ' + _Main + 'dvLogFolio, ' + _Main + 'dvRespuesta, ' + _Main + 'dvListaDocumentos, ' + _Main + 'dvListaDocEv, ' + _Main + 'dvEntidadesDen, #RDGeneraPSW, ' + _Main +"dvValidDEnuncia").hide();
+    $('#dvSiAnonima, #dvDenunciaRegistro, ' + _Main + 'dvLogFolio, ' + _Main + 'dvRespuesta, ' + _Main + 'dvListaDocumentos, ' + _Main + 'dvListaDocEv, ' + _Main + 'dvEntidadesDen, #RDGeneraPSW, ' + _Main +"dvValidDEnuncia, #dvFolioCapturado").hide();
     //
 
     //Poner estilo de tamaño al txtarea de Información Validación Denuncia
@@ -59,7 +59,7 @@ $(document).ready(function () {
 
             let _sNomControl = "#Denuncia_no_anonima";
 
-            $(_Main + "HDLlaveTipoDenuncia").val($(this).val());
+            //$(_Main + "HDLlaveTipoDenuncia").val($(this).val());
 
             $(this).val() == '14' ? $(_sNomControl).addClass("OcultaSeccion") : $(_sNomControl).removeClass("OcultaSeccion");
             $(_Main + "hdnPGuarda").val(0);
@@ -80,8 +80,18 @@ $(document).ready(function () {
 
             
 
+            $.each($("input[name *= 'rblDenunciaAnonima']"), function () {
+                if (this.checked) {
+
+                    $(_Main + "HDLlaveTipoDenuncia").val(this.value);
+                }
+
+            });
+
             $('#otInfo').hide();
             $('#dvDenunciaRegistro').show();
+
+            LimpiarDatosDenuncia();
 
             Habilitardeshabilitar2Secc(true);
 
@@ -216,6 +226,39 @@ $(document).ready(function () {
         validarcamposHechosDen();
 
     });
+
+    $("body").on("click", "input[name*='btnGuardaDatosContacto']", function () {
+
+        if (!validaEmail($(_Main + "txtCorreoReg").val())) {
+            return;
+        }
+
+        $(_Main + "lblAdvertencia").text("Se enviará un correo electrónico a la dirección capturada con la liga para que pueda capturar su denuncia. ¿Desea continuar?");
+
+        $(_Main + "dvAdvertencia").dialog({
+            open: function () { $(".ui-dialog-titlebar-close").hide(); },
+            resizable: false,
+            width: 450,
+            height: 260,
+            modal: true,
+            dialogClass: "no-close",
+            buttons: {
+                "Aceptar": function () {
+
+                    EnviarCorreoDenuncia();
+
+                    $(_Main + "dvAdvertencia").dialog("close");
+                    //$(_Main + "dvControlPopup-Den").hide();
+                }
+            },
+            close: function () {
+                //$(_Main + "dvRegistroDen").dialog("close");
+                //$("#dvControlPopup-Den").hide();
+            }
+        });
+    });
+
+    
 
 
 
@@ -570,6 +613,16 @@ function Habilitardeshabilitar2Secc(_bDisable) {
     
 }
 
+function HabilitardeshabilitarSecciones(_bDisable) {
+
+    //let SeccionesHD = '#RDGeneraPSW, #RDComplementoDenuncia';
+    let SeccionesHD = '#RDComplementoDenuncia, #RDHechos';
+    let ClassHD = 'disabledsecc2';
+
+    _bDisable == true ? $(SeccionesHD).addClass(ClassHD) : $(SeccionesHD).removeClass(ClassHD);
+
+}
+
 function seguimiento() {
 
 
@@ -665,7 +718,64 @@ function ValidarCamposFolioLog() {
     $(_Main + "HDFolio").val(_sLogFolio);
     $(_Main + "HDPassword").val(_sLogPass);
 
-    consultaFolio();
+    consultaEnvioDenuncia();
+
+    
+
+}
+
+function consultaEnvioDenuncia() {
+
+
+    _oData = "{ _psFolio:'" + $(_Main + "HDFolio").val() + "'" +
+        ", _psPassword: '" + $(_Main + "HDPassword").val() + "'" +
+        "}";
+
+    try {
+
+
+        _oAJAX = $.ajax({
+            type: "POST",
+            url: _AjaxURL + "/AJAX_ConsultaEnvioDenuncia",
+            data: _oData,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json"
+
+        })
+
+            .done(function (data, textStatus, jqXHR) {
+
+                if (String(data.d).indexOf("Error") == -1) {
+
+                    $(_Main + "HDEnvioDenuncia").val(data.d);
+
+                    if (data.d == "Si") {
+
+                        MensajeOk("Recuerde que el folio capturado ya fue enviado y solo podrá ser de consulta.","Denuncia enviada");
+
+                    }
+
+                    consultaFolio();
+
+                    
+                }
+
+                else {
+
+                    MensajeError(data.d);
+                }
+            })
+
+            .fail(function (jqXHR, textStatus, errorThrown) {
+
+                MensajeError("Error al traer los datos [AJAX_envioDenuncia]");
+            });
+
+    }
+    catch (err) {
+        alert("[consultaEnvioDenuncia] \n" + err.message);
+
+    }
 
 }
 
@@ -901,15 +1011,15 @@ function consultaFolio() {
 
 
 
-                        //$(_Main + "HDFolio").val($(_Main + "txtLogFolio").val());
+                        
                         $(_Main + "HDLlaveDenuncia").val(data.d[0]._lLlaveDenuncia);
 
                         $(_Main + "txtLogFolio").val("");
                         $(_Main + "txtLogPass").val("");
                         $(_Main + "dvLogFolio").dialog("close");
 
-                        //Habilitardeshabilitar2Secc(false);
 
+                        HabilitardeshabilitarSecciones($(_Main + "HDEnvioDenuncia").val() == "Si" ? true:false);
 
                     });
                 }
@@ -999,14 +1109,14 @@ function consultaFolio() {
 
 
 
-                    //$(_Main + "HDFolio").val($(_Main + "txtLogFolio").val());
+                    
                     $(_Main + "HDLlaveDenuncia").val(data.d[0]._lLlaveDenuncia);
 
                     $(_Main + "txtLogFolio").val("");
                     $(_Main + "txtLogPass").val("");
                     $(_Main + "dvLogFolio").dialog("close");
 
-                    //Habilitardeshabilitar2Secc(false);
+                    HabilitardeshabilitarSecciones($(_Main + "HDEnvioDenuncia").val() == "Si" ? true : false);
 
                 }
 
@@ -1041,6 +1151,7 @@ function VerDocumento(_lLlaveDocumento, _lLlaveTipoDoc) {
     $(_Main + "HDLlaveDocumento").val(_lLlaveDocumento);
     $(_Main + "HDLlaveTipoDocumento").val(_lLlaveTipoDoc);
 
+    $(_Main + "HDImprimirFolio").val("0");
 
     __doPostBack('btnVerDocumento', 'CLICK');
 }
@@ -1809,6 +1920,7 @@ function VerDocumentoTab(_lLlaveDocumento, _sRutaDocumento) {
     $(_Main + "HDVerLlaveDoc").val(_lLlaveDocumento);
     $(_Main + "HDVerRutaDoc").val(_sRutaDocumento.replace(/#/g,"\\"));
 
+    $(_Main + "HDImprimirFolio").val("0");
 
     __doPostBack('btnVerDocumento', 'CLICK');
 
@@ -1912,7 +2024,7 @@ function fValidarDenuncia() {
 
                 if (data.d == "") {
 
-                    //envioDenuncia();
+                    envioDenuncia();
 
                 }
 
@@ -1924,12 +2036,12 @@ function fValidarDenuncia() {
 
             .fail(function (jqXHR, textStatus, errorThrown) {
 
-                MensajeError("Error al traer los datos [AJAX_cargaCatalogo()]");
+                MensajeError("Error al traer los datos [AJAX_validacionDenuncia]");
             });
 
     }
     catch (err) {
-        alert("[cargaCatalogo] \n" + err.message);
+        alert("[fValidarDenuncia] \n" + err.message);
 
     }
 
@@ -1955,7 +2067,13 @@ function envioDenuncia() {
 
                 if (String(data.d).indexOf("Error") == -1) {
 
-                    MensajeOk("Denuncia enviada correctamente");
+                    //MensajeOk("Denuncia enviada correctamente");
+                    $(_Main + "HDEnvioDenuncia").val("Si");
+                    //HabilitardeshabilitarSecciones(true);
+
+                    $("#dvFolioCapturado").show();
+                    $("#RDComplementoDenuncia, #RDHechos").hide();
+                    $(_Main + "lblFolioRec").text($(_Main + "HDFolio").val());
 
                 }
 
@@ -1967,12 +2085,12 @@ function envioDenuncia() {
 
             .fail(function (jqXHR, textStatus, errorThrown) {
 
-                MensajeError("Error al traer los datos [AJAX_cargaCatalogo()]");
+                MensajeError("Error al traer los datos [AJAX_envioDenuncia]");
             });
 
     }
     catch (err) {
-        alert("[cargaCatalogo] \n" + err.message);
+        alert("[envioDenuncia] \n" + err.message);
 
     }
 
@@ -1990,7 +2108,10 @@ function MensajeRegistroOK(_psFolio, _psVencimiento) {
         $(_Main + "dvRegistroDen").attr("title", "Folio de Registro de la Denuncia");
         $("#dvRDFolio").append(_psFolio)
         $("#dvRDVencimiento").append("El plazo para concluir el registro de su denuncia vence el <strong>" + _psVencimiento + "</strong>");
-        
+
+        $(_Main + "HDFolio").val(_psFolio);
+        $(_Main + "HDPassword").val($(_Main + "txtPSW").val());
+
         $("#load").dialog("close");
 
         $(_Main + "dvRegistroDen").dialog({
@@ -2050,6 +2171,164 @@ function MensajeValidDenuncia(_psDatos) {
     }
     catch (err) {
         alert("[MensajeValidDenuncia] \n" + err.message);
+    }
+
+}
+
+function LimpiarDatosDenuncia() {
+
+
+    $(_Main + "HDLlaveDenuncia").val(0);
+    $(_Main + "HDFolio").val("");
+    $(_Main + "HDPassword").val("");
+    
+    
+
+    var NomControl = _Main + 'lbxCP';
+    var NomContenedor = '';
+
+    _oAJAXCat = null;
+    cargaCatalogo('CP', 'lbx', NomControl, NomContenedor, 0);
+
+    if (_oAJAXCat != null) {
+
+        $.when(_oAJAXCat).done(function (data, textStatus, jqXHR) {
+
+            if (String(data.d).indexOf("Error") == -1) {
+
+                NomControl = _Main + 'ddlOrigenRecursos';
+                NomContenedor = '';
+
+                _oAJAXCat = null;
+                cargaCatalogo('STD', 'ddl', NomControl, NomContenedor, 40);
+
+                $(_Main + 'ddlOrigenRecursos option:selected').val(1000);
+
+                if (_oAJAXCat != null) {
+
+                    $.when(_oAJAXCat).done(function (data, textStatus, jqXHR) {
+
+                        if (String(data.d).indexOf("Error") == -1) {
+
+                            NomControl = 'NG';
+                            NomContenedor = '#dvNivelGobierno';
+
+                            _oAJAXCat = null;
+                            cargaCatalogo('NG', 'rbl', NomControl, NomContenedor, 9);
+
+                            if (_oAJAXCat != null) {
+
+                                $.when(_oAJAXCat).done(function (data, textStatus, jqXHR) {
+
+                                    if (String(data.d).indexOf("Error") == -1) {
+
+                                        if ($("#RDHechos").is(":visible")) {
+                                            $("#aLinkRD").click();
+
+                                        }
+
+                                        $(_Main + "lbxCPSeleccionados").empty();
+                                        $(_Main + "txtDescArchivo").val("");
+                                        $(_Main + "txtDescArchEv").val("");
+                                        $("#Tdocumentos tbody").empty();
+                                        $("#TdocEv tbody").empty();
+
+                                        $(_Main + "txtEntInvolucrada").val("");
+                                        $("#TEntidades tbody").empty();
+
+                                        $(_Main + "txtObjetoDenunciado").val("");
+
+                                        $(_Main + "dvListaDocumentos, " + _Main + "dvListaDocEv, " + _Main + "dvEntidadesDen").hide();
+
+                                        HabilitardeshabilitarSecciones(false);
+                                        Habilitardeshabilitar2Secc(true);
+                                        $("#btnGuardaDenuncia").show();
+
+                                    }
+                                });
+
+                            }
+
+                        }
+                    });
+                }
+
+
+
+
+            }
+        });
+    }
+
+}
+
+function fImprimir() {
+
+    $(_Main + "HDVerLlaveDoc").val("0");
+    $(_Main + "HDVerRutaDoco").val("");
+
+    $(_Main + "HDLlaveDocumento").val("0");
+
+    $(_Main + "HDImprimirFolio").val("1");
+    
+
+    __doPostBack('btnVerDocumento', 'CLICK');
+
+}
+
+const validaEmail = function (_psCorreo) {
+    let regex = new RegExp("^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$");
+    if (!regex.test(_psCorreo)) {
+        event.preventDefault();
+        MensajeError("Formato de correo incorrecto, por favor vuelva a intentarlo");
+        return false;
+    }
+    return true;
+}
+
+function EnviarCorreoDenuncia() {
+
+    _oData = "{ _psCorreo:'" + $(_Main + "txtCorreoReg").val() + "'" +
+        ", _psURL: '" + $(_Main+"HDUrlSitio").val() + "'" +
+        "}";
+
+
+    try {
+
+
+        _oAJAX = $.ajax({
+            type: "POST",
+            url: _AjaxURL + "/AJAX_enviarCorreo",
+            data: _oData,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json"
+
+        })
+
+            .done(function (data, textStatus, jqXHR) {
+
+                if (String(data.d).indexOf("Error") == -1) {
+
+                    MensajeOk("Correo enviado correctamente");
+                    $("#MainContent_dvEnvioCorreo").dialog("close");
+                    limpiarfiltrosCorreo();
+                }
+
+                else {
+
+                    MensajeError("Hubo un error al traer los datos.");
+                }
+            })
+
+            .fail(function (jqXHR, textStatus, errorThrown) {
+
+                MensajeError("Error al traer los datos [AJAX_enviarCorreo]");
+            });
+
+    }
+    catch (err) {
+        alert("[EnviarCorreoDen] \n" + err.message);
+
     }
 
 }

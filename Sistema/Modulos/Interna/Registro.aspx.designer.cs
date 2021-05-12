@@ -33,13 +33,13 @@ namespace Sistema.Modulos.Interna
         protected global::System.Web.UI.WebControls.TextBox txtNomSeudonimo;
 
         /// <summary>
-        /// Control TextBox4.
+        /// Control txtCorreoReg.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TextBox4;
+        protected global::System.Web.UI.WebControls.TextBox txtCorreoReg;
 
         /// <summary>
         /// Control dvchbHechos.
@@ -204,6 +204,15 @@ namespace Sistema.Modulos.Interna
         protected global::System.Web.UI.WebControls.TextBox txtPSW;
 
         /// <summary>
+        /// Control lblFolioRec.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblFolioRec;
+
+        /// <summary>
         /// Control txtSegFolio.
         /// </summary>
         /// <remarks>
@@ -320,8 +329,6 @@ namespace Sistema.Modulos.Interna
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl dvRegistroDen;
 
-        
-
         /// <summary>
         /// Control dvValidDEnuncia.
         /// </summary>
@@ -348,6 +355,24 @@ namespace Sistema.Modulos.Interna
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtValiDenuncia;
+
+        /// <summary>
+        /// Control dvAdvertencia.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl dvAdvertencia;
+
+        /// <summary>
+        /// Control lblAdvertencia.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblAdvertencia;
 
         /// <summary>
         /// Control HDLlaveDocumento.
@@ -456,5 +481,41 @@ namespace Sistema.Modulos.Interna
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField HDIntrodujoContrasenia;
+
+        /// <summary>
+        /// Control HDEnvioDenuncia.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField HDEnvioDenuncia;
+
+        /// <summary>
+        /// Control HDImprimirFolio.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField HDImprimirFolio;
+
+        /// <summary>
+        /// Control HDUrlSitio.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField HDUrlSitio;
+
+        /// <summary>
+        /// Control HDEstatusLiga.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField HDEstatusLiga;
     }
 }

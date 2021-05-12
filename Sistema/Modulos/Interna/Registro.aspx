@@ -308,7 +308,7 @@
 
                             <tr class="left_txt">
                                 <td class="txt_az_normal">
-                                    <asp:TextBox ID="TextBox4" runat="server" Width="100%"></asp:TextBox>                                    
+                                    <asp:TextBox ID="txtCorreoReg" runat="server" Width="100%"></asp:TextBox>                                    
                                     <br />
                                     <br />
                                 </td>
@@ -983,7 +983,7 @@
 
                                             <tr>
                                                 <td colspan="2" class="center_txt size_100">
-                                                    <input type="button" name="btnContinuaDenuncia" value="Guardar" onclick="javascript: fGuarda(); return false;" />
+                                                    <input type="button" name="btnContinuaContrasenia" value="Guardar" onclick="javascript: fGuarda(); return false;" />
                                             <%--        &nbsp;&nbsp;&nbsp;
                                                 <img src="../../Imagenes/garbage.png" class="img_normal_size" />--%>
                                                    
@@ -1007,7 +1007,74 @@
 
                         </div>
 
-
+                        <div id="dvFolioCapturado" class="size_95" style="margin: 0px auto;">
+                            <table class="size_95" style="margin: 0px auto;" >
+                                <tr>
+                                    <td class="row_height_size" colspan="2">
+                                        <hr class="linesHTML" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <asp:Image runat="server" imageurl="~/Imagenes/folio_capturado.png" />
+                                    </td>
+                                    <td>
+                                        <table class="size_95" style="margin: 0px auto;">
+                                            <tr>
+                                                <td>
+                                                    <asp:Label runat="server" Text="Su denuncia fue recibida"></asp:Label>
+                                                    <br />
+                                                    <asp:Label runat="server" Text="¡Agradecemos su participación!" Font-Bold="true"></asp:Label>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="height:10px;">
+                                                    &nbsp;
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <asp:Label runat="server" Text="Folio de registro de la denuncia" Font-Bold="true"></asp:Label>
+                                                    <br />
+                                                    <asp:Label runat="server" ID="lblFolioRec" Text=""></asp:Label>
+                                                </td>
+                                                
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="height:30px">
+                                        &nbsp;
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <asp:Label runat="server" Text="La ASF emitirá la respuesta que proceda por las áreas competentes, y se le comunicará por alguno de los siguientes medios:"></asp:Label>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <asp:Label runat="server" Text="Por el correo electrónico proporcionado o el Folio de la Denuncia"></asp:Label>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="height:15px">
+                                        &nbsp;
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <input type="button" name="btnImprimirFolio" value="Imprimir Folio" onclick="javascript: fImprimir(); return false;" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="height:15px">
+                                        &nbsp;
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
         
 
                     </div>
@@ -1193,6 +1260,14 @@
             <asp:TextBox ID="txtValiDenuncia" runat="server" Height="250px" TextMode="MultiLine"></asp:TextBox>
         </div>
 
+        
+        <div runat="server" id="dvAdvertencia" title="Validación Denuncia" class="center_txt">
+            <br />
+            <asp:Label ID="lblAdvertencia" runat="server" CssClass="txt_az_normal" Text=""></asp:Label>
+            <br />
+            
+        </div>
+
 
         <asp:HiddenField runat="server" ID="HDLlaveDocumento" Value="0" />
         <asp:HiddenField runat="server" ID="HDLlaveTipoDocumento" Value="0" />
@@ -1208,6 +1283,14 @@
         <asp:HiddenField runat="server" ID="HDVerRutaDoc" Value="" />
         <asp:HiddenField runat="server" ID="HDVerTipoDoc" Value="0" />
         <asp:HiddenField runat="server" ID="HDIntrodujoContrasenia" Value="0" />
+        <asp:HiddenField runat="server" ID="HDEnvioDenuncia" Value="" />
+
+        <asp:HiddenField runat="server" ID="HDImprimirFolio" Value="0" />
+
+        <asp:HiddenField runat="server" ID="HDUrlSitio" Value="" />
+
+        <asp:HiddenField runat="server" ID="HDEstatusLiga" Value="" />
+
     </div>
    
     
