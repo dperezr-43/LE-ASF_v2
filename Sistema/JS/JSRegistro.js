@@ -480,7 +480,8 @@ function ConsultaSeguimiento(_sFilio, _sPassword) {
 
         }).done(function (data, textStatus, jqXHR) {
 
-            if (String(data.d).indexOf("Error") == -1) {
+
+            if (String(data.d[0].Respuesta).indexOf("Error") == -1) {
                                 
                 $("#load").dialog("close");
 
@@ -533,14 +534,16 @@ function ConsultaSeguimiento(_sFilio, _sPassword) {
 
                     }
                 });
+                                                             
 
-                //data.d[0].LlaveDocumento == 0 ? (_Main + "jq_btn_adjuntar_nvo").hide() : (_Main + "jq_btn_adjuntar_nvo").show();
-                data.d[0].LlaveDocumento == 0 ? ("#jq_btn_adjuntar_nvo").addClass(disabledseccion) : ("#jq_btn_adjuntar_nvo").addClass(disabledseccion);
+                data.d[0].LlaveDocumento == 0 ? $("#jq_btn_adjuntar_nvo").hide() : $("#jq_btn_adjuntar_nvo").show();
             }
 
             else {
 
-                MensajeError(data.d.replace("Error", ""));
+               // LimpiaCtrl();
+                $(_Main + "txtSegFolio, " + _Main + "txtSegPsw").val('');
+                MensajeError(data.d[0].Respuesta);
             }
         })
 
@@ -2053,3 +2056,23 @@ function MensajeValidDenuncia(_psDatos) {
     }
 
 }
+
+
+
+//function LimpiaCtrl() {
+
+
+//    try {
+
+//        $("#dvConsultaDeguim").find("input:text").each(function () {
+//            $(this).val('');
+//        });​
+
+//    }
+//    catch (err) {
+//        MensajeError("[LimpiaCtrl] \n" + err.message);
+//    }
+
+//}
+
+

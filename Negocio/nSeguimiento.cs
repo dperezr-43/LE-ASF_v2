@@ -28,6 +28,7 @@ namespace Negocio
 
         private long _LlaveUsuario = -1;
         private string _Pagina = null;
+        private string sMensajeErr = string.Empty;
         private string _Evento = null;
         protected string _sMetodo = string.Empty;
         public int TipoBuzon { get; set; } = 0;
@@ -35,6 +36,7 @@ namespace Negocio
         public long LlaveSesion { get; set; }
 
         public string Pagina { get { return _Pagina; } set { _Pagina = value; } }
+        public string MensajeErr { get { return sMensajeErr; } set { sMensajeErr = value; } }
 
         protected DataSet _ds = null;
 
@@ -550,6 +552,7 @@ namespace Negocio
             }
             catch (Exception ex)
             {
+                MensajeErr = "Error -> " + ex.Message;
                 Exception = ex;                
             }
 

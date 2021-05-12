@@ -1024,7 +1024,7 @@
                     <i class="fa fa-plus"></i>
                     </a>
                     
-                    <div class="content center_txt">
+                    <div id="dvConsultaDeguim" class="content center_txt">
 
 
                         <table style=" width:60%; margin:0px auto;" >
